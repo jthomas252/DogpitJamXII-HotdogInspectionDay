@@ -1,0 +1,153 @@
+[gd_scene load_steps=10 format=2]
+
+[ext_resource path="res://default_env.tres" type="Environment" id=1]
+[ext_resource path="res://Scripts/BaseScene.cs" type="Script" id=2]
+[ext_resource path="res://desk_material.tres" type="Material" id=3]
+[ext_resource path="res://brick_material.tres" type="Material" id=4]
+[ext_resource path="res://Scripts/InteractableObject.cs" type="Script" id=5]
+
+[sub_resource type="CubeMesh" id=1]
+
+[sub_resource type="BoxShape" id=2]
+
+[sub_resource type="BoxShape" id=5]
+
+[sub_resource type="CubeMesh" id=6]
+
+[node name="SceneRoot" type="Spatial"]
+script = ExtResource( 2 )
+
+[node name="Interface" type="Control" parent="."]
+margin_right = 40.0
+margin_bottom = 40.0
+
+[node name="Label" type="Label" parent="Interface"]
+margin_right = 134.0
+margin_bottom = 14.0
+text = "Print debug info here"
+
+[node name="Button" type="Button" parent="Interface"]
+anchor_left = 1.0
+anchor_right = 1.0
+margin_left = 892.0
+margin_top = 13.0
+margin_right = 968.0
+margin_bottom = 44.0
+text = "Menu"
+__meta__ = {
+"_editor_description_": ""
+}
+
+[node name="Camera" type="Camera" parent="."]
+transform = Transform( 1, 0, 0, 0, 0.910026, 0.41455, 0, -0.41455, 0.910026, 0, 14.3007, 34.0793 )
+environment = ExtResource( 1 )
+far = 500.0
+
+[node name="InteractableObject" type="RigidBody" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -9.84214, -5.93615, 0 )
+script = ExtResource( 5 )
+
+[node name="MeshInstance" type="MeshInstance" parent="InteractableObject"]
+mesh = SubResource( 1 )
+
+[node name="CollisionShape" type="CollisionShape" parent="InteractableObject"]
+shape = SubResource( 2 )
+
+[node name="InteractableObject2" type="RigidBody" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 14.8342, -5.93615, 0 )
+script = ExtResource( 5 )
+
+[node name="MeshInstance" type="MeshInstance" parent="InteractableObject2"]
+mesh = SubResource( 1 )
+
+[node name="CollisionShape" type="CollisionShape" parent="InteractableObject2"]
+shape = SubResource( 2 )
+
+[node name="InteractableObject3" type="RigidBody" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.677168, -5.93615, -10.3682 )
+script = ExtResource( 5 )
+
+[node name="MeshInstance" type="MeshInstance" parent="InteractableObject3"]
+mesh = SubResource( 1 )
+
+[node name="CollisionShape" type="CollisionShape" parent="InteractableObject3"]
+shape = SubResource( 2 )
+
+[node name="Environment" type="Spatial" parent="."]
+
+[node name="Floor" type="KinematicBody" parent="Environment"]
+transform = Transform( 500, 0, 0, 0, 1, 0, 0, 0, 100, 0, -51.4661, 0 )
+
+[node name="CollisionShape" type="CollisionShape" parent="Environment/Floor"]
+shape = SubResource( 5 )
+
+[node name="MeshInstance" type="MeshInstance" parent="Environment/Floor"]
+mesh = SubResource( 6 )
+material/0 = ExtResource( 4 )
+
+[node name="Wall" type="KinematicBody" parent="Environment"]
+transform = Transform( 500, 0, 0, 0, 100, 0, 0, 0, 1, 0.355713, 48.1689, -61.7712 )
+
+[node name="CollisionShape" type="CollisionShape" parent="Environment/Wall"]
+shape = SubResource( 5 )
+
+[node name="MeshInstance" type="MeshInstance" parent="Environment/Wall"]
+mesh = SubResource( 6 )
+material/0 = ExtResource( 4 )
+
+[node name="Desk" type="KinematicBody" parent="Environment"]
+transform = Transform( 40, 0, 0, 0, 1, 0, 0, 0, 20, 0, -9.20885, 0 )
+
+[node name="CollisionShape" type="CollisionShape" parent="Environment/Desk"]
+shape = SubResource( 5 )
+
+[node name="MeshInstance" type="MeshInstance" parent="Environment/Desk"]
+mesh = SubResource( 6 )
+material/0 = ExtResource( 3 )
+
+[node name="Leg" type="KinematicBody" parent="Environment/Desk"]
+transform = Transform( 0.025, 0, 0, 0, 20, 0, 0, 0, 0.05, -0.916345, -21.1887, 0.851432 )
+
+[node name="CollisionShape" type="CollisionShape" parent="Environment/Desk/Leg"]
+shape = SubResource( 5 )
+
+[node name="MeshInstance" type="MeshInstance" parent="Environment/Desk/Leg"]
+mesh = SubResource( 6 )
+material/0 = ExtResource( 3 )
+
+[node name="Leg2" type="KinematicBody" parent="Environment/Desk"]
+transform = Transform( 0.025, 0, 0, 0, 20, 0, 0, 0, 0.05, -0.916345, -21.1887, -0.843425 )
+
+[node name="CollisionShape" type="CollisionShape" parent="Environment/Desk/Leg2"]
+shape = SubResource( 5 )
+
+[node name="MeshInstance" type="MeshInstance" parent="Environment/Desk/Leg2"]
+mesh = SubResource( 6 )
+material/0 = ExtResource( 3 )
+
+[node name="Leg3" type="KinematicBody" parent="Environment/Desk"]
+transform = Transform( 0.025, 0, 0, 0, 20, 0, 0, 0, 0.05, 0.917217, -21.1887, 0.851432 )
+
+[node name="CollisionShape" type="CollisionShape" parent="Environment/Desk/Leg3"]
+shape = SubResource( 5 )
+
+[node name="MeshInstance" type="MeshInstance" parent="Environment/Desk/Leg3"]
+mesh = SubResource( 6 )
+material/0 = ExtResource( 3 )
+
+[node name="Leg4" type="KinematicBody" parent="Environment/Desk"]
+transform = Transform( 0.025, 0, 0, 0, 20, 0, 0, 0, 0.05, 0.917217, -21.1887, -0.843425 )
+
+[node name="CollisionShape" type="CollisionShape" parent="Environment/Desk/Leg4"]
+shape = SubResource( 5 )
+
+[node name="MeshInstance" type="MeshInstance" parent="Environment/Desk/Leg4"]
+mesh = SubResource( 6 )
+material/0 = ExtResource( 3 )
+
+[node name="DeskLamp" type="OmniLight" parent="Environment/Desk"]
+transform = Transform( 0.025, 0, 0, 0, 1, 0, 0, 0, 0.05, 0.0293387, 50.0894, 0.423917 )
+shadow_enabled = true
+omni_range = 100.0
+
+[connection signal="pressed" from="Interface/Button" to="." method="OnMenuButton"]
