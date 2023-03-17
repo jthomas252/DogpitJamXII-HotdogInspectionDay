@@ -3,20 +3,26 @@ using System;
 
 public class BaseScene : Spatial
 {
-    // Called when the node enters the scene tree for the first time.
-    public override void _Ready()
-    {
-        
-    }
+	private int levelProgression = 0;
+	private int playerScore = 0;
 
-    // Called every frame. 'delta' is the elapsed time since the previous frame.
-    public override void _Process(float delta)
-    {
+	public override void _Ready()
+	{
+		// Start by setting up whatever gameplay variables might be relevant, like player score, day, rat timer, etc. 
 
-    }
+		// Set the mouse to be hidden, reconsider enabling when in menus (disable while working on MacOS)
+		// Input.MouseMode = Input.MouseModeEnum.Hidden;
+	}
 
-    public void OnMenuButton()
-    {
-        GD.Print("Received an input from the menu button.");
-    }
+	public override void _Process(float delta)
+	{
+		
+	}
+
+	// Pause the game from progressing while the menu is active
+	public void OnMenuButton()
+	{
+		GetTree().Paused = true; 
+		GD.Print("Received an input from the menu button.");
+	}
 }

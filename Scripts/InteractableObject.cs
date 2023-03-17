@@ -1,17 +1,12 @@
 using Godot;
 using System;
 
-public class InteractableObject : RigidBody
+public class InteractableObject : Spatial
 {
     public override void _Ready()
     {
         GD.Print("Object ready");
 
-        Connect("mouse_entered", this, "OnMouseEntered");
-    }
-    
-    public void OnMouseEntered()
-    {
-        GD.Print("??");
+        // Connect("mouse_entered", this, "OnMouseEntered");
     }
 }
