@@ -11,11 +11,11 @@ public class Spawner : KinematicBody
     public Vector3 spawnPoint;
     
     // Re-usable list of hotdogs we have spawned in the scene already
-    private List<Hotdog> hotdogList;
+    private List<Spatial> hotdogList;
     
     public override void _Ready()
     {
-        hotdogList = new List<Hotdog>();
+        hotdogList = new List<Spatial>();
     }
 
     public override void _Input(InputEvent @event)
@@ -26,17 +26,19 @@ public class Spawner : KinematicBody
         {
             if (eventKey.Pressed && eventKey.Scancode == (int)KeyList.O)
             {
-                this.TriggerSpawn();
+                TriggerSpawn();
             }
         }
     }
 
     public void TriggerSpawn()
     {
-        Hotdog dog = (Hotdog)hotdog.Instance();
+        Spatial dog = (Spatial)hotdog.Instance();
         hotdogList.Add(dog);
-        GetTree().CurrentScene.AddChild(dog);
         
-        dog.Translation = Translation + spawnPoint;
+        dog.Translation = GlobalTranslation + spawnPoint;
+        dog.Rotation = new Vector3(GD.Randf() * 45, GD.Randf() * 45, GD.Randf() * 45);
+        
+        GetTree().CurrentScene.AddChild(dog);
     }
 }

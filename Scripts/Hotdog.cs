@@ -1,7 +1,6 @@
 using Godot;
 using System;
 
-public class Hotdog : InteractableObject
+public class Hotdog : Spatial
 {
-    
 }

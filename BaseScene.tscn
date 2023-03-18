@@ -1,19 +1,35 @@
-[gd_scene load_steps=13 format=2]
+[gd_scene load_steps=23 format=2]
 
 [ext_resource path="res://default_env.tres" type="Environment" id=1]
 [ext_resource path="res://Scripts/BaseScene.cs" type="Script" id=2]
 [ext_resource path="res://Assets/Materials/desk.tres" type="Material" id=3]
 [ext_resource path="res://Assets/Materials/environment_basic.tres" type="Material" id=4]
 [ext_resource path="res://Assets/Materials/bin_accept.tres" type="Material" id=5]
-[ext_resource path="res://icon.png" type="Texture" id=6]
+[ext_resource path="res://Assets/Textures/cursor_empty.png" type="Texture" id=6]
 [ext_resource path="res://Scripts/Cursor.cs" type="Script" id=7]
 [ext_resource path="res://Assets/Materials/bin_trash.tres" type="Material" id=8]
 [ext_resource path="res://Scripts/Spawner.cs" type="Script" id=9]
 [ext_resource path="res://Prefab/Hotdog.tscn" type="PackedScene" id=10]
+[ext_resource path="res://WorldPoint.tscn" type="PackedScene" id=11]
+[ext_resource path="res://Assets/Textures/cursor_clicked.png" type="Texture" id=12]
+[ext_resource path="res://Assets/Textures/cursor_pointer.png" type="Texture" id=13]
+[ext_resource path="res://Assets/Textures/cursor_hold.png" type="Texture" id=14]
+[ext_resource path="res://Scripts/WorldPoint.cs" type="Script" id=15]
+[ext_resource path="res://Prefab/Button.tscn" type="PackedScene" id=18]
 
 [sub_resource type="BoxShape" id=5]
 
 [sub_resource type="CubeMesh" id=6]
+
+[sub_resource type="BoxShape" id=7]
+
+[sub_resource type="BoxShape" id=8]
+
+[sub_resource type="BoxShape" id=9]
+extents = Vector3( 60, 60, 1 )
+
+[sub_resource type="BoxShape" id=10]
+extents = Vector3( 30, 60, 1 )
 
 [node name="SceneRoot" type="Spatial"]
 script = ExtResource( 2 )
@@ -22,7 +38,7 @@ script = ExtResource( 2 )
 anchor_right = 1.0
 anchor_bottom = 1.0
 
-[node name="Label" type="Label" parent="Interface"]
+[node name="Debug" type="Label" parent="Interface"]
 margin_right = 134.0
 margin_bottom = 14.0
 text = "Print debug info here"
@@ -40,15 +56,17 @@ __meta__ = {
 }
 
 [node name="Camera" type="Camera" parent="."]
-transform = Transform( 1, 0, 0, 0, 0.910026, 0.41455, 0, -0.41455, 0.910026, 0, 14.3007, 29.4495 )
+transform = Transform( 1, 0, 0, 0, 0.98176, 0.190124, 0, -0.190124, 0.98176, -0.919161, 14.3007, 48.3786 )
 environment = ExtResource( 1 )
-fov = 90.0
+fov = 74.3
 far = 500.0
 
 [node name="Environment" type="Spatial" parent="."]
 
 [node name="Floor" type="KinematicBody" parent="Environment"]
 transform = Transform( 500, 0, 0, 0, 1, 0, 0, 0, 100, 0, -51.4661, 0 )
+collision_layer = 5
+collision_mask = 5
 
 [node name="CollisionShape" type="CollisionShape" parent="Environment/Floor"]
 shape = SubResource( 5 )
@@ -59,6 +77,8 @@ material/0 = ExtResource( 4 )
 
 [node name="Wall" type="KinematicBody" parent="Environment"]
 transform = Transform( 500, 0, 0, 0, 100, 0, 0, 0, 1, 0.355713, 48.1689, -98.6815 )
+collision_layer = 5
+collision_mask = 5
 
 [node name="CollisionShape" type="CollisionShape" parent="Environment/Wall"]
 shape = SubResource( 5 )
@@ -69,6 +89,8 @@ material/0 = ExtResource( 4 )
 
 [node name="Desk" type="KinematicBody" parent="Environment"]
 transform = Transform( 40, 0, 0, 0, 1, 0, 0, 0, 20, -12.5512, -9.20885, 0 )
+collision_layer = 5
+collision_mask = 5
 
 [node name="CollisionShape" type="CollisionShape" parent="Environment/Desk"]
 shape = SubResource( 5 )
@@ -84,34 +106,91 @@ omni_range = 100.0
 
 [node name="Spawner" type="KinematicBody" parent="Environment"]
 transform = Transform( 5, 0, 0, 0, 25, 0, 0, 0, 5, -26.4508, 40.6898, 0 )
+collision_layer = 5
+collision_mask = 5
 script = ExtResource( 9 )
 hotdog = ExtResource( 10 )
-spawnPoint = Vector3( 0, -1, 0 )
-
-[node name="CollisionShape" type="CollisionShape" parent="Environment/Spawner"]
-shape = SubResource( 5 )
+spawnPoint = Vector3( 20, -25, 0 )
 
 [node name="MeshInstance" type="MeshInstance" parent="Environment/Spawner"]
 mesh = SubResource( 6 )
 material/0 = ExtResource( 3 )
 
 [node name="BinAccept" type="KinematicBody" parent="Environment"]
-transform = Transform( 10, 0, 0, 0, 25, 0, 0, 0, 10, 37.9743, -33.1482, -9.73786 )
+transform = Transform( 10, 0, 0, 0, 25, 0, 0, 0, 10, 40, -33.148, -9.814 )
+collision_layer = 5
+collision_mask = 5
 
 [node name="MeshInstance" type="MeshInstance" parent="Environment/BinAccept"]
 mesh = SubResource( 6 )
 material/0 = ExtResource( 5 )
 
+[node name="CollisionShape" type="CollisionShape" parent="Environment/BinAccept"]
+shape = SubResource( 7 )
+
 [node name="BinTrash" type="KinematicBody" parent="Environment"]
-transform = Transform( 10, 0, 0, 0, 25, 0, 0, 0, 10, 37.9743, -33.1482, 10.626 )
+transform = Transform( 10, 0, 0, 0, 25, 0, 0, 0, 10, 40, -33.148, 10.739 )
+collision_layer = 5
+collision_mask = 5
 
 [node name="MeshInstance" type="MeshInstance" parent="Environment/BinTrash"]
 mesh = SubResource( 6 )
 material/0 = ExtResource( 8 )
 
+[node name="CollisionShape" type="CollisionShape" parent="Environment/BinTrash"]
+shape = SubResource( 8 )
+
+[node name="InvisibleBackWall" type="KinematicBody" parent="Environment"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 8.06106, -21.9158 )
+collision_layer = 5
+collision_mask = 5
+
+[node name="CollisionShape" type="CollisionShape" parent="Environment/InvisibleBackWall"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0 )
+shape = SubResource( 9 )
+
+[node name="InvisibleSideLeft" type="KinematicBody" parent="Environment"]
+transform = Transform( -4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -54.6422, 8.06106, -21.9158 )
+collision_layer = 5
+collision_mask = 5
+
+[node name="CollisionShape" type="CollisionShape" parent="Environment/InvisibleSideLeft"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -30.9074, 0, 7.62939e-06 )
+shape = SubResource( 10 )
+
+[node name="InvisibleSideRight" type="KinematicBody" parent="Environment"]
+transform = Transform( -4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 51.9887, 8.06106, -21.9158 )
+collision_layer = 5
+collision_mask = 5
+
+[node name="CollisionShape" type="CollisionShape" parent="Environment/InvisibleSideRight"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -30.9074, 0, 7.62939e-06 )
+shape = SubResource( 10 )
+
 [node name="Cursor" type="Sprite3D" parent="."]
+pixel_size = 0.1
 billboard = 1
 texture = ExtResource( 6 )
 script = ExtResource( 7 )
+inspectionPoint = ExtResource( 15 )
+cursorDistance = 20.0
+handTextureOpen = ExtResource( 6 )
+handTextureClosed = ExtResource( 14 )
+handTexturePoint = ExtResource( 13 )
+handTextureClicked = ExtResource( 12 )
+
+[node name="Hotdog" parent="." instance=ExtResource( 10 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -19.2801, 4.08527, 13.0185 )
+
+[node name="Points" type="Spatial" parent="."]
+
+[node name="InspectionPoint" parent="Points" instance=ExtResource( 11 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 22.2968, -6.43064, -1.10543 )
+
+[node name="TestButton" parent="." instance=ExtResource( 18 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -28.0412, -7.50341, -15.5692 )
+
+[node name="TestButton2" parent="." instance=ExtResource( 18 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -30.4535, -7.50341, -15.5692 )
 
 [connection signal="pressed" from="Interface/Button" to="." method="OnMenuButton"]

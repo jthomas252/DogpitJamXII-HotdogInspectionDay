@@ -3,9 +3,6 @@ using System;
 
 public class BaseScene : Spatial
 {
-	private int levelProgression = 0;
-	private int playerScore = 0;
-
 	public override void _Ready()
 	{
 		// Start by setting up whatever gameplay variables might be relevant, like player score, day, rat timer, etc. 
