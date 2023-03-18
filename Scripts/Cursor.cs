@@ -1,6 +1,7 @@
 using Godot; 
 using System;
 using Godot.Collections;
+using Array = Godot.Collections.Array;
 
 /**
  * This represents the players hand for grabbing objects
@@ -9,15 +10,16 @@ using Godot.Collections;
 public class Cursor : Sprite3D
 {
     // Bitmasks for raycasting
-    private const int LAYER_PHYSICAL    = 1;
-    private const int LAYER_INTERACTIVE = 2;
-    private const int LAYER_ENVIRONMENT = 4;
-
+    private const uint LAYER_PHYSICAL    = 1;
+    private const uint LAYER_INTERACTIVE = 2;
+    private const uint LAYER_ENVIRONMENT = 4;
+    private const uint LAYER_MOUSE = 8;
+    
     [Export]
     public WorldPoint inspectionPoint;
     
     [Export]
-    public float cursorDistance = 10f;
+    public float cursorDistance = 100f;
 
     [Export] public Texture handTextureOpen;
     [Export] public Texture handTextureClosed;
@@ -27,11 +29,14 @@ public class Cursor : Sprite3D
     private Camera camera;
     private GrabableObject grabbedObject;
     private Vector3 objectHoldPoint;
+    private CursorState cursorState;
+    private Array ignoreObjects;
 
     public override void _Ready()
     {
         // Find relevant world objects
         objectHoldPoint = GetTree().CurrentScene.GetNode<WorldPoint>("Points/InspectionPoint").GlobalTranslation;
+        cursorState = CursorState.HandOpen;
     }
 
     public override void _Process(float delta)
@@ -44,76 +49,77 @@ public class Cursor : Sprite3D
         
         PhysicsDirectSpaceState spaceState = GetWorld().DirectSpaceState;
 
-        Translation = pos + (normal * cursorDistance);
-
+        if (grabbedObject != null) ignoreObjects = new Array() { grabbedObject };
+        
+        // Always update cursor position
         Dictionary hand = spaceState.IntersectRay(
             pos, 
             pos + (normal * 1000f), 
-            new Godot.Collections.Array{grabbedObject}, 
-            LAYER_PHYSICAL
+            ignoreObjects,
+            LAYER_PHYSICAL | LAYER_MOUSE
         );
-        
         if (hand.Count > 0)
         {
+            // Translation = (Vector3)hand["position"];
             objectHoldPoint = (Vector3)hand["position"];
         }
         else
         {
+            // Translation = pos + (normal * cursorDistance);
             objectHoldPoint = pos + (normal * cursorDistance);
         }
+        
+        Translation = pos + (normal * cursorDistance);
 
-        if (Input.IsKeyPressed((int)KeyList.Key8))
+        // Skip this if already grabbing an object
+        if (cursorState != CursorState.HandClosed)
         {
-            GD.Print(hand);
-        }
 
-        Dictionary interacts = spaceState.IntersectRay(pos, pos + (normal * 1000f), null, LAYER_INTERACTIVE);
-
-        // Reveal the pointing finger when over something that can be clicked
-        if (interacts.Count > 0)
-        {
-            if (interacts["collider"] is InteractableObject interactiveObject && !isGrabbing())
-            {
-                ChangeCursorState(CursorState.HandPoint);
-                GD.Print("Point");
-            }
-        }
-        else
-        {
-            ChangeCursorState(CursorState.HandOpen);
-        }
-
-        // Attempt to send a raycast only for interactable objects
-        if (Input.IsMouseButtonPressed((int)ButtonList.Left))
-        {
+            Dictionary interacts = spaceState.IntersectRay(pos, pos + (normal * 1000f), null, LAYER_INTERACTIVE);
+            // Reveal the pointing finger when over something that can be clicked
             if (interacts.Count > 0)
             {
-                // Validate the object has an InteractiveObject script 
                 if (interacts["collider"] is InteractableObject interactiveObject)
                 {
-                    interactiveObject.OnInteractedWith();
-                    ChangeCursorState(CursorState.HandClicked);
-                    GD.Print("Clicked");
+                    ChangeCursorState(CursorState.HandPoint);
                 }
-                
-                if (interacts["collider"] is GrabableObject grabbableObject)
+            }
+            else
+            {
+                ChangeCursorState(CursorState.HandOpen);
+            }
+
+            // Attempt to send a raycast only for interactable objects
+            if (Input.IsMouseButtonPressed((int)ButtonList.Left))
+            {
+                if (interacts.Count > 0)
                 {
-                    grabbedObject = grabbableObject;
-                    grabbableObject.Grab();
-                    ChangeCursorState(CursorState.HandClosed);
-                    GD.Print("Grabbed");
+                    // Validate the object has an InteractiveObject script 
+                    if (interacts["collider"] is InteractableObject interactiveObject)
+                    {
+                        interactiveObject.OnInteractedWith();
+                        ChangeCursorState(CursorState.HandClicked);
+                    }
+
+                    if (interacts["collider"] is GrabableObject grabbableObject)
+                    {
+                        grabbedObject = grabbableObject;
+                        grabbableObject.Grab();
+                        ChangeCursorState(CursorState.HandClosed);
+                    }
                 }
-            } 
+            }
         }
         
-        if (Input.IsMouseButtonPressed((int)ButtonList.Right))
+        // Holding onto an object
+        if (isGrabbing() && Input.IsMouseButtonPressed((int)ButtonList.Right))
         {
             // Drop the grabbed object, release the reference
-            grabbedObject = null; 
+            grabbedObject.Drop();
             ChangeCursorState(CursorState.HandOpen);
-            GD.Print("Dropped");
-        }
-
+            grabbedObject = null;
+        };
+        
         grabbedObject?.UpdateTargetPosition(objectHoldPoint);
     }
 
@@ -132,6 +138,7 @@ public class Cursor : Sprite3D
 
     private void ChangeCursorState(CursorState state)
     {
+        cursorState = state;
         switch (state)
         {
             case CursorState.HandClicked:

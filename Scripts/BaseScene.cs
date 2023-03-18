@@ -16,6 +16,11 @@ public class BaseScene : Spatial
 		
 	}
 
+	public void Hover()
+	{
+		
+	}
+
 	// Pause the game from progressing while the menu is active
 	public void OnMenuButton()
 	{

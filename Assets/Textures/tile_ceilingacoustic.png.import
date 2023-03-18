@@ -2,8 +2,8 @@
 
 importer="texture"
 type="StreamTexture"
-path.s3tc="res://.import/icon.png-487276ed1e3a0c39cad0279d744ee560.s3tc.stex"
-path.etc="res://.import/icon.png-487276ed1e3a0c39cad0279d744ee560.etc.stex"
+path.s3tc="res://.import/tile_ceilingacoustic.png-05b6d1f0d63e6525953c3418e7082754.s3tc.stex"
+path.etc="res://.import/tile_ceilingacoustic.png-05b6d1f0d63e6525953c3418e7082754.etc.stex"
 metadata={
 "imported_formats": [ "s3tc", "etc" ],
 "vram_texture": true
@@ -11,8 +11,8 @@ metadata={
 
 [deps]
 
-source_file="res://icon.png"
-dest_files=[ "res://.import/icon.png-487276ed1e3a0c39cad0279d744ee560.s3tc.stex", "res://.import/icon.png-487276ed1e3a0c39cad0279d744ee560.etc.stex" ]
+source_file="res://Assets/Textures/tile_ceilingacoustic.png"
+dest_files=[ "res://.import/tile_ceilingacoustic.png-05b6d1f0d63e6525953c3418e7082754.s3tc.stex", "res://.import/tile_ceilingacoustic.png-05b6d1f0d63e6525953c3418e7082754.etc.stex" ]
 
 [params]
 

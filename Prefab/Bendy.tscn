@@ -1,0 +1,7 @@
+[gd_scene load_steps=2 format=2]
+
+[ext_resource path="res://TestMoreBones.tscn" type="PackedScene" id=1]
+
+[node name="hotdog_bendy"]
+
+[node name="KinematicBody" parent="." index="1" instance=ExtResource( 1 )]
