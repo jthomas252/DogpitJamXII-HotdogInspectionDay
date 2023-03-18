@@ -3,15 +3,12 @@ using System;
 
 public class InteractableObject : KinematicBody
 {
-    private ShaderMaterial material;
-
+    [Signal]
+    public delegate void Interacted();
+    
     public override void _Ready()
     {
-        GD.Print("Object ready");
         Connect("mouse_entered", this, "OnMouseEntered");
-
-        MeshInstance mesh = GetNode<MeshInstance>("MeshInstance");
-        mesh.GetActiveMaterial(0);
     }
 
     public virtual void OnMouseEntered()
@@ -21,6 +18,7 @@ public class InteractableObject : KinematicBody
 
     public virtual void OnInteractedWith()
     {
-        
+        GD.Print($"Button was interacted with of ${GetPath().ToString()}");
+        EmitSignal(nameof(Interacted));
     }
 }
