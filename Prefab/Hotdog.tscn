@@ -107,10 +107,10 @@ transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -1.69747 )
 shape = SubResource( 4 )
 
 [node name="BottomBone" type="PhysicalBone" parent="HotdogBody/Skeleton"]
-transform = Transform( -1, 1.50996e-07, 6.60024e-15, 0, -4.37114e-08, 1, 1.50996e-07, 1, 4.37114e-08, 0, -4.5, 1.13687e-13 )
+transform = Transform( -1, 1.50996e-07, 6.60024e-15, 0, -4.37114e-08, 1, 1.50996e-07, 1, 4.37114e-08, 0, -4.5, 1.56319e-13 )
 joint_type = 3
-joint_offset = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -1.50205e-20, -6.55672e-08, 1.5 )
-body_offset = Transform( -1, 1.50996e-07, 6.60024e-15, 0, -4.37114e-08, 1, 1.50996e-07, 1, 4.37114e-08, 0, -1.5, 9.9476e-14 )
+joint_offset = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -2.14578e-20, -6.55672e-08, 1.5 )
+body_offset = Transform( -1, 1.50996e-07, 6.60024e-15, 0, -4.37114e-08, 1, 1.50996e-07, 1, 4.37114e-08, 0, -1.5, 1.42109e-13 )
 mass = 79.43
 weight = 778.414
 friction = 0.63

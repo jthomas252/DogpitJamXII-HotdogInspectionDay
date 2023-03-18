@@ -4,7 +4,7 @@ using System;
 public class GrabableObject : KinematicBody
 {
     private readonly float MOVE_DISTANCE_THRESHOLD = 1f;
-    private readonly float MOVEMENT_DISTANCE_SCALE = 30.25f;
+    private readonly float MOVEMENT_DISTANCE_SCALE = 10f;
 
     private bool isGrabbed = false;
     private Vector3 targetPosition;
@@ -12,6 +12,8 @@ public class GrabableObject : KinematicBody
 
     private Skeleton skeleton;
     private PhysicalBone bone;
+
+    private Vector2 mouseOffset = new Vector2(0f,0f);
     
     public override void _Ready()
     {
@@ -38,9 +40,19 @@ public class GrabableObject : KinematicBody
         isGrabbed = false; 
     }
 
+    public override void _UnhandledInput(InputEvent @event)
+    {
+        if (@event is InputEventMouse inputEventMouse)
+        {
+            if (inputEventMouse.ButtonMask == (int)ButtonList.Left)
+            {
+                mouseOffset = inputEventMouse.Position; 
+            }
+        }
+    }
+
     public override void _PhysicsProcess(float delta)
     {
-        // Grab 
         if (isGrabbed)
         {
             // Move and slide, if distance is within range
@@ -48,24 +60,33 @@ public class GrabableObject : KinematicBody
             if (targetDistance > MOVE_DISTANCE_THRESHOLD)
             {
                 targetDirection = targetPosition - GlobalTranslation;
-                Rotation = targetDirection;
-                
-                if (Input.IsKeyPressed((int)KeyList.Shift))
-                {
-                    MoveAndSlide(Vector3.Zero, targetDirection);
-                }
-                else
-                {
-                    MoveAndSlide(targetDirection * MOVEMENT_DISTANCE_SCALE, targetDirection);
-                }
+                MoveAndSlide(targetDirection * MOVEMENT_DISTANCE_SCALE, Rotation);
             }
             else
             {
                 targetDirection = targetPosition - GlobalTranslation;
                 MoveAndSlide(Vector3.Zero, targetDirection);
             }
+            
+            // Rotate the object with shift pressed
+            if (Input.IsKeyPressed((int)KeyList.Shift))
+            {
+                Vector2 mousePos = GetViewport().GetMousePosition() - mouseOffset;
+                mouseOffset = GetViewport().GetMousePosition();
+
+                RotateX(mousePos.x * 0.25f * delta);
+                if (Input.IsKeyPressed((int)KeyList.Control))
+                {
+                    RotateY(mousePos.y * 0.25f * delta);
+                }
+                else
+                {
+                    RotateZ(mousePos.y * 0.25f * delta);
+                }
+            }
+            
+            
         }
-        // Release
         else
         {
             MoveAndSlide(Vector3.Zero, Vector3.Up);

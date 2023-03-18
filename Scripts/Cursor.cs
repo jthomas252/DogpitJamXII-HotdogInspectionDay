@@ -14,9 +14,8 @@ public class Cursor : Sprite3D
     private const uint LAYER_INTERACTIVE = 2;
     private const uint LAYER_ENVIRONMENT = 4;
     private const uint LAYER_MOUSE = 8;
-    
-    [Export]
-    public WorldPoint inspectionPoint;
+
+    private WorldPoint inspectPoint;
     
     [Export]
     public float cursorDistance = 100f;
@@ -35,7 +34,8 @@ public class Cursor : Sprite3D
     public override void _Ready()
     {
         // Find relevant world objects
-        objectHoldPoint = GetTree().CurrentScene.GetNode<WorldPoint>("Points/InspectionPoint").GlobalTranslation;
+        inspectPoint = GetTree().CurrentScene.GetNode<WorldPoint>("Points/InspectionPoint");
+        objectHoldPoint = Vector3.Zero;
         cursorState = CursorState.HandOpen;
     }
 
@@ -119,8 +119,15 @@ public class Cursor : Sprite3D
             ChangeCursorState(CursorState.HandOpen);
             grabbedObject = null;
         };
-        
-        grabbedObject?.UpdateTargetPosition(objectHoldPoint);
+
+        if (Input.IsKeyPressed((int)KeyList.Shift))
+        {
+            grabbedObject?.UpdateTargetPosition(inspectPoint.GlobalTranslation);
+        }
+        else
+        {
+            grabbedObject?.UpdateTargetPosition(objectHoldPoint);
+        }
     }
 
     public bool isGrabbing()
