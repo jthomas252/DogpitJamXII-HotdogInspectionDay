@@ -17,10 +17,10 @@ public class TriggerZone : Area
     public void OnChildEntered(Node node)
     {
         // See if this contains a scannerInfo property
-        if (node is GrabableObject grabableObject)
+        if (node is GrabbableObject grabbableObject)
         {
             GD.Print("This has interactive properties.");
-            ComputerScreen.UpdateBodyText($"${grabableObject.GlobalTranslation.ToString()}");
+            ComputerScreen.UpdateBodyText($"${grabbableObject.GlobalTranslation.ToString()}");
         }
         else
         {

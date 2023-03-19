@@ -3,6 +3,16 @@ using System;
 
 public class BaseScene : Spatial
 {
+	public enum PlayerState
+	{
+		Normal,
+		Grabbing,
+		Inspecting
+	}
+	
+	// TODO: Protect this with defined Get/Set methods if needed? 
+	public static PlayerState currentState = PlayerState.Normal;
+	
 	public override void _Ready()
 	{
 		// Start by setting up whatever gameplay variables might be relevant, like player score, day, rat timer, etc. 

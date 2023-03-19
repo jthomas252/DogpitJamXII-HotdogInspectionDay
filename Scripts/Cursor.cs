@@ -9,7 +9,7 @@ using Array = Godot.Collections.Array;
  */
 public class Cursor : Sprite3D
 {
-    // Bitmasks for raycasting
+    // Bitmasks for checks
     private const uint LAYER_PHYSICAL    = 1;
     private const uint LAYER_INTERACTIVE = 2;
     private const uint LAYER_ENVIRONMENT = 4;
@@ -17,46 +17,93 @@ public class Cursor : Sprite3D
 
     private Spatial inspectPoint;
     
-    [Export]
-    public float cursorDistance = 100f;
-
+    [Export] public float cursorDistance = 100f;
+    [Export] public float holdOffset = 5f;
+    
     [Export] public Texture handTextureOpen;
     [Export] public Texture handTextureClosed;
     [Export] public Texture handTexturePoint;
     [Export] public Texture handTextureClicked;
 
     private Camera camera;
-    private GrabableObject grabbedObject;
+    private Node hoverObject;
+    private GrabbableObject grabbedObject;
     private Vector3 objectHoldPoint;
-    private CursorState cursorState;
     private Array ignoreObjects;
+    private PhysicsDirectSpaceState spaceState;
     
-    public static bool inInspectionMode = false; 
-
     public override void _Ready()
     {
         // Find relevant world objects
         inspectPoint = GetTree().CurrentScene.GetNode<Spatial>("Points/InspectPoint");
         objectHoldPoint = Vector3.Zero;
-        cursorState = CursorState.HandOpen;
+        spaceState = GetWorld().DirectSpaceState;
     }
 
+    private void AttemptInteraction()
+    {
+        if (hoverObject != null)
+        {
+            // Validate the object has an InteractiveObject script 
+            if (hoverObject is InteractableObject interactiveObject)
+            {
+                interactiveObject.OnInteractedWith();
+                ChangeCursorState(CursorState.HandClicked);
+            }
+
+            if (hoverObject is GrabbableObject grabbableObject)
+            {
+                grabbedObject = grabbableObject;
+                ignoreObjects = new Array() { grabbedObject };
+                grabbableObject.Grab();
+                ChangeCursorState(CursorState.HandClosed);
+            }
+        }
+    }
+
+    private void DropObject()
+    {
+        // Holding onto an object
+        if (isGrabbing() && Input.IsMouseButtonPressed((int)ButtonList.Right))
+        {
+            // Drop the grabbed object, release the reference
+            grabbedObject.Drop();
+            ChangeCursorState(CursorState.HandOpen);
+            grabbedObject = null;
+        }    
+    }
+    
     public override void _Input(InputEvent @event)
     {
         if (@event is InputEventMouse eventMouse)
         {
-            if (eventMouse.IsPressed() && eventMouse.ButtonMask == (int)ButtonList.Left)
+            if (eventMouse.IsPressed())
             {
-                // Attempt to send a one-off to the relevant interact / grab object
-                GD.Print("One click");
+                switch (eventMouse.ButtonMask)
+                {
+                    case (int)ButtonList.Left:
+                        AttemptInteraction();
+                        break;
+                    
+                    case (int)ButtonList.Right:
+                        DropObject();
+                        break;
+                }
             }
         }
         
         if (@event is InputEventKey eventKey)
         {
-            if (eventKey.IsPressed() && eventKey.Scancode == (int)KeyList.Shift)
+            if (eventKey.IsPressed())
             {
-                inInspectionMode = !inInspectionMode;
+                switch (eventKey.Scancode)
+                {
+                    case (int)KeyList.Shift:
+                        BaseScene.currentState = BaseScene.currentState == BaseScene.PlayerState.Inspecting ? 
+                            (isGrabbing() ? BaseScene.PlayerState.Grabbing : BaseScene.PlayerState.Normal) : 
+                            BaseScene.PlayerState.Inspecting;
+                        break;
+                }
             }
         }        
     }
@@ -68,12 +115,7 @@ public class Cursor : Sprite3D
         // Attempt to match the cursor position in world 
         Vector3 pos = camera.ProjectRayOrigin(GetViewport().GetMousePosition());
         Vector3 normal = camera.ProjectRayNormal(GetViewport().GetMousePosition());
-        
-        PhysicsDirectSpaceState spaceState = GetWorld().DirectSpaceState;
 
-        // TODO: Regenerate this when picking up a new object
-        if (grabbedObject != null) ignoreObjects = new Array() { grabbedObject };
-        
         // Always update cursor position
         Dictionary hand = spaceState.IntersectRay(
             pos, 
@@ -81,27 +123,30 @@ public class Cursor : Sprite3D
             ignoreObjects,
             LAYER_PHYSICAL | LAYER_MOUSE
         );
+        
         if (hand.Count > 0)
         {
-            // Translation = (Vector3)hand["position"];
-            objectHoldPoint = (Vector3)hand["position"];
+            Vector3 hitPoint = (Vector3)hand["position"];
+            float distance = pos.DistanceTo(hitPoint);
+            objectHoldPoint = pos + (normal * (distance - holdOffset));
         }
         else
         {
-            // Translation = pos + (normal * cursorDistance);
             objectHoldPoint = pos + (normal * cursorDistance);
         }
         
         Translation = pos + (normal * cursorDistance);
 
-        // Skip this if already grabbing an object
-        if (cursorState != CursorState.HandClosed)
+        // Check for object interactions
+        if (!isGrabbing())
         {
-
             Dictionary interacts = spaceState.IntersectRay(pos, pos + (normal * 1000f), null, LAYER_INTERACTIVE);
+            
             // Reveal the pointing finger when over something that can be clicked
             if (interacts.Count > 0)
             {
+                hoverObject = (Node)interacts["collider"];
+                
                 if (interacts["collider"] is InteractableObject interactiveObject)
                 {
                     ChangeCursorState(CursorState.HandPoint);
@@ -109,47 +154,21 @@ public class Cursor : Sprite3D
             }
             else
             {
+                hoverObject = null;
                 ChangeCursorState(CursorState.HandOpen);
             }
-
-            // Attempt to send a raycast only for interactable objects
-            if (Input.IsMouseButtonPressed((int)ButtonList.Left))
-            {
-                if (interacts.Count > 0)
-                {
-                    // Validate the object has an InteractiveObject script 
-                    if (interacts["collider"] is InteractableObject interactiveObject)
-                    {
-                        interactiveObject.OnInteractedWith();
-                        ChangeCursorState(CursorState.HandClicked);
-                    }
-
-                    if (interacts["collider"] is GrabableObject grabbableObject)
-                    {
-                        grabbedObject = grabbableObject;
-                        grabbableObject.Grab();
-                        ChangeCursorState(CursorState.HandClosed);
-                    }
-                }
-            }
         }
-        
-        // Holding onto an object
-        if (isGrabbing() && Input.IsMouseButtonPressed((int)ButtonList.Right))
-        {
-            // Drop the grabbed object, release the reference
-            grabbedObject.Drop();
-            ChangeCursorState(CursorState.HandOpen);
-            grabbedObject = null;
-        };
-
-        if (inInspectionMode)
-        {
-            grabbedObject?.UpdateTargetPosition(inspectPoint.GlobalTranslation);
-        }
+        // Update the position of the grabbed object
         else
         {
-            grabbedObject?.UpdateTargetPosition(objectHoldPoint);
+            if (BaseScene.currentState == BaseScene.PlayerState.Inspecting)
+            {
+                grabbedObject.UpdateTargetPosition(inspectPoint.GlobalTranslation);
+            }
+            else
+            {
+                grabbedObject.UpdateTargetPosition(objectHoldPoint);
+            }
         }
     }
 
@@ -168,7 +187,6 @@ public class Cursor : Sprite3D
 
     private void ChangeCursorState(CursorState state)
     {
-        cursorState = state;
         switch (state)
         {
             case CursorState.HandClicked:

@@ -1,0 +1,14 @@
+# Team Credits
+- Modeling: Obsurveyor
+- Sound: 917
+- Programming: Nanomachine Son / Jonathan Thomas
+
+## Assets used
+- Seamless textures via BMacZero (Open Game Art)
+    - https://opengameart.org/content/seamless-brickconcrete-textures-2
+    - https://opengameart.org/content/seamless-assorted-textures-2
+- Rat models via Over Action Game Studio (Open Game Art) 
+    - https://opengameart.org/content/rat-pack
+- Phoenix BIOS font
+    - https://int10h.org/oldschool-pc-fonts/fontlist/font?phoenix_bios#-
+- DecalCo for model decals
