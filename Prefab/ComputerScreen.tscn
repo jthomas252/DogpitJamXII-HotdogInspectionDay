@@ -1,0 +1,44 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://Scripts/ComputerScreen.cs" type="Script" id=1]
+[ext_resource path="res://Assets/Fonts/DosFont.tres" type="DynamicFont" id=2]
+
+[node name="Screen" type="Control"]
+margin_right = 320.0
+margin_bottom = 240.0
+script = ExtResource( 1 )
+
+[node name="HeaderRect" type="ColorRect" parent="."]
+margin_right = 320.0
+margin_bottom = 20.0
+
+[node name="Text" type="Label" parent="HeaderRect"]
+modulate = Color( 0, 0, 1, 1 )
+margin_left = 3.0
+margin_top = 3.0
+margin_right = 320.0
+margin_bottom = 240.0
+custom_fonts/font = ExtResource( 2 )
+text = "TEST TEST TEST asdf"
+
+[node name="BodyRect" type="ColorRect" parent="."]
+margin_top = 20.0
+margin_right = 320.0
+margin_bottom = 240.0
+color = Color( 0.12549, 0, 1, 1 )
+
+[node name="TopText" type="Label" parent="BodyRect"]
+margin_left = 3.0
+margin_top = 3.0
+margin_right = 540.0
+margin_bottom = 240.0
+custom_fonts/font = ExtResource( 2 )
+text = "NO SIGNAL"
+
+[node name="BottomText" type="Label" parent="BodyRect"]
+margin_left = 3.0
+margin_top = 3.0
+margin_right = 320.0
+margin_bottom = 240.0
+custom_fonts/font = ExtResource( 2 )
+valign = 2
