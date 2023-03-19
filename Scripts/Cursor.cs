@@ -15,7 +15,7 @@ public class Cursor : Sprite3D
     private const uint LAYER_ENVIRONMENT = 4;
     private const uint LAYER_MOUSE = 8;
 
-    private WorldPoint inspectPoint;
+    private Spatial inspectPoint;
     
     [Export]
     public float cursorDistance = 100f;
@@ -34,7 +34,7 @@ public class Cursor : Sprite3D
     public override void _Ready()
     {
         // Find relevant world objects
-        inspectPoint = GetTree().CurrentScene.GetNode<WorldPoint>("Points/InspectionPoint");
+        inspectPoint = GetTree().CurrentScene.GetNode<Spatial>("Points/InspectPoint");
         objectHoldPoint = Vector3.Zero;
         cursorState = CursorState.HandOpen;
     }

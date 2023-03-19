@@ -18,6 +18,7 @@ config/icon="res://Assets/Textures/icon.png"
 
 window/size/width=1280
 window/size/height=720
+window/stretch/mode="2d"
 
 [editor_plugins]
 
@@ -34,15 +35,16 @@ project/assembly_name="Dogpit Jam Xii"
 [physics]
 
 common/enable_pause_aware_picking=true
+3d/default_gravity=15.0
 
 [rendering]
 
-quality/driver/fallback_to_gles2=true
 vram_compression/import_etc=true
 vram_compression/import_etc2=false
-quality/directional_shadow/size=8192
+quality/directional_shadow/size=2048
+quality/shadow_atlas/size=2048
 quality/filters/anisotropic_filter_level=16
-quality/filters/msaa=2
-quality/filters/use_fxaa=true
-quality/filters/use_debanding=true
+quality/subsurface_scattering/quality=2
+quality/depth/hdr=false
 environment/default_environment="res://Prefab/default_env.tres"
+quality/dynamic_fonts/use_oversampling=false

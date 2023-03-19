@@ -38,6 +38,8 @@ public class GrabableObject : KinematicBody
     {
         skeleton.PhysicalBonesStartSimulation();
         isGrabbed = false; 
+        
+        GD.Print(skeleton.ToString());
     }
 
     public override void _UnhandledInput(InputEvent @event)

@@ -9,7 +9,8 @@ public class ComputerScreen : Control
     protected Label headerText;
 
     private ColorRect bodyRect;
-    private Label bodyText;
+    private Label bodyTopText;
+    private Label bodyBottomText;
 
     public override void _Ready()
     {
@@ -19,7 +20,8 @@ public class ComputerScreen : Control
         headerText = headerRect.GetNode<Label>("Text");
         
         bodyRect = GetNode<ColorRect>("BodyRect");
-        bodyText = bodyRect.GetNode<Label>("Text");        
+        bodyTopText = bodyRect.GetNode<Label>("TopText");        
+        bodyBottomText = bodyRect.GetNode<Label>("BottomText");        
     }
 
     public static void UpdateHeaderText(string newText)
@@ -31,6 +33,12 @@ public class ComputerScreen : Control
     public static void UpdateBodyText(string newText)
     {
         if (_instance != null)
-            _instance.bodyText.Text = newText;
-    }    
+            _instance.bodyTopText.Text = newText;
+    }
+
+    public static void UpdateBodyBottomText(string newText)
+    {
+        if (_instance != null)
+            _instance.bodyBottomText.Text = newText;
+    }
 }
