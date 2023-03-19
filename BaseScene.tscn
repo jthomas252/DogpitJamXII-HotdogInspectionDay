@@ -1,68 +1,36 @@
-[gd_scene load_steps=36 format=2]
+[gd_scene load_steps=22 format=2]
 
 [ext_resource path="res://default_env.tres" type="Environment" id=1]
 [ext_resource path="res://Scripts/BaseScene.cs" type="Script" id=2]
-[ext_resource path="res://Assets/Materials/desk.tres" type="Material" id=3]
-[ext_resource path="res://Assets/Materials/environment_basic.tres" type="Material" id=4]
+[ext_resource path="res://Assets/Models/desk.obj" type="ArrayMesh" id=3]
+[ext_resource path="res://ComputerScreenViewport.tres" type="Material" id=4]
 [ext_resource path="res://Prefab/RedButton.tscn" type="PackedScene" id=5]
 [ext_resource path="res://Assets/Textures/cursor_empty.png" type="Texture" id=6]
 [ext_resource path="res://Scripts/Cursor.cs" type="Script" id=7]
-[ext_resource path="res://Assets/Materials/bin_trash.tres" type="Material" id=8]
-[ext_resource path="res://Scripts/Spawner.cs" type="Script" id=9]
 [ext_resource path="res://Prefab/Hotdog.tscn" type="PackedScene" id=10]
 [ext_resource path="res://Prefab/WorldPoint.tscn" type="PackedScene" id=11]
 [ext_resource path="res://Assets/Textures/cursor_clicked.png" type="Texture" id=12]
 [ext_resource path="res://Assets/Textures/cursor_pointer.png" type="Texture" id=13]
 [ext_resource path="res://Assets/Textures/cursor_hold.png" type="Texture" id=14]
-[ext_resource path="res://Assets/Models/desk/desk.obj" type="ArrayMesh" id=15]
-[ext_resource path="res://Assets/Materials/environment_ceiling.tres" type="Material" id=17]
 [ext_resource path="res://Prefab/GreenButton.tscn" type="PackedScene" id=18]
 [ext_resource path="res://Prefab/IconButton.tscn" type="PackedScene" id=19]
 [ext_resource path="res://Scripts/TriggerZone.cs" type="Script" id=20]
 [ext_resource path="res://Scripts/ComputerScreen.cs" type="Script" id=22]
 
-[sub_resource type="BoxShape" id=5]
-
-[sub_resource type="CubeMesh" id=6]
-
-[sub_resource type="SpatialMaterial" id=22]
-albedo_color = Color( 0.501961, 0.501961, 0.501961, 1 )
-
-[sub_resource type="BoxShape" id=7]
-extents = Vector3( 5, 10, 20 )
-
-[sub_resource type="BoxShape" id=9]
-extents = Vector3( 60, 60, 1 )
-
-[sub_resource type="BoxShape" id=10]
-extents = Vector3( 30, 60, 1 )
-
 [sub_resource type="PlaneMesh" id=14]
-
-[sub_resource type="ViewportTexture" id=15]
-flags = 13
-viewport_path = NodePath("Viewport")
-
-[sub_resource type="SpatialMaterial" id=16]
-resource_local_to_scene = true
-flags_unshaded = true
-flags_vertex_lighting = true
-albedo_texture = SubResource( 15 )
-
-[sub_resource type="BoxShape" id=11]
-extents = Vector3( 50, 1, 50 )
-
-[sub_resource type="CylinderMesh" id=13]
 
 [sub_resource type="CapsuleMesh" id=21]
 
-[sub_resource type="BoxShape" id=19]
-
 [sub_resource type="DynamicFontData" id=17]
+antialiased = false
 font_path = "res://Assets/Fonts/terminal-16.ttf"
 
 [sub_resource type="DynamicFont" id=18]
+size = 80
 font_data = SubResource( 17 )
+
+[sub_resource type="ConcavePolygonShape" id=22]
+data = PoolVector3Array( -31.2276, -1.0524, 39.9415, -31.2276, -1.3326, 39.9415, -34.2197, 1.9397, 39.9415, -34.2197, 1.9397, 39.9415, -31.2276, -1.3326, 39.9415, -35.3929, 1.9397, 39.9415, -35.3929, 1.9397, 39.9415, -31.2276, -1.3326, 39.9415, -35.3929, -1.3326, 39.9415, -36, 11.3323, -54.3552, -31.6716, 11.3323, -54.3552, -36, 11.3323, 39.3344, -36, 11.3323, 39.3344, -31.6716, 11.3323, -54.3552, -31.6716, 11.3323, 39.3344, 34.3845, -1.9397, -54.3552, -31.2276, -1.9397, -54.3552, 34.3845, -1.9397, 39.3344, 34.3845, -1.9397, 39.3344, -31.2276, -1.9397, -54.3552, -31.2276, -1.9397, 39.3344, -34.2197, 1.9397, 39.9415, -35.3929, 1.9397, 39.9415, -31.782, 4.3774, 39.9415, -31.782, 4.3774, 39.9415, -35.3929, 1.9397, 39.9415, -31.784, 10.5862, 39.9415, -31.784, 10.5862, 39.9415, -35.3929, 1.9397, 39.9415, -31.923, 10.7252, 39.9415, -31.923, 10.7252, 39.9415, -35.3929, 1.9397, 39.9415, -35.3929, 10.7252, 39.9415, -34.2197, 1.9397, -54.9623, -31.782, 4.3774, -54.9623, -35.3929, 1.9397, -54.9623, -35.3929, 1.9397, -54.9623, -31.782, 4.3774, -54.9623, -35.3929, 10.7252, -54.9623, -35.3929, 10.7252, -54.9623, -31.782, 4.3774, -54.9623, -31.923, 10.7252, -54.9623, -31.923, 10.7252, -54.9623, -31.782, 4.3774, -54.9623, -31.784, 10.5862, -54.9623, -36, 1.9397, 39.3344, -36, -1.9397, 39.3344, -36, 1.9397, -54.3552, -36, 1.9397, -54.3552, -36, -1.9397, 39.3344, -36, -1.9397, -54.3552, 35.877, -0.9424, -54.3552, 35.877, -0.9424, 39.3344, 36, -0.3242, -54.3552, 36, -0.3242, -54.3552, 35.877, -0.9424, 39.3344, 36, -0.3242, 39.3344, -29.3805, 2.1675, 39.3344, -29.3805, 2.1675, -54.3552, -28.2355, 1.9397, 39.3344, -28.2355, 1.9397, 39.3344, -29.3805, 2.1675, -54.3552, -28.2355, 1.9397, -54.3552, -31.6342, 3.6435, -54.9623, -31.782, 4.3774, -54.9623, -30.7889, 2.3784, -54.9623, -30.7889, 2.3784, -54.9623, -31.782, 4.3774, -54.9623, -29.5238, 1.533, -54.9623, -29.5238, 1.533, -54.9623, -31.782, 4.3774, -54.9623, -28.7899, 1.3853, -54.9623, -28.7899, 1.3853, -54.9623, -31.782, 4.3774, -54.9623, -31.2276, -1.0524, -54.9623, -31.2276, -1.0524, -54.9623, -31.782, 4.3774, -54.9623, -34.2197, 1.9397, -54.9623, -36, 1.9397, 39.3344, -36, 1.9397, -54.3552, -36, 11.3323, 39.3344, -36, 11.3323, 39.3344, -36, 1.9397, -54.3552, -36, 11.3323, -54.3552, -31.2276, -1.0524, -54.9623, -31.2276, -1.3326, -54.9623, -28.7899, 1.3853, -54.9623, -28.7899, 1.3853, -54.9623, -31.2276, -1.3326, -54.9623, 34.07, 1.3833, -54.9623, 34.07, 1.3833, -54.9623, -31.2276, -1.3326, -54.9623, 34.7659, 1.2449, -54.9623, 34.7659, 1.2449, -54.9623, -31.2276, -1.3326, -54.9623, 35.0892, 1.0289, -54.9623, 35.0892, 1.0289, -54.9623, -31.2276, -1.3326, -54.9623, 35.3052, 0.7056, -54.9623, 35.3052, 0.7056, -54.9623, -31.2276, -1.3326, -54.9623, 35.3929, 0.2644, -54.9623, 35.3929, 0.2644, -54.9623, -31.2276, -1.3326, -54.9623, 35.3929, -0.2644, -54.9623, 35.3929, -0.2644, -54.9623, -31.2276, -1.3326, -54.9623, 35.3052, -0.7056, -54.9623, 35.3052, -0.7056, -54.9623, -31.2276, -1.3326, -54.9623, 35.0892, -1.0289, -54.9623, 35.0892, -1.0289, -54.9623, -31.2276, -1.3326, -54.9623, 34.7659, -1.2449, -54.9623, 34.7659, -1.2449, -54.9623, -31.2276, -1.3326, -54.9623, 34.3247, -1.3326, -54.9623, -31.2276, 4.9318, 39.3344, -31.2276, 4.9318, -54.3552, -30.9998, 3.7868, 39.3344, -30.9998, 3.7868, 39.3344, -31.2276, 4.9318, -54.3552, -30.9998, 3.7868, -54.3552, 35.877, 0.9424, 39.3344, 35.877, 0.9424, -54.3552, 36, 0.3242, 39.3344, 36, 0.3242, 39.3344, 35.877, 0.9424, -54.3552, 36, 0.3242, -54.3552, -31.2276, 4.9318, -54.3552, -31.2276, 4.9318, 39.3344, -31.2276, 10.8883, -54.3552, -31.2276, 10.8883, -54.3552, -31.2276, 4.9318, 39.3344, -31.2276, 10.8883, 39.3344, -30.3512, 2.8161, 39.3344, -30.3512, 2.8161, -54.3552, -29.3805, 2.1675, 39.3344, -29.3805, 2.1675, 39.3344, -30.3512, 2.8161, -54.3552, -29.3805, 2.1675, -54.3552, -29.5238, 1.533, 39.9415, -28.7899, 1.3853, 39.9415, -30.7889, 2.3784, 39.9415, -30.7889, 2.3784, 39.9415, -28.7899, 1.3853, 39.9415, -31.6342, 3.6435, 39.9415, -31.6342, 3.6435, 39.9415, -28.7899, 1.3853, 39.9415, -31.782, 4.3774, 39.9415, -31.782, 4.3774, 39.9415, -28.7899, 1.3853, 39.9415, -34.2197, 1.9397, 39.9415, -34.2197, 1.9397, 39.9415, -28.7899, 1.3853, 39.9415, -31.2276, -1.0524, 39.9415, -28.2355, 1.9397, -54.3552, 34.3845, 1.9397, -54.3552, -28.2355, 1.9397, 39.3344, -28.2355, 1.9397, 39.3344, 34.3845, 1.9397, -54.3552, 34.3845, 1.9397, 39.3344, 34.3845, -1.9397, -54.3552, 34.3845, -1.9397, 39.3344, 35.0027, -1.8167, -54.3552, 35.0027, -1.8167, -54.3552, 34.3845, -1.9397, 39.3344, 35.0027, -1.8167, 39.3344, 35.5268, 1.4665, 39.3344, 35.5268, 1.4665, -54.3552, 35.877, 0.9424, 39.3344, 35.877, 0.9424, 39.3344, 35.5268, 1.4665, -54.3552, 35.877, 0.9424, -54.3552, 35.0027, -1.8167, -54.3552, 35.0027, -1.8167, 39.3344, 35.5268, -1.4665, -54.3552, 35.5268, -1.4665, -54.3552, 35.0027, -1.8167, 39.3344, 35.5268, -1.4665, 39.3344, 35.0027, 1.8167, 39.3344, 35.0027, 1.8167, -54.3552, 35.5268, 1.4665, 39.3344, 35.5268, 1.4665, 39.3344, 35.0027, 1.8167, -54.3552, 35.5268, 1.4665, -54.3552, 34.3845, 1.9397, 39.3344, 34.3845, 1.9397, -54.3552, 35.0027, 1.8167, 39.3344, 35.0027, 1.8167, 39.3344, 34.3845, 1.9397, -54.3552, 35.0027, 1.8167, -54.3552, -30.9998, 3.7868, 39.3344, -30.9998, 3.7868, -54.3552, -30.3512, 2.8161, 39.3344, -30.3512, 2.8161, 39.3344, -30.9998, 3.7868, -54.3552, -30.3512, 2.8161, -54.3552, 35.5268, -1.4665, -54.3552, 35.5268, -1.4665, 39.3344, 35.877, -0.9424, -54.3552, 35.877, -0.9424, -54.3552, 35.5268, -1.4665, 39.3344, 35.877, -0.9424, 39.3344, -31.6716, 11.3323, 39.3344, -31.6716, 11.3323, -54.3552, -31.2276, 10.8883, 39.3344, -31.2276, 10.8883, 39.3344, -31.6716, 11.3323, -54.3552, -31.2276, 10.8883, -54.3552, 36, 0.3242, -54.3552, 36, -0.3242, -54.3552, 36, 0.3242, 39.3344, 36, 0.3242, 39.3344, 36, -0.3242, -54.3552, 36, -0.3242, 39.3344, 34.7659, -1.2449, 39.9415, 34.3247, -1.3326, 39.9415, 35.0892, -1.0289, 39.9415, 35.0892, -1.0289, 39.9415, 34.3247, -1.3326, 39.9415, 35.3052, -0.7056, 39.9415, 35.3052, -0.7056, 39.9415, 34.3247, -1.3326, 39.9415, 35.3929, -0.2644, 39.9415, 35.3929, -0.2644, 39.9415, 34.3247, -1.3326, 39.9415, 35.3929, 0.2644, 39.9415, 35.3929, 0.2644, 39.9415, 34.3247, -1.3326, 39.9415, 35.3052, 0.7056, 39.9415, 35.3052, 0.7056, 39.9415, 34.3247, -1.3326, 39.9415, 35.0892, 1.0289, 39.9415, 35.0892, 1.0289, 39.9415, 34.3247, -1.3326, 39.9415, 34.7659, 1.2449, 39.9415, 34.7659, 1.2449, 39.9415, 34.3247, -1.3326, 39.9415, 34.07, 1.3833, 39.9415, 34.07, 1.3833, 39.9415, 34.3247, -1.3326, 39.9415, -28.7899, 1.3853, 39.9415, -28.7899, 1.3853, 39.9415, 34.3247, -1.3326, 39.9415, -31.2276, -1.0524, 39.9415, -31.2276, -1.0524, 39.9415, 34.3247, -1.3326, 39.9415, -31.2276, -1.3326, 39.9415, -35.3929, 1.9397, -54.9623, -35.3929, -1.3326, -54.9623, -34.2197, 1.9397, -54.9623, -34.2197, 1.9397, -54.9623, -35.3929, -1.3326, -54.9623, -31.2276, -1.0524, -54.9623, -31.2276, -1.0524, -54.9623, -35.3929, -1.3326, -54.9623, -31.2276, -1.3326, -54.9623, -35.3929, 1.9397, 39.9415, -35.3929, -1.3326, 39.9415, -36, 1.9397, 39.3344, -36, 1.9397, 39.3344, -35.3929, -1.3326, 39.9415, -36, -1.9397, 39.3344, -35.3929, -1.3326, -54.9623, -35.3929, 1.9397, -54.9623, -36, -1.9397, -54.3552, -36, -1.9397, -54.3552, -35.3929, 1.9397, -54.9623, -36, 1.9397, -54.3552, -36, -1.9397, -54.3552, -31.2276, -1.9397, -54.3552, -35.3929, -1.3326, -54.9623, -35.3929, -1.3326, -54.9623, -31.2276, -1.9397, -54.3552, -31.2276, -1.3326, -54.9623, 34.7659, -1.2449, 39.9415, 35.0892, -1.0289, 39.9415, 35.0027, -1.8167, 39.3344, 35.0027, -1.8167, 39.3344, 35.0892, -1.0289, 39.9415, 35.5268, -1.4665, 39.3344, -31.2276, -1.9397, 39.3344, -36, -1.9397, 39.3344, -31.2276, -1.3326, 39.9415, -31.2276, -1.3326, 39.9415, -36, -1.9397, 39.3344, -35.3929, -1.3326, 39.9415, -35.3929, 10.7252, 39.9415, -35.3929, 1.9397, 39.9415, -36, 11.3323, 39.3344, -36, 11.3323, 39.3344, -35.3929, 1.9397, 39.9415, -36, 1.9397, 39.3344, -35.3929, 1.9397, -54.9623, -35.3929, 10.7252, -54.9623, -36, 1.9397, -54.3552, -36, 1.9397, -54.3552, -35.3929, 10.7252, -54.9623, -36, 11.3323, -54.3552, -30.9998, 3.7868, -54.3552, -31.2276, 4.9318, -54.3552, -31.6342, 3.6435, -54.9623, -31.6342, 3.6435, -54.9623, -31.2276, 4.9318, -54.3552, -31.782, 4.3774, -54.9623, -30.3512, 2.8161, -54.3552, -30.9998, 3.7868, -54.3552, -30.7889, 2.3784, -54.9623, -30.7889, 2.3784, -54.9623, -30.9998, 3.7868, -54.3552, -31.6342, 3.6435, -54.9623, -29.3805, 2.1675, -54.3552, -30.3512, 2.8161, -54.3552, -29.5238, 1.533, -54.9623, -29.5238, 1.533, -54.9623, -30.3512, 2.8161, -54.3552, -30.7889, 2.3784, -54.9623, -28.2355, 1.9397, -54.3552, -29.3805, 2.1675, -54.3552, -28.7899, 1.3853, -54.9623, -28.7899, 1.3853, -54.9623, -29.3805, 2.1675, -54.3552, -29.5238, 1.533, -54.9623, -29.3805, 2.1675, 39.3344, -28.2355, 1.9397, 39.3344, -29.5238, 1.533, 39.9415, -29.5238, 1.533, 39.9415, -28.2355, 1.9397, 39.3344, -28.7899, 1.3853, 39.9415, -30.3512, 2.8161, 39.3344, -29.3805, 2.1675, 39.3344, -30.7889, 2.3784, 39.9415, -30.7889, 2.3784, 39.9415, -29.3805, 2.1675, 39.3344, -29.5238, 1.533, 39.9415, -30.9998, 3.7868, 39.3344, -30.3512, 2.8161, 39.3344, -31.6342, 3.6435, 39.9415, -31.6342, 3.6435, 39.9415, -30.3512, 2.8161, 39.3344, -30.7889, 2.3784, 39.9415, -31.2276, 4.9318, 39.3344, -30.9998, 3.7868, 39.3344, -31.782, 4.3774, 39.9415, -31.782, 4.3774, 39.9415, -30.9998, 3.7868, 39.3344, -31.6342, 3.6435, 39.9415, 34.3247, -1.3326, 39.9415, 34.7659, -1.2449, 39.9415, 34.3845, -1.9397, 39.3344, 34.3845, -1.9397, 39.3344, 34.7659, -1.2449, 39.9415, 35.0027, -1.8167, 39.3344, 34.7659, -1.2449, -54.9623, 34.3247, -1.3326, -54.9623, 35.0027, -1.8167, -54.3552, 35.0027, -1.8167, -54.3552, 34.3247, -1.3326, -54.9623, 34.3845, -1.9397, -54.3552, 34.07, 1.3833, -54.9623, 34.7659, 1.2449, -54.9623, 34.3845, 1.9397, -54.3552, 34.3845, 1.9397, -54.3552, 34.7659, 1.2449, -54.9623, 35.0027, 1.8167, -54.3552, 34.7659, 1.2449, 39.9415, 34.07, 1.3833, 39.9415, 35.0027, 1.8167, 39.3344, 35.0027, 1.8167, 39.3344, 34.07, 1.3833, 39.9415, 34.3845, 1.9397, 39.3344, 34.7659, 1.2449, -54.9623, 35.0892, 1.0289, -54.9623, 35.0027, 1.8167, -54.3552, 35.0027, 1.8167, -54.3552, 35.0892, 1.0289, -54.9623, 35.5268, 1.4665, -54.3552, 35.0892, 1.0289, 39.9415, 34.7659, 1.2449, 39.9415, 35.5268, 1.4665, 39.3344, 35.5268, 1.4665, 39.3344, 34.7659, 1.2449, 39.9415, 35.0027, 1.8167, 39.3344, 35.0892, 1.0289, -54.9623, 35.3052, 0.7056, -54.9623, 35.5268, 1.4665, -54.3552, 35.5268, 1.4665, -54.3552, 35.3052, 0.7056, -54.9623, 35.877, 0.9424, -54.3552, 35.3052, 0.7056, 39.9415, 35.0892, 1.0289, 39.9415, 35.877, 0.9424, 39.3344, 35.877, 0.9424, 39.3344, 35.0892, 1.0289, 39.9415, 35.5268, 1.4665, 39.3344, 35.3052, 0.7056, -54.9623, 35.3929, 0.2644, -54.9623, 35.877, 0.9424, -54.3552, 35.877, 0.9424, -54.3552, 35.3929, 0.2644, -54.9623, 36, 0.3242, -54.3552, 35.3929, 0.2644, 39.9415, 35.3052, 0.7056, 39.9415, 36, 0.3242, 39.3344, 36, 0.3242, 39.3344, 35.3052, 0.7056, 39.9415, 35.877, 0.9424, 39.3344, -28.7899, 1.3853, -54.9623, 34.07, 1.3833, -54.9623, -28.2355, 1.9397, -54.3552, -28.2355, 1.9397, -54.3552, 34.07, 1.3833, -54.9623, 34.3845, 1.9397, -54.3552, 34.07, 1.3833, 39.9415, -28.7899, 1.3853, 39.9415, 34.3845, 1.9397, 39.3344, 34.3845, 1.9397, 39.3344, -28.7899, 1.3853, 39.9415, -28.2355, 1.9397, 39.3344, 35.0892, -1.0289, -54.9623, 34.7659, -1.2449, -54.9623, 35.5268, -1.4665, -54.3552, 35.5268, -1.4665, -54.3552, 34.7659, -1.2449, -54.9623, 35.0027, -1.8167, -54.3552, 35.0892, -1.0289, 39.9415, 35.3052, -0.7056, 39.9415, 35.5268, -1.4665, 39.3344, 35.5268, -1.4665, 39.3344, 35.3052, -0.7056, 39.9415, 35.877, -0.9424, 39.3344, 35.3052, -0.7056, -54.9623, 35.0892, -1.0289, -54.9623, 35.877, -0.9424, -54.3552, 35.877, -0.9424, -54.3552, 35.0892, -1.0289, -54.9623, 35.5268, -1.4665, -54.3552, 35.3052, -0.7056, 39.9415, 35.3929, -0.2644, 39.9415, 35.877, -0.9424, 39.3344, 35.877, -0.9424, 39.3344, 35.3929, -0.2644, 39.9415, 36, -0.3242, 39.3344, 35.3929, -0.2644, -54.9623, 35.3052, -0.7056, -54.9623, 36, -0.3242, -54.3552, 36, -0.3242, -54.3552, 35.3052, -0.7056, -54.9623, 35.877, -0.9424, -54.3552, 35.3929, 0.2644, -54.9623, 35.3929, -0.2644, -54.9623, 36, 0.3242, -54.3552, 36, 0.3242, -54.3552, 35.3929, -0.2644, -54.9623, 36, -0.3242, -54.3552, 35.3929, -0.2644, 39.9415, 35.3929, 0.2644, 39.9415, 36, -0.3242, 39.3344, 36, -0.3242, 39.3344, 35.3929, 0.2644, 39.9415, 36, 0.3242, 39.3344, 34.3247, -1.3326, -54.9623, -31.2276, -1.3326, -54.9623, 34.3845, -1.9397, -54.3552, 34.3845, -1.9397, -54.3552, -31.2276, -1.3326, -54.9623, -31.2276, -1.9397, -54.3552, -31.2276, -1.3326, 39.9415, 34.3247, -1.3326, 39.9415, -31.2276, -1.9397, 39.3344, -31.2276, -1.9397, 39.3344, 34.3247, -1.3326, 39.9415, 34.3845, -1.9397, 39.3344, -31.923, 10.7252, -54.9623, -31.784, 10.5862, -54.9623, -31.6716, 11.3323, -54.3552, -31.6716, 11.3323, -54.3552, -31.784, 10.5862, -54.9623, -31.2276, 10.8883, -54.3552, -31.784, 10.5862, 39.9415, -31.923, 10.7252, 39.9415, -31.2276, 10.8883, 39.3344, -31.2276, 10.8883, 39.3344, -31.923, 10.7252, 39.9415, -31.6716, 11.3323, 39.3344, -31.2276, 10.8883, 39.3344, -31.2276, 4.9318, 39.3344, -31.784, 10.5862, 39.9415, -31.784, 10.5862, 39.9415, -31.2276, 4.9318, 39.3344, -31.782, 4.3774, 39.9415, -36, 11.3323, 39.3344, -31.6716, 11.3323, 39.3344, -35.3929, 10.7252, 39.9415, -35.3929, 10.7252, 39.9415, -31.6716, 11.3323, 39.3344, -31.923, 10.7252, 39.9415, -35.3929, 10.7252, -54.9623, -31.923, 10.7252, -54.9623, -36, 11.3323, -54.3552, -36, 11.3323, -54.3552, -31.923, 10.7252, -54.9623, -31.6716, 11.3323, -54.3552, -31.784, 10.5862, -54.9623, -31.782, 4.3774, -54.9623, -31.2276, 10.8883, -54.3552, -31.2276, 10.8883, -54.3552, -31.782, 4.3774, -54.9623, -31.2276, 4.9318, -54.3552, -31.2276, -1.9397, -54.3552, -36, -1.9397, -54.3552, -31.2276, -1.9397, 39.3344, -31.2276, -1.9397, 39.3344, -36, -1.9397, -54.3552, -36, -1.9397, 39.3344 )
 
 [node name="SceneRoot" type="Spatial"]
 script = ExtResource( 2 )
@@ -72,326 +40,16 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 
 [node name="Camera" type="Camera" parent="."]
-transform = Transform( 0.996593, 0.0336464, -0.075298, -0.00864656, 0.950591, 0.310325, 0.082019, -0.308617, 0.947644, -3.16299, 6.84232, 37.6352 )
+transform = Transform( 0.999969, 0.0078539, 0, -0.00700748, 0.892202, 0.451582, 0.00354668, -0.451569, 0.892229, 0, 24.8409, 48.4861 )
 environment = ExtResource( 1 )
 fov = 90.0
 far = 500.0
 
-[node name="Environment" type="Spatial" parent="."]
-
-[node name="Floor" type="KinematicBody" parent="Environment"]
-transform = Transform( 400, 0, 0, 0, 1, 0, 0, 0, 400, 0, -34.4205, 0 )
-collision_layer = 5
-collision_mask = 5
-
-[node name="CollisionShape" type="CollisionShape" parent="Environment/Floor"]
-shape = SubResource( 5 )
-
-[node name="MeshInstance" type="MeshInstance" parent="Environment/Floor"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0494732, -3.49839, 0.0408816 )
-mesh = SubResource( 6 )
-material/0 = ExtResource( 17 )
-
-[node name="Ceiling" type="KinematicBody" parent="Environment"]
-transform = Transform( 400, 0, 0, 0, -1.74846e-05, -1, 0, 400, -4.37114e-08, 0.355713, 42.2865, -1.04715 )
-collision_layer = 5
-collision_mask = 5
-
-[node name="CollisionShape" type="CollisionShape" parent="Environment/Ceiling"]
-shape = SubResource( 5 )
-
-[node name="MeshInstance" type="MeshInstance" parent="Environment/Ceiling"]
-mesh = SubResource( 6 )
-material/0 = ExtResource( 17 )
-
-[node name="Desk" type="KinematicBody" parent="Environment"]
-transform = Transform( 30, 0, 0, 0, 1, 0, 0, 0, 25, -0.973105, -9.20885, 0.202084 )
-collision_layer = 5
-collision_mask = 5
-
-[node name="CollisionShape" type="CollisionShape" parent="Environment/Desk"]
-shape = SubResource( 5 )
-
-[node name="MeshInstance" type="MeshInstance" parent="Environment/Desk"]
-transform = Transform( 1, 0, 0, 0, 3, 0, 0, 0, 1, -0.0154404, -1.96768, 0 )
-mesh = SubResource( 6 )
-material/0 = ExtResource( 3 )
-
-[node name="DeskLamp" type="OmniLight" parent="Environment/Desk"]
-transform = Transform( -0.0182761, 0.0125983, -0.0248673, 0.149018, 0.921929, 0.357548, 0.0329164, 0.00339467, -0.0224719, 0.904719, 26.5253, 0.0429659 )
-light_color = Color( 0.756863, 0.768627, 1, 1 )
-light_energy = 6.738
-shadow_enabled = true
-omni_range = 20.299
-
-[node name="SpotLight" type="SpotLight" parent="Environment/Desk"]
-transform = Transform( 0.0331005, -0.00229415, -0.0031943, 0.0985293, 0.0369646, 0.994447, -0.002596, -0.0398777, 0.00173951, 3.72529e-09, 50.2768, -1.67638e-08 )
-light_color = Color( 0.898039, 0.886275, 0.858824, 1 )
-light_energy = 1.378
-light_indirect_energy = 1.21
-spot_range = 88.146
-
-[node name="Desk2" type="KinematicBody" parent="Environment"]
-transform = Transform( 30, 0, 0, 0, 1, 0, 0, 0, 25, -91.4791, -9.20885, 0.202084 )
-collision_layer = 5
-collision_mask = 5
-
-[node name="CollisionShape" type="CollisionShape" parent="Environment/Desk2"]
-shape = SubResource( 5 )
-
-[node name="MeshInstance" type="MeshInstance" parent="Environment/Desk2"]
-mesh = SubResource( 6 )
-material/0 = ExtResource( 3 )
-
-[node name="Desk3" type="KinematicBody" parent="Environment"]
-transform = Transform( 30, 0, 0, 0, 1, 0, 0, 0, 25, -170.768, -9.20884, 0.152165 )
-collision_layer = 5
-collision_mask = 5
-
-[node name="CollisionShape" type="CollisionShape" parent="Environment/Desk3"]
-shape = SubResource( 5 )
-
-[node name="MeshInstance" type="MeshInstance" parent="Environment/Desk3"]
-mesh = SubResource( 6 )
-material/0 = ExtResource( 3 )
-
-[node name="DeskBack" type="KinematicBody" parent="Environment"]
-transform = Transform( 30, 0, 0, 0, 0.0265433, -49.9824, 0, 0.999648, 1.32717, -0.973105, -6.05901, -20.1772 )
-collision_layer = 5
-collision_mask = 5
-
-[node name="CollisionShape" type="CollisionShape" parent="Environment/DeskBack"]
-shape = SubResource( 5 )
-
-[node name="MeshInstance" type="MeshInstance" parent="Environment/DeskBack"]
-mesh = SubResource( 6 )
-material/0 = ExtResource( 3 )
-
-[node name="DeskBack2" type="KinematicBody" parent="Environment"]
-transform = Transform( 30, 0, 0, 0, 0.0265433, -24.9912, 0, 0.999648, 0.663583, 4.40306, 16.3323, -19.8785 )
-collision_layer = 5
-collision_mask = 5
-
-[node name="CollisionShape" type="CollisionShape" parent="Environment/DeskBack2"]
-shape = SubResource( 5 )
-
-[node name="MeshInstance" type="MeshInstance" parent="Environment/DeskBack2"]
-transform = Transform( 0.999981, 0.1801, 0.000194465, -0.183094, 0.983629, 0, -0.000194465, -3.50041e-05, 1, -0.298556, 2.66265, 0.00282782 )
-mesh = SubResource( 6 )
-material/0 = ExtResource( 3 )
-
-[node name="DeskBack3" type="KinematicBody" parent="Environment"]
-transform = Transform( -9.7379, -0.994897, -1.32083, 0, 0.0265428, -49.9824, 99.5247, -0.0973446, -0.129236, 140.677, 16.2392, -19.5772 )
-collision_layer = 5
-collision_mask = 5
-
-[node name="CollisionShape" type="CollisionShape" parent="Environment/DeskBack3"]
-shape = SubResource( 5 )
-
-[node name="MeshInstance" type="MeshInstance" parent="Environment/DeskBack3"]
-transform = Transform( 0.984367, 0.00176069, 0.00233751, -17.6068, 0.984379, -0.02074, -0.00935002, -8.29548e-06, 0.999991, -0.0579884, -136.63, -0.0725567 )
-mesh = SubResource( 6 )
-material/0 = ExtResource( 3 )
-
-[node name="DeskBack4" type="KinematicBody" parent="Environment"]
-transform = Transform( 99.983, -0.017972, 0.203673, 0.454832, 0.0264614, -49.982, 1.78578, 0.999488, 1.32693, 130.69, 15.6052, -95.4929 )
-collision_layer = 5
-collision_mask = 5
-
-[node name="MeshInstance" type="MeshInstance" parent="Environment/DeskBack4"]
-transform = Transform( 0.999912, 0.00013283, 8.81803e-05, -1.3283, 0.999913, -5.85914e-05, -0.00141089, -9.25502e-08, 1, -0.00270794, -15.1563, -0.0160987 )
-mesh = SubResource( 6 )
-material/0 = ExtResource( 3 )
-
-[node name="MeshInstance3" type="MeshInstance" parent="Environment/DeskBack4"]
-transform = Transform( 0.999912, 0.00013283, 8.81802e-05, -1.3283, 0.999914, -5.88894e-05, -0.00141089, -9.17353e-08, 1, 1.99688, -94.7996, -0.100694 )
-mesh = SubResource( 6 )
-material/0 = ExtResource( 3 )
-
-[node name="DeskBack5" type="KinematicBody" parent="Environment"]
-transform = Transform( 99.9841, -0.0178513, -0.0118514, 0, 0.0265451, -24.9912, 1.78578, 0.999489, 0.663522, -133.901, 16.3323, -44.5135 )
-collision_layer = 5
-collision_mask = 5
-
-[node name="CollisionShape" type="CollisionShape" parent="Environment/DeskBack5"]
-shape = SubResource( 5 )
-
-[node name="MeshInstance" type="MeshInstance" parent="Environment/DeskBack5"]
-mesh = SubResource( 6 )
-material/0 = ExtResource( 3 )
-
-[node name="DeskSide" type="KinematicBody" parent="Environment"]
-transform = Transform( -1.31134e-06, 0.999648, 1.32714, 0, 0.0265428, -49.9824, -30, -4.3696e-08, -5.80112e-08, -32.5818, -7.22018, -16.9657 )
-collision_layer = 5
-collision_mask = 5
-
-[node name="CollisionShape" type="CollisionShape" parent="Environment/DeskSide"]
-shape = SubResource( 5 )
-
-[node name="MeshInstance" type="MeshInstance" parent="Environment/DeskSide"]
-transform = Transform( 1, 0, 4.44089e-16, 0, 1, 1.19209e-07, 0, 1.01394e-18, 1, -0.831316, 1.1943, 0.000634223 )
-mesh = SubResource( 6 )
-material/0 = ExtResource( 3 )
-
-[node name="DeskSide2" type="KinematicBody" parent="Environment"]
-transform = Transform( -1.31134e-06, 0.999648, 0.663586, 0, 0.0265434, -24.9912, -30, -4.3696e-08, -2.90063e-08, -121.717, 16.3323, -17.1246 )
-collision_layer = 5
-collision_mask = 5
-
-[node name="CollisionShape" type="CollisionShape" parent="Environment/DeskSide2"]
-shape = SubResource( 5 )
-
-[node name="MeshInstance" type="MeshInstance" parent="Environment/DeskSide2"]
-mesh = SubResource( 6 )
-material/0 = ExtResource( 3 )
-
-[node name="DeskSide3" type="KinematicBody" parent="Environment"]
-transform = Transform( -1.31134e-06, 0.999648, 0.663586, 0, 0.0265434, -24.9912, -30, -4.3696e-08, -2.90063e-08, -200.831, 16.3323, -17.1246 )
-collision_layer = 5
-collision_mask = 5
-
-[node name="CollisionShape" type="CollisionShape" parent="Environment/DeskSide3"]
-shape = SubResource( 5 )
-
-[node name="MeshInstance" type="MeshInstance" parent="Environment/DeskSide3"]
-mesh = SubResource( 6 )
-material/0 = ExtResource( 3 )
-
-[node name="Spawner" type="KinematicBody" parent="Environment"]
-transform = Transform( 5, 0, 0, 0, 25, 0, 0, 0, 5, -26.4628, 40.4603, 0.00241089 )
-collision_layer = 5
-collision_mask = 5
-script = ExtResource( 9 )
-hotdog = ExtResource( 10 )
-spawnPoint = Vector3( 0, -25, 0 )
-
-[node name="MeshInstance" type="MeshInstance" parent="Environment/Spawner"]
-mesh = SubResource( 6 )
-material/0 = ExtResource( 3 )
-
-[node name="Spawner2" type="KinematicBody" parent="Environment"]
-transform = Transform( 5, 0, 0, 0, 25, 0, 0, 0, 5, -116.666, 40.4603, 0.00241089 )
-collision_layer = 5
-collision_mask = 5
-
-[node name="MeshInstance" type="MeshInstance" parent="Environment/Spawner2"]
-mesh = SubResource( 6 )
-material/0 = ExtResource( 3 )
-
-[node name="Spawner3" type="KinematicBody" parent="Environment"]
-transform = Transform( 5, 0, 0, 0, 25, 0, 0, 0, 5, -196.478, 40.409, 0.0584354 )
-collision_layer = 5
-collision_mask = 5
-
-[node name="MeshInstance" type="MeshInstance" parent="Environment/Spawner3"]
-mesh = SubResource( 6 )
-material/0 = ExtResource( 3 )
-
-[node name="BinAccept" type="KinematicBody" parent="Environment"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 39.9473, -33.148, 2.06459 )
-collision_layer = 5
-collision_mask = 5
-
-[node name="MeshInstance" type="MeshInstance" parent="Environment/BinAccept"]
-transform = Transform( 5, 0, 0, 0, 25, 0, 0, 0, 20, -6.49432, -0.680489, 3.19716 )
-mesh = SubResource( 6 )
-material/0 = SubResource( 22 )
-
-[node name="MeshInstance2" type="MeshInstance" parent="Environment/BinAccept"]
-transform = Transform( 5.28458, 0, 8.4896, 0, 10, 0, -8.4896, 0, 5.28458, -8.53497, 49.0286, -10.9681 )
-mesh = SubResource( 6 )
-material/0 = ExtResource( 3 )
-
-[node name="CollisionShape" type="CollisionShape" parent="Environment/BinAccept"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -5.53245, 14.851, 3.21634 )
-shape = SubResource( 7 )
-
-[node name="BinAccept2" type="KinematicBody" parent="Environment"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 50.2307, -28.9616, 2.06459 )
-collision_layer = 5
-collision_mask = 5
-
-[node name="MeshInstance" type="MeshInstance" parent="Environment/BinAccept2"]
-transform = Transform( 0.273641, 1.92366, 0, -0.961832, 0.547282, 0, 0, 0, 20, -10.4254, 20.9333, 3.19716 )
-mesh = SubResource( 6 )
-material/0 = ExtResource( 3 )
-
-[node name="MeshInstance2" type="MeshInstance" parent="Environment/BinAccept2"]
-transform = Transform( 5.28458, 0, 8.4896, 0, 3, 0, -8.4896, 0, 5.28458, -25.3975, 49.227, -24.0289 )
-mesh = SubResource( 6 )
-material/0 = ExtResource( 3 )
-
-[node name="MeshInstance3" type="MeshInstance" parent="Environment/BinAccept2"]
-transform = Transform( 5.28458, 0, 8.4896, 0, 3, 0, -8.4896, 0, 5.28458, -25.3975, 42.0186, -24.0289 )
-mesh = SubResource( 6 )
-material/0 = ExtResource( 3 )
-
-[node name="CollisionShape" type="CollisionShape" parent="Environment/BinAccept2"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -5.53245, 14.851, 3.21634 )
-shape = SubResource( 7 )
-
-[node name="InvisibleBackWall" type="KinematicBody" parent="Environment"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 8.06106, -21.9158 )
-collision_layer = 5
-collision_mask = 5
-
-[node name="CollisionShape" type="CollisionShape" parent="Environment/InvisibleBackWall"]
-shape = SubResource( 9 )
-
-[node name="InvisibleSideLeft" type="KinematicBody" parent="Environment"]
-transform = Transform( -4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -32.5386, 8.06106, -21.9158 )
-collision_layer = 5
-collision_mask = 5
-
-[node name="CollisionShape" type="CollisionShape" parent="Environment/InvisibleSideLeft"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -30.9074, 0, 7.62939e-06 )
-shape = SubResource( 10 )
-
-[node name="InvisibleSideRight" type="KinematicBody" parent="Environment"]
-transform = Transform( -4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 51.9887, 8.06106, -21.9158 )
-collision_layer = 5
-collision_mask = 5
-
-[node name="CollisionShape" type="CollisionShape" parent="Environment/InvisibleSideRight"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -30.9074, 0, -0.702248 )
-shape = SubResource( 10 )
-
-[node name="Screen" type="MeshInstance" parent="Environment"]
-transform = Transform( 6.78478, -0.529841, 1.85281e-07, 0, -4.37114e-08, -8, 4.23873, 0.848098, -2.96572e-07, 26.2006, 16.1316, -0.299402 )
+[node name="Screen" type="MeshInstance" parent="."]
+transform = Transform( 20, 0, 0, 0, -4.37114e-08, -20, 0, 1, -8.74228e-07, 19.1094, 21.718, -40 )
 cast_shadow = 0
 mesh = SubResource( 14 )
-skeleton = NodePath("../InvisibleSideDesk")
-material/0 = SubResource( 16 )
-
-[node name="InvisibleSideDesk" type="KinematicBody" parent="Environment"]
-transform = Transform( -4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0, 1.27516, 28.2083 )
-collision_layer = 8
-collision_mask = 8
-
-[node name="CollisionShape" type="CollisionShape" parent="Environment/InvisibleSideDesk"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -6.45868, 0 )
-shape = SubResource( 11 )
-
-[node name="MeshInstance2" type="MeshInstance" parent="Environment/InvisibleSideDesk"]
-
-[node name="DirectionalLight" type="DirectionalLight" parent="Environment"]
-transform = Transform( -0.328007, 0.155707, 0.931755, -0.552808, -0.831448, -0.0556617, 0.766038, -0.533339, 0.358797, 0, 0, 0 )
-light_color = Color( 0.333333, 0.294118, 0.290196, 1 )
-light_energy = 0.655
-
-[node name="MeshInstance" type="MeshInstance" parent="Environment"]
-transform = Transform( 1, 0, 0, 0, -2.18557e-05, -1, 0, 500, -4.37114e-08, 223.522, 50.8446, -91.8057 )
-mesh = SubResource( 13 )
-material/0 = ExtResource( 8 )
-
-[node name="MeshInstance2" type="MeshInstance" parent="Environment"]
-transform = Transform( 1, 0, 0, 0, -2.18557e-05, -1, 0, 500, -4.37114e-08, 218.859, 52.947, -91.8057 )
-mesh = SubResource( 13 )
-material/0 = ExtResource( 8 )
-
-[node name="MeshInstance3" type="MeshInstance" parent="Environment"]
-transform = Transform( 1, 0, 0, 0, -2.18557e-05, -1, 0, 500, -4.37114e-08, 222.673, -30.6895, -91.8057 )
-mesh = SubResource( 13 )
+skeleton = NodePath("")
 material/0 = ExtResource( 4 )
 
 [node name="Cursor" type="Sprite3D" parent="."]
@@ -411,10 +69,10 @@ transform = Transform( 0.451929, -0.892054, 3.89929e-08, 0, -4.37114e-08, -1, 0.
 [node name="Points" type="Spatial" parent="."]
 
 [node name="InspectionPoint" parent="Points" instance=ExtResource( 11 )]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -3.05688, 4.96169, 26.7726 )
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 17.9542, 40.1579 )
 
 [node name="MeshInstance" type="MeshInstance" parent="Points/InspectionPoint"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.70654, -4.56206 )
+transform = Transform( 10, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.70654, -4.56206 )
 visible = false
 mesh = SubResource( 21 )
 
@@ -425,13 +83,13 @@ transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -25.6654, 12.3286, 0.193945 )
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 26.6094, -5.72668, 0.721867 )
 
 [node name="AcceptButton" parent="." instance=ExtResource( 18 )]
-transform = Transform( 1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 23.9754, 1.16231, -15.826 )
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 20, -10.5, 20 )
 
 [node name="DenyButton" parent="." instance=ExtResource( 5 )]
-transform = Transform( 1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 23.9754, -3.83769, -15.826 )
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 25, -10.5, 20 )
 
 [node name="LightToggleButton" parent="." instance=ExtResource( 19 )]
-transform = Transform( 1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, -16.6275, -10.9777, 25.3039 )
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 30, -10.5, 20 )
 
 [node name="Trigger" type="Area" parent="."]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 34.0008, -8.28004, 5.26833 )
@@ -439,12 +97,8 @@ collision_layer = 2
 collision_mask = 2
 script = ExtResource( 20 )
 
-[node name="Collider" type="CollisionShape" parent="Trigger"]
-transform = Transform( 5, 0, 0, 0, 1, 0, 0, 0, 20, 0, 0, 0 )
-shape = SubResource( 19 )
-
 [node name="Viewport" type="Viewport" parent="."]
-size = Vector2( 640, 480 )
+size = Vector2( 320, 240 )
 hdr = false
 disable_3d = true
 render_target_v_flip = true
@@ -456,34 +110,60 @@ margin_bottom = 40.0
 script = ExtResource( 22 )
 
 [node name="HeaderRect" type="ColorRect" parent="Viewport/Control"]
-margin_right = 640.0
-margin_bottom = 40.0
+margin_right = 320.0
+margin_bottom = 20.0
 
 [node name="Text" type="Label" parent="Viewport/Control/HeaderRect"]
 modulate = Color( 0.0431373, 0.0117647, 1, 1 )
-margin_right = 640.0
-margin_bottom = 40.0
+margin_right = 1280.0
+margin_bottom = 80.0
+rect_scale = Vector2( 0.25, 0.25 )
 custom_fonts/font = SubResource( 18 )
 text = "DOG SCANNER"
-align = 1
 valign = 1
 
 [node name="BodyRect" type="ColorRect" parent="Viewport/Control"]
-margin_top = 40.0
-margin_right = 640.0
-margin_bottom = 480.0
+margin_top = 20.0
+margin_right = 320.0
+margin_bottom = 240.0
 color = Color( 0.12549, 0, 1, 1 )
 
-[node name="Text" type="Label" parent="Viewport/Control/BodyRect"]
-margin_right = 640.0
-margin_bottom = 440.0
+[node name="TopText" type="Label" parent="Viewport/Control/BodyRect"]
+margin_right = 1280.0
+margin_bottom = 880.0
+rect_scale = Vector2( 0.25, 0.25 )
 custom_fonts/font = SubResource( 18 )
-text = "Hello my honey,
-Hello my baby,
-Hello my ragtime gal"
+text = "NO SIGNAL"
 
-[node name="desk" type="MeshInstance" parent="."]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 96.1655, -33.4204, 47.9776 )
-mesh = ExtResource( 15 )
+[node name="BottomText" type="Label" parent="Viewport/Control/BodyRect"]
+margin_right = 1280.0
+margin_bottom = 880.0
+rect_scale = Vector2( 0.25, 0.25 )
+custom_fonts/font = SubResource( 18 )
+valign = 2
+
+[node name="Lights" type="Spatial" parent="."]
+
+[node name="DirectionalLight" type="DirectionalLight" parent="Lights"]
+transform = Transform( 0.259648, 0.144491, -0.954833, -0.486266, 0.873811, 1.44919e-08, 0.834343, 0.464303, 0.297144, 0.0731354, 3.8147e-06, 0.0175591 )
+light_color = Color( 0.964706, 0.960784, 0.890196, 1 )
+shadow_enabled = true
+shadow_bias = 1.0
+
+[node name="Environment" type="Spatial" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 13.3585, 0 )
+
+[node name="StaticBody" type="StaticBody" parent="."]
+collision_layer = 5
+collision_mask = 5
+
+[node name="desk" type="MeshInstance" parent="StaticBody"]
+transform = Transform( -4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -15.1639, -12.5718, -10.9875 )
+mesh = ExtResource( 3 )
+skeleton = NodePath("../..")
+
+[node name="CollisionShape2" type="CollisionShape" parent="StaticBody"]
+transform = Transform( -4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -15.1639, -12.5718, -10.9875 )
+shape = SubResource( 22 )
 
 [connection signal="area_entered" from="Trigger" to="Trigger" method="_on_Area_area_entered"]

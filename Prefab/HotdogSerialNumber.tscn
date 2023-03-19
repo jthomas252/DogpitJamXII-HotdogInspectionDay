@@ -1,11 +1,19 @@
-[gd_scene load_steps=9 format=2]
+[gd_scene load_steps=12 format=2]
 
 [ext_resource path="res://Scripts/Hotdog.cs" type="Script" id=1]
 [ext_resource path="res://Scripts/GrabableObject.cs" type="Script" id=2]
-[ext_resource path="res://Assets/Models/Material.material" type="Material" id=4]
+[ext_resource path="res://Assets/Models/Material.material" type="Material" id=3]
+[ext_resource path="res://new_shader.tres" type="Shader" id=4]
+[ext_resource path="res://Assets/Textures/buttonIconLightbulb.png" type="Texture" id=5]
 
 [sub_resource type="CapsuleShape" id=6]
 radius = 5.0
+
+[sub_resource type="ShaderMaterial" id=7]
+render_priority = 100
+shader = ExtResource( 4 )
+shader_param/albedo = Color( 0.952941, 0.407843, 0.0980392, 1 )
+shader_param/cube_half_size = 1.0
 
 [sub_resource type="ArrayMesh" id=2]
 resource_name = "hotdog_fixed_Cube001"
@@ -16,7 +24,7 @@ surfaces/0 = {
 "blend_shape_data": [  ],
 "format": 2194903,
 "index_count": 2292,
-"material": ExtResource( 4 ),
+"material": ExtResource( 3 ),
 "primitive": 4,
 "skeleton_aabb": [ AABB( -1, 0, -1, 2, 3, 2 ), AABB( -1, -3, -1, 2, 1.00136e-05, 2 ), AABB( -1, -6.43518, -1, 2, 3.43518, 2 ), AABB( -1, 3, -1, 2, 3.47003, 2 ) ],
 "vertex_count": 1280
@@ -80,6 +88,13 @@ bones/3/rest = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 4, 0 )
 bones/3/enabled = true
 bones/3/bound_children = [  ]
 
+[node name="Sprite3D" type="Sprite3D" parent="HotdogBody/Skeleton"]
+transform = Transform( 1, 0, 0, 0, -1, 8.74228e-08, 0, -8.74228e-08, -1, 0, 4.72114, -1.01381 )
+material_override = SubResource( 7 )
+pixel_size = 0.05
+texture = ExtResource( 5 )
+region_rect = Rect2( 0, 0, 10, 10 )
+
 [node name="SkeletalMesh" type="MeshInstance" parent="HotdogBody/Skeleton"]
 mesh = SubResource( 2 )
 skin = SubResource( 3 )
@@ -96,9 +111,9 @@ bounce = 0.27
 gravity_scale = 3.02
 bone_name = "topdog"
 joint_constraints/angular_limit_enabled = true
-joint_constraints/angular_limit_upper = 40.9
+joint_constraints/angular_limit_upper = 50.35
 joint_constraints/angular_limit_lower = -51.91
-joint_constraints/angular_limit_bias = 0.2
+joint_constraints/angular_limit_bias = 0.3
 joint_constraints/angular_limit_softness = 0.9
 joint_constraints/angular_limit_relaxation = 1.0
 
@@ -118,9 +133,9 @@ bounce = 0.64
 gravity_scale = 3.04
 bone_name = "middledog"
 joint_constraints/angular_limit_enabled = true
-joint_constraints/angular_limit_upper = 36.26
-joint_constraints/angular_limit_lower = -47.9
-joint_constraints/angular_limit_bias = 0.13
+joint_constraints/angular_limit_upper = 56.42
+joint_constraints/angular_limit_lower = -49.82
+joint_constraints/angular_limit_bias = 0.3
 joint_constraints/angular_limit_softness = 0.9
 joint_constraints/angular_limit_relaxation = 1.0
 
