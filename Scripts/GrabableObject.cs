@@ -1,5 +1,8 @@
 using Godot;
 using System;
+using System.Numerics;
+using Vector2 = Godot.Vector2;
+using Vector3 = Godot.Vector3;
 
 public class GrabableObject : KinematicBody
 {
@@ -14,7 +17,7 @@ public class GrabableObject : KinematicBody
     private PhysicalBone bone;
 
     private Vector2 mouseOffset = new Vector2(0f,0f);
-    
+
     public override void _Ready()
     {
         base._Ready();
@@ -42,16 +45,16 @@ public class GrabableObject : KinematicBody
         GD.Print(skeleton.ToString());
     }
 
-    public override void _UnhandledInput(InputEvent @event)
-    {
-        if (@event is InputEventMouse inputEventMouse)
-        {
-            if (inputEventMouse.ButtonMask == (int)ButtonList.Left)
-            {
-                mouseOffset = inputEventMouse.Position; 
-            }
-        }
-    }
+    // public override void _UnhandledInput(InputEvent @event)
+    // {
+    //     if (@event is InputEventMouse inputEventMouse)
+    //     {
+    //         if (inputEventMouse.ButtonMask == (int)ButtonList.Left)
+    //         {
+    //             mouseOffset = inputEventMouse.Position; 
+    //         }
+    //     }
+    // }
 
     public override void _PhysicsProcess(float delta)
     {
@@ -73,18 +76,21 @@ public class GrabableObject : KinematicBody
             // Rotate the object with shift pressed
             if (Input.IsKeyPressed((int)KeyList.Shift))
             {
-                Vector2 mousePos = GetViewport().GetMousePosition() - mouseOffset;
-                mouseOffset = GetViewport().GetMousePosition();
+                Vector2 mousePosition = (GetViewport().GetMousePosition() - mouseOffset);
+                
+                Transform transform = GlobalTransform;
+                transform.basis = transform.basis.Rotated(
+                    transform.basis[2], 
+                    mousePosition.x * 0.02f
+                );
+                
+                transform.basis = transform.basis.Rotated(
+                     transform.basis[0], 
+                    mousePosition.y * 0.02f
+                );
+                GlobalTransform = transform;
 
-                RotateX(mousePos.x * 0.25f * delta);
-                if (Input.IsKeyPressed((int)KeyList.Control))
-                {
-                    RotateY(mousePos.y * 0.25f * delta);
-                }
-                else
-                {
-                    RotateZ(mousePos.y * 0.25f * delta);
-                }
+                mouseOffset = GetViewport().GetMousePosition();
             }
             
             

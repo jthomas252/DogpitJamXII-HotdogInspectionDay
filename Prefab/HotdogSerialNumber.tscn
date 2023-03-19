@@ -1,19 +1,14 @@
-[gd_scene load_steps=12 format=2]
+[gd_scene load_steps=14 format=2]
 
 [ext_resource path="res://Scripts/Hotdog.cs" type="Script" id=1]
 [ext_resource path="res://Scripts/GrabableObject.cs" type="Script" id=2]
 [ext_resource path="res://Assets/Materials/Hotdog.material" type="Material" id=3]
-[ext_resource path="res://DecalShader.tres" type="Shader" id=4]
-[ext_resource path="res://Assets/Textures/buttonIconLightbulb.png" type="Texture" id=5]
+[ext_resource path="res://decalco/src/Decal.shader" type="Shader" id=4]
+[ext_resource path="res://Assets/Textures/cursor_clicked.png" type="Texture" id=5]
+[ext_resource path="res://Assets/Textures/texture_fruit.jpg" type="Texture" id=6]
 
 [sub_resource type="CapsuleShape" id=6]
 radius = 5.0
-
-[sub_resource type="ShaderMaterial" id=7]
-render_priority = 100
-shader = ExtResource( 4 )
-shader_param/albedo = Color( 0.952941, 0.407843, 0.0980392, 1 )
-shader_param/cube_half_size = 1.0
 
 [sub_resource type="ArrayMesh" id=2]
 resource_name = "hotdog_fixed_Cube001"
@@ -45,6 +40,27 @@ bind/2/pose = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 6, 0 )
 bind/3/name = "toptopdog"
 bind/3/bone = -1
 bind/3/pose = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -3, 0 )
+
+[sub_resource type="ShaderMaterial" id=7]
+shader = ExtResource( 4 )
+shader_param/albedo_tint = Color( 1, 1, 1, 1 )
+shader_param/emission_tint = Color( 0, 0, 0, 1 )
+shader_param/emission_strength = 1.0
+shader_param/occlusion_strength = 1.0
+shader_param/specular_strength = 1.0
+shader_param/metallic_strength = 1.0
+shader_param/animation_speed = 1.0
+shader_param/flipbook_columns_count = 1
+shader_param/one_shot = false
+shader_param/start_time = null
+shader_param/current_frame_blend = 0.0
+shader_param/use_normal_map = false
+shader_param/border_mask = ExtResource( 5 )
+shader_param/albedo = ExtResource( 6 )
+
+[sub_resource type="CubeMesh" id=8]
+material = SubResource( 7 )
+size = Vector3( 1, 1, 1 )
 
 [sub_resource type="CapsuleShape" id=4]
 height = 4.0
@@ -88,23 +104,22 @@ bones/3/rest = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 4, 0 )
 bones/3/enabled = true
 bones/3/bound_children = [  ]
 
-[node name="Sprite3D" type="Sprite3D" parent="HotdogBody/Skeleton"]
-transform = Transform( 1, 0, 0, 0, -1, 8.74228e-08, 0, -8.74228e-08, -1, 0, 4.72114, -1.01381 )
-material_override = SubResource( 7 )
-pixel_size = 0.05
-texture = ExtResource( 5 )
-region_rect = Rect2( 0, 0, 10, 10 )
-
 [node name="SkeletalMesh" type="MeshInstance" parent="HotdogBody/Skeleton"]
 mesh = SubResource( 2 )
 skin = SubResource( 3 )
+
+[node name="MeshInstance" type="MeshInstance" parent="HotdogBody/Skeleton/SkeletalMesh"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.188463, -6.29558, -0.728139 )
+cast_shadow = 0
+mesh = SubResource( 8 )
+skeleton = NodePath("../..")
 
 [node name="TopBone" type="PhysicalBone" parent="HotdogBody/Skeleton"]
 transform = Transform( -1, 0, 0, 0, 0, 1, 0, 1, 0, 0, -2, 0 )
 joint_type = 3
 joint_offset = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 1 )
 body_offset = Transform( -1, 0, 0, 0, 0, 1, 0, 1, 0, 0, -1, 0 )
-mass = 78.0
+mass = 50.96
 weight = 764.4
 friction = 0.8
 bounce = 0.27
@@ -126,7 +141,7 @@ transform = Transform( -1, 1.50996e-07, 6.60024e-15, 0, -4.37114e-08, 1, 1.50996
 joint_type = 3
 joint_offset = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -2.88412e-20, -6.55672e-08, 1.5 )
 body_offset = Transform( -1, 1.50996e-07, 6.60024e-15, 0, -4.37114e-08, 1, 1.50996e-07, 1, 4.37114e-08, 0, -1.5, 1.27898e-13 )
-mass = 79.43
+mass = 51.8943
 weight = 778.414
 friction = 0.63
 bounce = 0.64

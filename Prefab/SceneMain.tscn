@@ -1,4 +1,4 @@
-[gd_scene load_steps=27 format=2]
+[gd_scene load_steps=33 format=2]
 
 [ext_resource path="res://Scripts/BaseScene.cs" type="Script" id=1]
 [ext_resource path="res://Assets/Textures/cursor_clicked.png" type="Texture" id=2]
@@ -12,6 +12,7 @@
 [ext_resource path="res://Assets/Textures/cursor_empty.png" type="Texture" id=10]
 [ext_resource path="res://Scripts/Cursor.cs" type="Script" id=11]
 [ext_resource path="res://Prefab/default_env.tres" type="Environment" id=12]
+[ext_resource path="res://Prefab/HotdogSerialNumber.tscn" type="PackedScene" id=13]
 [ext_resource path="res://Prefab/RedButton.tscn" type="PackedScene" id=14]
 [ext_resource path="res://Prefab/IconButton.tscn" type="PackedScene" id=15]
 [ext_resource path="res://Prefab/Hotdog.tscn" type="PackedScene" id=16]
@@ -47,6 +48,24 @@ viewport_path = NodePath("ComputerViewport")
 resource_local_to_scene = true
 albedo_texture = SubResource( 28 )
 
+[sub_resource type="CubeMesh" id=31]
+size = Vector3( 20, 200, 200 )
+
+[sub_resource type="SpatialMaterial" id=32]
+flags_transparent = true
+flags_unshaded = true
+flags_vertex_lighting = true
+albedo_color = Color( 1, 0.0156863, 0.0156863, 0.207843 )
+
+[sub_resource type="ConcavePolygonShape" id=33]
+data = PoolVector3Array( -10, 100, 100, 10, 100, 100, -10, -100, 100, 10, 100, 100, 10, -100, 100, -10, -100, 100, 10, 100, -100, -10, 100, -100, 10, -100, -100, -10, 100, -100, -10, -100, -100, 10, -100, -100, 10, 100, 100, 10, 100, -100, 10, -100, 100, 10, 100, -100, 10, -100, -100, 10, -100, 100, -10, 100, -100, -10, 100, 100, -10, -100, -100, -10, 100, 100, -10, -100, 100, -10, -100, -100, 10, 100, 100, -10, 100, 100, 10, 100, -100, -10, 100, 100, -10, 100, -100, 10, 100, -100, -10, -100, 100, 10, -100, 100, -10, -100, -100, 10, -100, 100, 10, -100, -100, -10, -100, -100 )
+
+[sub_resource type="CubeMesh" id=34]
+size = Vector3( 100, 200, 5 )
+
+[sub_resource type="ConcavePolygonShape" id=35]
+data = PoolVector3Array( -50, 100, 2.5, 50, 100, 2.5, -50, -100, 2.5, 50, 100, 2.5, 50, -100, 2.5, -50, -100, 2.5, 50, 100, -2.5, -50, 100, -2.5, 50, -100, -2.5, -50, 100, -2.5, -50, -100, -2.5, 50, -100, -2.5, 50, 100, 2.5, 50, 100, -2.5, 50, -100, 2.5, 50, 100, -2.5, 50, -100, -2.5, 50, -100, 2.5, -50, 100, -2.5, -50, 100, 2.5, -50, -100, -2.5, -50, 100, 2.5, -50, -100, 2.5, -50, -100, -2.5, 50, 100, 2.5, -50, 100, 2.5, 50, 100, -2.5, -50, 100, 2.5, -50, 100, -2.5, 50, 100, -2.5, -50, -100, 2.5, 50, -100, 2.5, -50, -100, -2.5, 50, -100, 2.5, 50, -100, -2.5, -50, -100, -2.5 )
+
 [node name="SceneRoot" type="Spatial"]
 script = ExtResource( 1 )
 
@@ -77,7 +96,7 @@ transform = Transform( 0.451929, -0.892054, 3.89929e-08, 0, -4.37114e-08, -1, 0.
 [node name="Points" type="Spatial" parent="."]
 
 [node name="InspectPoint" type="Spatial" parent="Points"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 14.9809, 29.5236 )
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 19.989, 38.844 )
 
 [node name="MeshInstance" type="MeshInstance" parent="Points/InspectPoint"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3.06537, 3.21453 )
@@ -162,6 +181,61 @@ mesh = SubResource( 14 )
 skeleton = NodePath("")
 material/0 = SubResource( 29 )
 
+[node name="MouseConstraints" type="Spatial" parent="Environment"]
+visible = false
+
+[node name="InvisibleWall" type="StaticBody" parent="Environment/MouseConstraints"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -62.7725, 0, 0 )
+collision_layer = 8
+collision_mask = 8
+
+[node name="MeshInstance" type="MeshInstance" parent="Environment/MouseConstraints/InvisibleWall"]
+mesh = SubResource( 31 )
+material/0 = SubResource( 32 )
+
+[node name="CollisionShape" type="CollisionShape" parent="Environment/MouseConstraints/InvisibleWall"]
+shape = SubResource( 33 )
+
+[node name="InvisibleWall2" type="StaticBody" parent="Environment/MouseConstraints"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 49.0912, 0, 0 )
+collision_layer = 8
+collision_mask = 8
+
+[node name="MeshInstance" type="MeshInstance" parent="Environment/MouseConstraints/InvisibleWall2"]
+mesh = SubResource( 31 )
+material/0 = SubResource( 32 )
+
+[node name="CollisionShape" type="CollisionShape" parent="Environment/MouseConstraints/InvisibleWall2"]
+shape = SubResource( 33 )
+
+[node name="InvisibleWall3" type="StaticBody" parent="Environment/MouseConstraints"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -4.42122, 0, 0 )
+collision_layer = 8
+collision_mask = 8
+
+[node name="MeshInstance" type="MeshInstance" parent="Environment/MouseConstraints/InvisibleWall3"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -44.9232 )
+mesh = SubResource( 34 )
+material/0 = SubResource( 32 )
+
+[node name="CollisionShape" type="CollisionShape" parent="Environment/MouseConstraints/InvisibleWall3"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -44.9232 )
+shape = SubResource( 35 )
+
+[node name="InvisibleWall4" type="StaticBody" parent="Environment/MouseConstraints"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -4.42122, -125.616, 68.4076 )
+collision_layer = 8
+collision_mask = 8
+
+[node name="MeshInstance" type="MeshInstance" parent="Environment/MouseConstraints/InvisibleWall4"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -44.9232 )
+mesh = SubResource( 34 )
+material/0 = SubResource( 32 )
+
+[node name="CollisionShape" type="CollisionShape" parent="Environment/MouseConstraints/InvisibleWall4"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -44.9232 )
+shape = SubResource( 35 )
+
 [node name="ComputerViewport" type="Viewport" parent="."]
 size = Vector2( 320, 240 )
 handle_input_locally = false
@@ -171,3 +245,6 @@ usage = 0
 render_target_v_flip = true
 
 [node name="Control" parent="ComputerViewport" instance=ExtResource( 17 )]
+
+[node name="Hotdog" parent="." instance=ExtResource( 13 )]
+transform = Transform( 1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, -20.2626, -5.6088, 8.89218 )

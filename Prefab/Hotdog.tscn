@@ -5,7 +5,7 @@
 [ext_resource path="res://Assets/Materials/Hotdog.material" type="Material" id=4]
 
 [sub_resource type="CapsuleShape" id=6]
-radius = 5.0
+height = 11.0
 
 [sub_resource type="ArrayMesh" id=2]
 resource_name = "hotdog_fixed_Cube001"
@@ -89,7 +89,7 @@ transform = Transform( -1, 0, 0, 0, 0, 1, 0, 1, 0, 0, -2, 0 )
 joint_type = 3
 joint_offset = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 1 )
 body_offset = Transform( -1, 0, 0, 0, 0, 1, 0, 1, 0, 0, -1, 0 )
-mass = 78.0
+mass = 50.96
 weight = 764.4
 friction = 0.8
 bounce = 0.27
@@ -111,7 +111,7 @@ transform = Transform( -1, 1.50996e-07, 6.60024e-15, 0, -4.37114e-08, 1, 1.50996
 joint_type = 3
 joint_offset = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -2.88412e-20, -6.55672e-08, 1.5 )
 body_offset = Transform( -1, 1.50996e-07, 6.60024e-15, 0, -4.37114e-08, 1, 1.50996e-07, 1, 4.37114e-08, 0, -1.5, 1.27898e-13 )
-mass = 79.43
+mass = 51.8943
 weight = 778.414
 friction = 0.63
 bounce = 0.64
