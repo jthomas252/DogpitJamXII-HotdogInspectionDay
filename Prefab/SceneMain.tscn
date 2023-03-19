@@ -1,4 +1,4 @@
-[gd_scene load_steps=29 format=2]
+[gd_scene load_steps=32 format=2]
 
 [ext_resource path="res://Scripts/BaseScene.cs" type="Script" id=1]
 [ext_resource path="res://Assets/Textures/cursor_clicked.png" type="Texture" id=2]
@@ -12,9 +12,11 @@
 [ext_resource path="res://Assets/Textures/cursor_empty.png" type="Texture" id=10]
 [ext_resource path="res://Scripts/Cursor.cs" type="Script" id=11]
 [ext_resource path="res://Prefab/default_env.tres" type="Environment" id=12]
+[ext_resource path="res://Scripts/WorldButton.cs" type="Script" id=13]
 [ext_resource path="res://Prefab/RedButton.tscn" type="PackedScene" id=14]
 [ext_resource path="res://Prefab/IconButton.tscn" type="PackedScene" id=15]
 [ext_resource path="res://Prefab/Hotdog.tscn" type="PackedScene" id=16]
+[ext_resource path="res://Scripts/Spawner.cs" type="Script" id=17]
 [ext_resource path="res://Prefab/ComputerPrefab.tscn" type="PackedScene" id=18]
 
 [sub_resource type="CubeMesh" id=30]
@@ -55,6 +57,8 @@ size = Vector3( 100, 200, 5 )
 [sub_resource type="ConcavePolygonShape" id=35]
 data = PoolVector3Array( -50, 100, 2.5, 50, 100, 2.5, -50, -100, 2.5, 50, 100, 2.5, 50, -100, 2.5, -50, -100, 2.5, 50, 100, -2.5, -50, 100, -2.5, 50, -100, -2.5, -50, 100, -2.5, -50, -100, -2.5, 50, -100, -2.5, 50, 100, 2.5, 50, 100, -2.5, 50, -100, 2.5, 50, 100, -2.5, 50, -100, -2.5, 50, -100, 2.5, -50, 100, -2.5, -50, 100, 2.5, -50, -100, -2.5, -50, 100, 2.5, -50, -100, 2.5, -50, -100, -2.5, 50, 100, 2.5, -50, 100, 2.5, 50, 100, -2.5, -50, 100, 2.5, -50, 100, -2.5, 50, 100, -2.5, -50, -100, 2.5, 50, -100, 2.5, -50, -100, -2.5, 50, -100, 2.5, 50, -100, -2.5, -50, -100, -2.5 )
 
+[sub_resource type="CubeMesh" id=36]
+
 [node name="SceneRoot" type="Spatial"]
 script = ExtResource( 1 )
 
@@ -91,6 +95,7 @@ mesh = SubResource( 30 )
 
 [node name="AcceptButton" parent="." instance=ExtResource( 9 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 20, -10.5, 20 )
+script = ExtResource( 13 )
 
 [node name="DenyButton" parent="." instance=ExtResource( 14 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 25, -10.5, 20 )
@@ -220,3 +225,16 @@ transform = Transform( 1.33326, -0.687322, 3.00438e-08, 0, -6.55671e-08, -1.5, 0
 
 [node name="Hotdog" parent="." instance=ExtResource( 16 )]
 transform = Transform( 1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, -20.7874, -2.73842, 10.3916 )
+
+[node name="Spawner" type="StaticBody" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -39.0576, 40.6627, -10.6515 )
+script = ExtResource( 17 )
+hotdog = ExtResource( 16 )
+
+[node name="MeshInstance" type="MeshInstance" parent="Spawner"]
+mesh = SubResource( 36 )
+skeleton = NodePath("")
+script = ExtResource( 17 )
+hotdog = ExtResource( 16 )
+
+[connection signal="Pressed" from="AcceptButton" to="Spawner" method="OnSpawnButton"]

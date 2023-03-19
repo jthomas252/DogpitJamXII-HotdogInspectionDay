@@ -11,14 +11,11 @@ public class InteractableObject : KinematicBody
         Connect("mouse_entered", this, "OnMouseEntered");
     }
 
-    public virtual void OnMouseEntered()
-    {
-        // Override me!
-    }
+    public virtual void OnMouseEntered(){}
 
     public virtual void OnInteractedWith()
     {
-        GD.Print($"Button was interacted with of ${GetPath().ToString()}");
+        GD.Print($"Button was interacted with of ${GetPath()}");
         EmitSignal(nameof(Interacted));
     }
 }

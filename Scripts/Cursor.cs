@@ -73,6 +73,7 @@ public class Cursor : Sprite3D
         }    
     }
     
+    // TODO: Move this somewhere more appropriate and set up signals where relevant
     public override void _Input(InputEvent @event)
     {
         if (@event is InputEventMouse eventMouse)
@@ -99,9 +100,11 @@ public class Cursor : Sprite3D
                 switch (eventKey.Scancode)
                 {
                     case (int)KeyList.Shift:
-                        BaseScene.currentState = BaseScene.currentState == BaseScene.PlayerState.Inspecting ? 
+                        BaseScene.ChangePlayerState(
+                            BaseScene.GetPlayerState() == BaseScene.PlayerState.Inspecting ? 
                             (isGrabbing() ? BaseScene.PlayerState.Grabbing : BaseScene.PlayerState.Normal) : 
-                            BaseScene.PlayerState.Inspecting;
+                            BaseScene.PlayerState.Inspecting
+                        );
                         break;
                 }
             }
@@ -161,7 +164,7 @@ public class Cursor : Sprite3D
         // Update the position of the grabbed object
         else
         {
-            if (BaseScene.currentState == BaseScene.PlayerState.Inspecting)
+            if (BaseScene.GetPlayerState() == BaseScene.PlayerState.Inspecting)
             {
                 grabbedObject.UpdateTargetPosition(inspectPoint.GlobalTranslation);
             }

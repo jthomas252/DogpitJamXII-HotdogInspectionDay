@@ -3,14 +3,19 @@ using System;
 
 public class ComputerScreen : Control
 {
-    public static ComputerScreen _instance; 
+    private static ComputerScreen _instance; 
     
-    protected ColorRect headerRect;
-    protected Label headerText;
+    private ColorRect headerRect;
+    private Label headerText;
 
     private ColorRect bodyRect;
     private Label bodyTopText;
     private Label bodyBottomText;
+
+    private ColorRect flashRect;
+    private Label flashText;
+
+    private AudioStreamPlayer3D audioPlayer;
 
     public override void _Ready()
     {
@@ -40,5 +45,29 @@ public class ComputerScreen : Control
     {
         if (_instance != null)
             _instance.bodyBottomText.Text = newText;
+    }
+
+    /**
+     * Pop up a message on the computer screen for a moment
+     */
+    public static void FlashMessage(string flashText)
+    {
+        
+    }
+
+    /**
+     * Pop up a error message on the computer screen
+     */
+    public static void FlashWarningMessage(string flashText)
+    {
+        
+    }
+
+    /**
+     * Play a sound effect at the computer
+     */
+    public static void PlaySound(AudioStream stream)
+    {
+        
     }
 }

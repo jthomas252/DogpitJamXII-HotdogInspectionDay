@@ -7,6 +7,8 @@ using Vector3 = Godot.Vector3;
 public class GrabbableObject : RigidBody
 {
     private readonly float ROTATION_MOUSE_SCALE = 0.01f;
+    private readonly float MOVEMENT_SCALE = 50f;
+    private readonly float MOVEMENT_DISTANCE_THRESHOLD = 5f;
     
     private bool isGrabbed = false;
     private Vector3 targetPosition;
@@ -22,7 +24,6 @@ public class GrabbableObject : RigidBody
     {
         GD.Print("Hotdog Grabbed");
         isGrabbed = true;
-        Sleeping = true;
     }
 
     public void UpdateTargetPosition(Vector3 newPosition)
@@ -34,7 +35,6 @@ public class GrabbableObject : RigidBody
     {
         GD.Print("Hotdog Dropped");
         isGrabbed = false; 
-        Sleeping = false;
     }
 
     public override void _PhysicsProcess(float delta)
@@ -44,14 +44,24 @@ public class GrabbableObject : RigidBody
         {
             // Move and slide, if distance is within range
             float targetDistance = GlobalTranslation.DistanceTo(targetPosition);
-            
-            // Just move the object to place
-            GlobalTranslation = targetPosition;
+            if (targetDistance > MOVEMENT_DISTANCE_THRESHOLD)
+            {
+                SetAxisVelocity(GlobalTranslation.DirectionTo(targetPosition) * (targetDistance * delta * MOVEMENT_SCALE));
+            }
+            else
+            {
+                AngularVelocity = Vector3.Zero;
+                LinearVelocity = Vector3.Zero;
+            }
 
-            // TODO: Optionally try and move the rigidbody to fly towards the target position
+            ComputerScreen.UpdateBodyText(
+                $"DIR: {GlobalTranslation.DirectionTo(targetPosition).ToString()}\n" +
+                $"VEL: {LinearVelocity.ToString()}\n" +
+                $"DIS: {targetDistance.ToString()}\n"
+            );
             
             // Rotate the object with shift pressed
-            if (BaseScene.currentState == BaseScene.PlayerState.Inspecting)
+            if (BaseScene.GetPlayerState() == BaseScene.PlayerState.Inspecting)
             {
                 // TODO: Convert this to generic position for gamepad support
                 Vector2 mousePosition = (GetViewport().GetMousePosition() - mouseOffset);

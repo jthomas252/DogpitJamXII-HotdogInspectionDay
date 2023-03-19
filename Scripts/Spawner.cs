@@ -1,8 +1,6 @@
 using Godot;
-using System;
-using System.Collections.Generic;
 
-public class Spawner : KinematicBody
+public class Spawner : Spatial
 {
     [Export] 
     public PackedScene hotdog;
@@ -11,34 +9,30 @@ public class Spawner : KinematicBody
     public Vector3 spawnPoint;
     
     // Re-usable list of hotdogs we have spawned in the scene already
-    private List<Spatial> hotdogList;
+    private int spawnsAvailable = 0;
     
     public override void _Ready()
     {
-        hotdogList = new List<Spatial>();
+        spawnsAvailable = 10; 
     }
 
-    public override void _Input(InputEvent @event)
+    public void OnSpawnButton()
     {
-        base._Input(@event);
-
-        if (@event is InputEventKey eventKey)
+        if (spawnsAvailable > 0)
         {
-            if (eventKey.Pressed && eventKey.Scancode == (int)KeyList.O)
-            {
-                TriggerSpawn();
-            }
-        }
-    }
+            // Randomly choose one type of hotdog from a random roll, then drop it out the spawner
+            Spatial dog = (Spatial)hotdog.Instance();
 
-    public void TriggerSpawn()
-    {
-        Spatial dog = (Spatial)hotdog.Instance();
-        hotdogList.Add(dog);
-        
-        dog.Translation = GlobalTranslation + spawnPoint;
-        dog.Rotation = new Vector3(GD.Randf() * 45, GD.Randf() * 45, GD.Randf() * 45);
-        
-        GetTree().CurrentScene.AddChild(dog);
+            dog.Translation = GlobalTranslation + spawnPoint;
+            dog.Rotation = new Vector3(GD.Randf() * 45, GD.Randf() * 45, GD.Randf() * 45);
+
+            GetTree().CurrentScene.AddChild(dog);
+
+            --spawnsAvailable;
+        }
+        else
+        {
+            GD.Print("No more hotdogs!");
+        }
     }
 }
