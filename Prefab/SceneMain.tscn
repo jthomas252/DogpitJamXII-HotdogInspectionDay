@@ -1,4 +1,4 @@
-[gd_scene load_steps=33 format=2]
+[gd_scene load_steps=29 format=2]
 
 [ext_resource path="res://Scripts/BaseScene.cs" type="Script" id=1]
 [ext_resource path="res://Assets/Textures/cursor_clicked.png" type="Texture" id=2]
@@ -12,11 +12,10 @@
 [ext_resource path="res://Assets/Textures/cursor_empty.png" type="Texture" id=10]
 [ext_resource path="res://Scripts/Cursor.cs" type="Script" id=11]
 [ext_resource path="res://Prefab/default_env.tres" type="Environment" id=12]
-[ext_resource path="res://Prefab/HotdogSerialNumber.tscn" type="PackedScene" id=13]
 [ext_resource path="res://Prefab/RedButton.tscn" type="PackedScene" id=14]
 [ext_resource path="res://Prefab/IconButton.tscn" type="PackedScene" id=15]
 [ext_resource path="res://Prefab/Hotdog.tscn" type="PackedScene" id=16]
-[ext_resource path="res://Prefab/ComputerScreen.tscn" type="PackedScene" id=17]
+[ext_resource path="res://Prefab/ComputerPrefab.tscn" type="PackedScene" id=18]
 
 [sub_resource type="CubeMesh" id=30]
 
@@ -37,16 +36,6 @@ data = PoolVector3Array( -250, 125, 50, 250, 125, 50, -250, -125, 50, 250, 125, 
 
 [sub_resource type="ConcavePolygonShape" id=27]
 data = PoolVector3Array( -250, 125, 50, 250, 125, 50, -250, -125, 50, 250, 125, 50, 250, -125, 50, -250, -125, 50, 250, 125, -50, -250, 125, -50, 250, -125, -50, -250, 125, -50, -250, -125, -50, 250, -125, -50, 250, 125, 50, 250, 125, -50, 250, -125, 50, 250, 125, -50, 250, -125, -50, 250, -125, 50, -250, 125, -50, -250, 125, 50, -250, -125, -50, -250, 125, 50, -250, -125, 50, -250, -125, -50, 250, 125, 50, -250, 125, 50, 250, 125, -50, -250, 125, 50, -250, 125, -50, 250, 125, -50, -250, -125, 50, 250, -125, 50, -250, -125, -50, 250, -125, 50, 250, -125, -50, -250, -125, -50 )
-
-[sub_resource type="PlaneMesh" id=14]
-
-[sub_resource type="ViewportTexture" id=28]
-flags = 4
-viewport_path = NodePath("ComputerViewport")
-
-[sub_resource type="SpatialMaterial" id=29]
-resource_local_to_scene = true
-albedo_texture = SubResource( 28 )
 
 [sub_resource type="CubeMesh" id=31]
 size = Vector3( 20, 200, 200 )
@@ -89,9 +78,6 @@ handTextureOpen = ExtResource( 10 )
 handTextureClosed = ExtResource( 4 )
 handTexturePoint = ExtResource( 3 )
 handTextureClicked = ExtResource( 2 )
-
-[node name="Test Hotdog" parent="." instance=ExtResource( 16 )]
-transform = Transform( 0.451929, -0.892054, 3.89929e-08, 0, -4.37114e-08, -1, 0.892054, 0.451929, -1.97545e-08, -12.7206, -5.48611, -3.45098 )
 
 [node name="Points" type="Spatial" parent="."]
 
@@ -174,13 +160,6 @@ material/0 = ExtResource( 7 )
 [node name="CollisionShape" type="CollisionShape" parent="Environment/RightWall"]
 shape = SubResource( 27 )
 
-[node name="Screen" type="MeshInstance" parent="Environment"]
-transform = Transform( 10.6784, -0.456216, 1.79476e-07, 0, -4.37114e-08, -9, 5.47459, 0.889869, -3.50077e-07, 39.0669, 13.9656, -10.895 )
-cast_shadow = 0
-mesh = SubResource( 14 )
-skeleton = NodePath("")
-material/0 = SubResource( 29 )
-
 [node name="MouseConstraints" type="Spatial" parent="Environment"]
 visible = false
 
@@ -236,15 +215,11 @@ material/0 = SubResource( 32 )
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -44.9232 )
 shape = SubResource( 35 )
 
-[node name="ComputerViewport" type="Viewport" parent="."]
-size = Vector2( 320, 240 )
-handle_input_locally = false
-hdr = false
-disable_3d = true
-usage = 0
-render_target_v_flip = true
+[node name="Computer" parent="Environment" instance=ExtResource( 18 )]
+transform = Transform( 1.33326, -0.687322, 3.00438e-08, 0, -6.55671e-08, -1.5, 0.687322, 1.33326, -5.82787e-08, 49.4118, 18.2542, -22.2414 )
 
-[node name="Control" parent="ComputerViewport" instance=ExtResource( 17 )]
+[node name="Hotdog" parent="." instance=ExtResource( 16 )]
+transform = Transform( 1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, -20.7874, -2.73842, 10.3916 )
 
-[node name="Hotdog" parent="." instance=ExtResource( 13 )]
-transform = Transform( 1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, -20.2626, -5.6088, 8.89218 )
+[node name="Hotdog2" parent="." instance=ExtResource( 16 )]
+transform = Transform( 1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, -14.548, -2.73842, 13.8083 )

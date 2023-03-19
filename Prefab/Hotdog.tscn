@@ -1,8 +1,11 @@
-[gd_scene load_steps=9 format=2]
+[gd_scene load_steps=14 format=2]
 
 [ext_resource path="res://Scripts/Hotdog.cs" type="Script" id=1]
 [ext_resource path="res://Scripts/GrabableObject.cs" type="Script" id=2]
+[ext_resource path="res://Skeleton.gd" type="Script" id=3]
 [ext_resource path="res://Assets/Materials/Hotdog.material" type="Material" id=4]
+[ext_resource path="res://decalco/src/Decal.shader" type="Shader" id=5]
+[ext_resource path="res://Assets/Textures/buttonIconLightbulb.png" type="Texture" id=6]
 
 [sub_resource type="CapsuleShape" id=6]
 height = 11.0
@@ -38,11 +41,28 @@ bind/3/name = "toptopdog"
 bind/3/bone = -1
 bind/3/pose = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -3, 0 )
 
-[sub_resource type="CapsuleShape" id=4]
+[sub_resource type="CubeMesh" id=7]
+
+[sub_resource type="ShaderMaterial" id=8]
+shader = ExtResource( 5 )
+shader_param/albedo_tint = Color( 1, 1, 1, 1 )
+shader_param/emission_tint = Color( 0, 0, 0, 1 )
+shader_param/emission_strength = 1.0
+shader_param/occlusion_strength = 1.0
+shader_param/specular_strength = 1.0
+shader_param/metallic_strength = 1.0
+shader_param/animation_speed = 1.0
+shader_param/flipbook_columns_count = 1
+shader_param/one_shot = false
+shader_param/start_time = null
+shader_param/current_frame_blend = 0.0
+shader_param/use_normal_map = false
+shader_param/albedo = ExtResource( 6 )
+
+[sub_resource type="CapsuleShape" id=9]
 height = 4.0
 
-[sub_resource type="CapsuleShape" id=5]
-margin = 0.083
+[sub_resource type="CapsuleShape" id=10]
 height = 4.0
 
 [node name="Hotdog" type="Spatial"]
@@ -79,51 +99,48 @@ bones/3/parent = 0
 bones/3/rest = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 4, 0 )
 bones/3/enabled = true
 bones/3/bound_children = [  ]
+script = ExtResource( 3 )
 
 [node name="SkeletalMesh" type="MeshInstance" parent="HotdogBody/Skeleton"]
 mesh = SubResource( 2 )
 skin = SubResource( 3 )
 
-[node name="TopBone" type="PhysicalBone" parent="HotdogBody/Skeleton"]
+[node name="SerialCode" type="MeshInstance" parent="HotdogBody/Skeleton"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -4.35914, -1.55513 )
+mesh = SubResource( 7 )
+skeleton = NodePath("")
+material/0 = SubResource( 8 )
+
+[node name="Physical Bone topdog" type="PhysicalBone" parent="HotdogBody/Skeleton"]
 transform = Transform( -1, 0, 0, 0, 0, 1, 0, 1, 0, 0, -2, 0 )
 joint_type = 3
 joint_offset = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 1 )
 body_offset = Transform( -1, 0, 0, 0, 0, 1, 0, 1, 0, 0, -1, 0 )
-mass = 50.96
-weight = 764.4
-friction = 0.8
-bounce = 0.27
-gravity_scale = 3.02
 bone_name = "topdog"
-joint_constraints/angular_limit_enabled = true
-joint_constraints/angular_limit_upper = 40.9
-joint_constraints/angular_limit_lower = -51.91
-joint_constraints/angular_limit_bias = 0.2
+joint_constraints/angular_limit_enabled = false
+joint_constraints/angular_limit_upper = 90.0
+joint_constraints/angular_limit_lower = -90.0
+joint_constraints/angular_limit_bias = 0.3
 joint_constraints/angular_limit_softness = 0.9
 joint_constraints/angular_limit_relaxation = 1.0
 
-[node name="CollisionShape" type="CollisionShape" parent="HotdogBody/Skeleton/TopBone"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -1.69747 )
-shape = SubResource( 4 )
+[node name="CollisionShape" type="CollisionShape" parent="HotdogBody/Skeleton/Physical Bone topdog"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -2.52903e-07, 5.78574 )
+shape = SubResource( 9 )
 
-[node name="BottomBone" type="PhysicalBone" parent="HotdogBody/Skeleton"]
-transform = Transform( -1, 1.50996e-07, 6.60024e-15, 0, -4.37114e-08, 1, 1.50996e-07, 1, 4.37114e-08, 0, -4.5, 1.27898e-13 )
+[node name="Physical Bone middledog" type="PhysicalBone" parent="HotdogBody/Skeleton"]
+transform = Transform( -1, 0, 0, 0, 0, 1, 0, 1, 0, 0, -4.5, -1.42109e-14 )
 joint_type = 3
-joint_offset = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -2.88412e-20, -6.55672e-08, 1.5 )
-body_offset = Transform( -1, 1.50996e-07, 6.60024e-15, 0, -4.37114e-08, 1, 1.50996e-07, 1, 4.37114e-08, 0, -1.5, 1.27898e-13 )
-mass = 51.8943
-weight = 778.414
-friction = 0.63
-bounce = 0.64
-gravity_scale = 3.04
+joint_offset = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.42109e-14, 1.5 )
+body_offset = Transform( -1, 0, 0, 0, 0, 1, 0, 1, 0, 0, -1.5, -1.42109e-14 )
 bone_name = "middledog"
-joint_constraints/angular_limit_enabled = true
-joint_constraints/angular_limit_upper = 36.26
-joint_constraints/angular_limit_lower = -47.9
-joint_constraints/angular_limit_bias = 0.13
+joint_constraints/angular_limit_enabled = false
+joint_constraints/angular_limit_upper = 90.0
+joint_constraints/angular_limit_lower = -90.0
+joint_constraints/angular_limit_bias = 0.3
 joint_constraints/angular_limit_softness = 0.9
 joint_constraints/angular_limit_relaxation = 1.0
 
-[node name="CollisionShape" type="CollisionShape" parent="HotdogBody/Skeleton/BottomBone"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 7.77375 )
-shape = SubResource( 5 )
+[node name="CollisionShape" type="CollisionShape" parent="HotdogBody/Skeleton/Physical Bone middledog"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -4.16704e-08, 0.953308 )
+shape = SubResource( 10 )

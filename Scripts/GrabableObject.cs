@@ -21,15 +21,15 @@ public class GrabableObject : KinematicBody
     public override void _Ready()
     {
         base._Ready();
-        skeleton = GetNode<Skeleton>("Skeleton"); 
-        bone = skeleton.GetNode<PhysicalBone>("TopBone");
-        skeleton.PhysicalBonesStartSimulation();
+        skeleton = GetNode<Skeleton>("Skeleton");
+        bone = skeleton.GetNode<PhysicalBone>("Physical Bone topdog");
+        // skeleton.PhysicalBonesStartSimulation();
     }
 
     public void Grab()
     {
         isGrabbed = true;
-        skeleton.PhysicalBonesStopSimulation();
+        // skeleton.PhysicalBonesStopSimulation();
     }
 
     public void UpdateTargetPosition(Vector3 newPosition)
@@ -39,7 +39,7 @@ public class GrabableObject : KinematicBody
 
     public void Drop()
     {
-        skeleton.PhysicalBonesStartSimulation();
+        // skeleton.PhysicalBonesStartSimulation();
         isGrabbed = false; 
         
         GD.Print(skeleton.ToString());
