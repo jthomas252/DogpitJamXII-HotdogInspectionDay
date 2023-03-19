@@ -1,14 +1,8 @@
-[gd_scene load_steps=14 format=2]
+[gd_scene load_steps=7 format=2]
 
 [ext_resource path="res://Scripts/Hotdog.cs" type="Script" id=1]
 [ext_resource path="res://Scripts/GrabableObject.cs" type="Script" id=2]
-[ext_resource path="res://Skeleton.gd" type="Script" id=3]
 [ext_resource path="res://Assets/Materials/Hotdog.material" type="Material" id=4]
-[ext_resource path="res://decalco/src/Decal.shader" type="Shader" id=5]
-[ext_resource path="res://Assets/Textures/buttonIconLightbulb.png" type="Texture" id=6]
-
-[sub_resource type="CapsuleShape" id=6]
-height = 11.0
 
 [sub_resource type="ArrayMesh" id=2]
 resource_name = "hotdog_fixed_Cube001"
@@ -41,106 +35,23 @@ bind/3/name = "toptopdog"
 bind/3/bone = -1
 bind/3/pose = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -3, 0 )
 
-[sub_resource type="CubeMesh" id=7]
+[sub_resource type="CapsuleShape" id=4]
+height = 11.272
 
-[sub_resource type="ShaderMaterial" id=8]
-shader = ExtResource( 5 )
-shader_param/albedo_tint = Color( 1, 1, 1, 1 )
-shader_param/emission_tint = Color( 0, 0, 0, 1 )
-shader_param/emission_strength = 1.0
-shader_param/occlusion_strength = 1.0
-shader_param/specular_strength = 1.0
-shader_param/metallic_strength = 1.0
-shader_param/animation_speed = 1.0
-shader_param/flipbook_columns_count = 1
-shader_param/one_shot = false
-shader_param/start_time = null
-shader_param/current_frame_blend = 0.0
-shader_param/use_normal_map = false
-shader_param/albedo = ExtResource( 6 )
-
-[sub_resource type="CapsuleShape" id=9]
-height = 4.0
-
-[sub_resource type="CapsuleShape" id=10]
-height = 4.0
-
-[node name="Hotdog" type="Spatial"]
+[node name="BonelessHotdog" type="Spatial"]
 transform = Transform( 1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 0 )
 script = ExtResource( 1 )
 
-[node name="HotdogBody" type="KinematicBody" parent="."]
-collision_layer = 6
-collision_mask = 6
+[node name="GrabableObject" type="RigidBody" parent="."]
+collision_layer = 3
+collision_mask = 3
 script = ExtResource( 2 )
 
-[node name="InteractShape" type="CollisionShape" parent="HotdogBody"]
-transform = Transform( 1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 0 )
-shape = SubResource( 6 )
-
-[node name="Skeleton" type="Skeleton" parent="HotdogBody"]
-bones/0/name = "topdog"
-bones/0/parent = -1
-bones/0/rest = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1, 0 )
-bones/0/enabled = true
-bones/0/bound_children = [  ]
-bones/1/name = "middledog"
-bones/1/parent = 0
-bones/1/rest = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -2, 0 )
-bones/1/enabled = true
-bones/1/bound_children = [  ]
-bones/2/name = "lowdog"
-bones/2/parent = 1
-bones/2/rest = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -3, 0 )
-bones/2/enabled = true
-bones/2/bound_children = [  ]
-bones/3/name = "toptopdog"
-bones/3/parent = 0
-bones/3/rest = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 4, 0 )
-bones/3/enabled = true
-bones/3/bound_children = [  ]
-script = ExtResource( 3 )
-
-[node name="SkeletalMesh" type="MeshInstance" parent="HotdogBody/Skeleton"]
+[node name="HotdogMesh" type="MeshInstance" parent="GrabableObject"]
 mesh = SubResource( 2 )
 skin = SubResource( 3 )
-
-[node name="SerialCode" type="MeshInstance" parent="HotdogBody/Skeleton"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -4.35914, -1.55513 )
-mesh = SubResource( 7 )
 skeleton = NodePath("")
-material/0 = SubResource( 8 )
 
-[node name="Physical Bone topdog" type="PhysicalBone" parent="HotdogBody/Skeleton"]
-transform = Transform( -1, 0, 0, 0, 0, 1, 0, 1, 0, 0, -2, 0 )
-joint_type = 3
-joint_offset = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 1 )
-body_offset = Transform( -1, 0, 0, 0, 0, 1, 0, 1, 0, 0, -1, 0 )
-bone_name = "topdog"
-joint_constraints/angular_limit_enabled = false
-joint_constraints/angular_limit_upper = 90.0
-joint_constraints/angular_limit_lower = -90.0
-joint_constraints/angular_limit_bias = 0.3
-joint_constraints/angular_limit_softness = 0.9
-joint_constraints/angular_limit_relaxation = 1.0
-
-[node name="CollisionShape" type="CollisionShape" parent="HotdogBody/Skeleton/Physical Bone topdog"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -2.52903e-07, 5.78574 )
-shape = SubResource( 9 )
-
-[node name="Physical Bone middledog" type="PhysicalBone" parent="HotdogBody/Skeleton"]
-transform = Transform( -1, 0, 0, 0, 0, 1, 0, 1, 0, 0, -4.5, -1.42109e-14 )
-joint_type = 3
-joint_offset = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.42109e-14, 1.5 )
-body_offset = Transform( -1, 0, 0, 0, 0, 1, 0, 1, 0, 0, -1.5, -1.42109e-14 )
-bone_name = "middledog"
-joint_constraints/angular_limit_enabled = false
-joint_constraints/angular_limit_upper = 90.0
-joint_constraints/angular_limit_lower = -90.0
-joint_constraints/angular_limit_bias = 0.3
-joint_constraints/angular_limit_softness = 0.9
-joint_constraints/angular_limit_relaxation = 1.0
-
-[node name="CollisionShape" type="CollisionShape" parent="HotdogBody/Skeleton/Physical Bone middledog"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -4.16704e-08, 0.953308 )
-shape = SubResource( 10 )
+[node name="CollisionShape" type="CollisionShape" parent="GrabableObject"]
+transform = Transform( 1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 0 )
+shape = SubResource( 4 )

@@ -4,10 +4,11 @@ using System.Numerics;
 using Vector2 = Godot.Vector2;
 using Vector3 = Godot.Vector3;
 
-public class GrabableObject : KinematicBody
+public class GrabableObject : RigidBody
 {
-    private readonly float MOVE_DISTANCE_THRESHOLD = 1f;
-    private readonly float MOVEMENT_DISTANCE_SCALE = 10f;
+    private readonly float MOVE_DISTANCE_THRESHOLD = 5f;
+    private readonly float MOVEMENT_DISTANCE_SCALE = 1f;
+    private readonly float ROTATION_MOUSE_SCALE = 0.01f;
 
     private bool isGrabbed = false;
     private Vector3 targetPosition;
@@ -18,18 +19,21 @@ public class GrabableObject : KinematicBody
 
     private Vector2 mouseOffset = new Vector2(0f,0f);
 
-    public override void _Ready()
-    {
-        base._Ready();
-        skeleton = GetNode<Skeleton>("Skeleton");
-        bone = skeleton.GetNode<PhysicalBone>("Physical Bone topdog");
-        // skeleton.PhysicalBonesStartSimulation();
-    }
+    // public override void _Ready()
+    // {
+    //     base._Ready();
+    //     skeleton = GetNodeOrNull<Skeleton>("Skeleton");
+    //     bone = skeleton.GetNodeOrNull<PhysicalBone>("Physical Bone topdog");
+    //     skeleton.PhysicalBonesStartSimulation();
+    // }
 
     public void Grab()
     {
-        isGrabbed = true;
         // skeleton.PhysicalBonesStopSimulation();
+
+        GD.Print("Hotdog Grabbed");
+        isGrabbed = true;
+        Sleeping = true;
     }
 
     public void UpdateTargetPosition(Vector3 newPosition)
@@ -40,9 +44,10 @@ public class GrabableObject : KinematicBody
     public void Drop()
     {
         // skeleton.PhysicalBonesStartSimulation();
-        isGrabbed = false; 
         
-        GD.Print(skeleton.ToString());
+        GD.Print("Hotdog Dropped");
+        isGrabbed = false; 
+        Sleeping = false;
     }
 
     // public override void _UnhandledInput(InputEvent @event)
@@ -58,48 +63,57 @@ public class GrabableObject : KinematicBody
 
     public override void _PhysicsProcess(float delta)
     {
+        
         if (isGrabbed)
         {
             // Move and slide, if distance is within range
             float targetDistance = GlobalTranslation.DistanceTo(targetPosition);
-            if (targetDistance > MOVE_DISTANCE_THRESHOLD)
-            {
-                targetDirection = targetPosition - GlobalTranslation;
-                MoveAndSlide(targetDirection * MOVEMENT_DISTANCE_SCALE, Rotation);
-            }
-            else
-            {
-                targetDirection = targetPosition - GlobalTranslation;
-                MoveAndSlide(Vector3.Zero, targetDirection);
-            }
+            
+            GlobalTranslation = targetPosition;
+            
+            // if (targetDistance > MOVE_DISTANCE_THRESHOLD)
+            // {
+            //     targetDirection = targetPosition - GlobalTranslation;
+            //     // MoveAndSlide(targetDirection * MOVEMENT_DISTANCE_SCALE, Rotation);
+            //     SetAxisVelocity(targetDirection * MOVEMENT_DISTANCE_SCALE);
+            // }
+            // else
+            // {
+            //     targetDirection = targetPosition - GlobalTranslation;
+            //     // MoveAndSlide(Vector3.Zero, targetDirection);
+            //     SetAxisVelocity(Vector3.Zero);
+            // }
             
             // Rotate the object with shift pressed
-            if (Input.IsKeyPressed((int)KeyList.Shift))
+            if (Cursor.inInspectionMode)
             {
+                // TODO: Move this elsewhere, shouldn't need it every frame
+                Camera c = GetViewport().GetCamera();
+                
                 Vector2 mousePosition = (GetViewport().GetMousePosition() - mouseOffset);
                 
                 Transform transform = GlobalTransform;
                 transform.basis = transform.basis.Rotated(
-                    transform.basis[2], 
-                    mousePosition.x * 0.02f
+                    Input.IsKeyPressed((int)KeyList.Alt) ? c.Transform.basis[0] : c.Transform.basis[1], 
+                    mousePosition.x * ROTATION_MOUSE_SCALE
                 );
                 
                 transform.basis = transform.basis.Rotated(
-                     transform.basis[0], 
-                    mousePosition.y * 0.02f
+                     c.Transform.basis[2], 
+                    mousePosition.y * ROTATION_MOUSE_SCALE
                 );
                 GlobalTransform = transform;
 
                 mouseOffset = GetViewport().GetMousePosition();
             }
-            
-            
         }
-        else
-        {
-            MoveAndSlide(Vector3.Zero, Vector3.Up);
-            GlobalTranslation = bone.GlobalTranslation;
-            GlobalRotation = bone.GlobalRotation;
-        }
+        
+        // Logic if we go back to skeletons, keep the kinematic body lined up with bone. 
+        // else
+        // {
+        //     MoveAndSlide(Vector3.Zero, Vector3.Up);
+        //     GlobalTranslation = bone.GlobalTranslation;
+        //     GlobalRotation = bone.GlobalRotation;
+        // }
     }
 }

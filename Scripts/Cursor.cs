@@ -30,6 +30,8 @@ public class Cursor : Sprite3D
     private Vector3 objectHoldPoint;
     private CursorState cursorState;
     private Array ignoreObjects;
+    
+    public static bool inInspectionMode = false; 
 
     public override void _Ready()
     {
@@ -37,6 +39,26 @@ public class Cursor : Sprite3D
         inspectPoint = GetTree().CurrentScene.GetNode<Spatial>("Points/InspectPoint");
         objectHoldPoint = Vector3.Zero;
         cursorState = CursorState.HandOpen;
+    }
+
+    public override void _Input(InputEvent @event)
+    {
+        if (@event is InputEventMouse eventMouse)
+        {
+            if (eventMouse.IsPressed() && eventMouse.ButtonMask == (int)ButtonList.Left)
+            {
+                // Attempt to send a one-off to the relevant interact / grab object
+                GD.Print("One click");
+            }
+        }
+        
+        if (@event is InputEventKey eventKey)
+        {
+            if (eventKey.IsPressed() && eventKey.Scancode == (int)KeyList.Shift)
+            {
+                inInspectionMode = !inInspectionMode;
+            }
+        }        
     }
 
     public override void _Process(float delta)
@@ -49,6 +71,7 @@ public class Cursor : Sprite3D
         
         PhysicsDirectSpaceState spaceState = GetWorld().DirectSpaceState;
 
+        // TODO: Regenerate this when picking up a new object
         if (grabbedObject != null) ignoreObjects = new Array() { grabbedObject };
         
         // Always update cursor position
@@ -120,7 +143,7 @@ public class Cursor : Sprite3D
             grabbedObject = null;
         };
 
-        if (Input.IsKeyPressed((int)KeyList.Shift))
+        if (inInspectionMode)
         {
             grabbedObject?.UpdateTargetPosition(inspectPoint.GlobalTranslation);
         }
