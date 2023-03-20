@@ -19,7 +19,7 @@ margin_top = 3.0
 margin_right = 320.0
 margin_bottom = 240.0
 custom_fonts/font = ExtResource( 2 )
-text = "TEST TEST TEST asdf"
+text = "HOTDOG SCANNER"
 
 [node name="BodyRect" type="ColorRect" parent="."]
 margin_top = 20.0
@@ -39,7 +39,7 @@ text = "NO SIGNAL"
 margin_left = 3.0
 margin_top = 3.0
 margin_right = 320.0
-margin_bottom = 240.0
+margin_bottom = 220.0
 custom_fonts/font = ExtResource( 2 )
 valign = 2
 
@@ -48,7 +48,7 @@ visible = false
 margin_right = 320.0
 margin_bottom = 240.0
 
-[node name="ColorRect" type="ColorRect" parent="FlashRect"]
+[node name="SubRect" type="ColorRect" parent="FlashRect"]
 margin_left = 10.0
 margin_top = 10.0
 margin_right = 310.0

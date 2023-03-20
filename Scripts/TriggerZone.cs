@@ -13,7 +13,13 @@ public class TriggerZone : Area
     public virtual void OnChildEntered(Node node)
     {
         GD.Print($"Node entered ${node.ToString()}");
-        if (isKillZone) node.QueueFree();
+
+        if (node is RigidBody rigidBody)
+        {
+            GD.Print($"Hit at {rigidBody.LinearVelocity}");
+        }
+        
+        if (isKillZone && node is GrabbableObject) node.QueueFree();
     }
 
     public virtual void OnChildExited(Node node)

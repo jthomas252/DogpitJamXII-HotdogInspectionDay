@@ -46,7 +46,6 @@ public class ComputerScreen : Control
     {
         if (flashDuration > 0f)
         {
-            GD.Print(flashDuration);
             flashDuration -= delta;
             if (flashDuration < 0f) HideFlash();
         }

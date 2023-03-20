@@ -27,10 +27,19 @@ public class Cursor : Sprite3D
 
     private Camera camera;
     private Node hoverObject;
-    private GrabbableObject grabbedObject;
+    private Spatial grabbedObject;
     private Vector3 objectHoldPoint;
     private Array ignoreObjects;
     private PhysicsDirectSpaceState spaceState;
+    private MeshInstance debugCursor; 
+    
+    public enum CursorState
+    {
+        HandOpen,
+        HandClosed,
+        HandPoint,
+        HandClicked,
+    }
     
     public override void _Ready()
     {
@@ -38,6 +47,8 @@ public class Cursor : Sprite3D
         inspectPoint = GetTree().CurrentScene.GetNode<Spatial>("Points/InspectPoint");
         objectHoldPoint = Vector3.Zero;
         spaceState = GetWorld().DirectSpaceState;
+
+        debugCursor = GetNode<MeshInstance>("Debug");
     }
 
     private void AttemptInteraction()
@@ -48,6 +59,13 @@ public class Cursor : Sprite3D
             if (hoverObject is InteractableObject interactiveObject)
             {
                 interactiveObject.OnInteractedWith();
+                ChangeCursorState(CursorState.HandClicked);
+            }
+            
+            if (hoverObject is ViewableObject viewableObject)
+            {
+                viewableObject.Inspect();
+                grabbedObject = viewableObject;
                 ChangeCursorState(CursorState.HandClicked);
             }
 
@@ -66,8 +84,10 @@ public class Cursor : Sprite3D
         // Holding onto an object
         if (isGrabbing() && Input.IsMouseButtonPressed((int)ButtonList.Right))
         {
+            if (grabbedObject is GrabbableObject grabbableObject) grabbableObject.Drop();
+            if (grabbedObject is ViewableObject viewableObject) viewableObject.Drop();
+            
             // Drop the grabbed object, release the reference
-            grabbedObject.Drop();
             ChangeCursorState(CursorState.HandOpen);
             grabbedObject = null;
         }    
@@ -87,7 +107,15 @@ public class Cursor : Sprite3D
                         break;
                     
                     case (int)ButtonList.Right:
-                        DropObject();
+                        // Don't allow dropping the hotdog if it's currently in inspection mode, but cancel out instead
+                        if (BaseScene.GetPlayerState() != BaseScene.PlayerState.Inspecting)
+                        {
+                            DropObject();
+                        }
+                        else
+                        {
+                            BaseScene.ChangePlayerState(BaseScene.PlayerState.Grabbing);
+                        }
                         break;
                 }
             }
@@ -99,7 +127,7 @@ public class Cursor : Sprite3D
             {
                 switch (eventKey.Scancode)
                 {
-                    case (int)KeyList.Shift:
+                    case (int)KeyList.Q:
                         BaseScene.ChangePlayerState(
                             BaseScene.GetPlayerState() == BaseScene.PlayerState.Inspecting ? 
                             (isGrabbing() ? BaseScene.PlayerState.Grabbing : BaseScene.PlayerState.Normal) : 
@@ -131,13 +159,14 @@ public class Cursor : Sprite3D
         {
             Vector3 hitPoint = (Vector3)hand["position"];
             float distance = pos.DistanceTo(hitPoint);
-            objectHoldPoint = pos + (normal * (distance - holdOffset));
+            objectHoldPoint = pos + (normal * (distance)); 
         }
         else
         {
             objectHoldPoint = pos + (normal * cursorDistance);
         }
-        
+
+        debugCursor.GlobalTranslation = objectHoldPoint;
         Translation = pos + (normal * cursorDistance);
 
         // Check for object interactions
@@ -150,7 +179,7 @@ public class Cursor : Sprite3D
             {
                 hoverObject = (Node)interacts["collider"];
                 
-                if (interacts["collider"] is InteractableObject interactiveObject)
+                if (interacts["collider"] is InteractableObject interactiveObject && !Input.IsMouseButtonPressed((int)ButtonList.Left))
                 {
                     ChangeCursorState(CursorState.HandPoint);
                 }
@@ -164,13 +193,16 @@ public class Cursor : Sprite3D
         // Update the position of the grabbed object
         else
         {
-            if (BaseScene.GetPlayerState() == BaseScene.PlayerState.Inspecting)
+            if (grabbedObject is GrabbableObject grabbableObject)
             {
-                grabbedObject.UpdateTargetPosition(inspectPoint.GlobalTranslation);
-            }
-            else
-            {
-                grabbedObject.UpdateTargetPosition(objectHoldPoint);
+                if (BaseScene.GetPlayerState() == BaseScene.PlayerState.Inspecting)
+                {
+                    grabbableObject.UpdateTargetPosition(inspectPoint.GlobalTranslation);
+                }
+                else
+                {
+                    grabbableObject.UpdateTargetPosition(objectHoldPoint);
+                }
             }
         }
     }
@@ -178,14 +210,6 @@ public class Cursor : Sprite3D
     public bool isGrabbing()
     {
         return (grabbedObject != null);
-    }
-
-    private enum CursorState
-    {
-        HandOpen,
-        HandClosed,
-        HandPoint,
-        HandClicked,
     }
 
     private void ChangeCursorState(CursorState state)

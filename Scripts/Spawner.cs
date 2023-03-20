@@ -21,7 +21,7 @@ public class Spawner : Spatial
         if (spawnsAvailable > 0)
         {
             // Randomly choose one type of hotdog from a random roll, then drop it out the spawner
-            Spatial dog = (Spatial)hotdog.Instance();
+            Hotdog dog = (Hotdog)hotdog.Instance();
 
             dog.Translation = GlobalTranslation + spawnPoint;
             dog.Rotation = new Vector3(GD.Randf() * 45, GD.Randf() * 45, GD.Randf() * 45);
@@ -33,6 +33,7 @@ public class Spawner : Spatial
         else
         {
             GD.Print("No more hotdogs!");
+            ComputerScreen.PlayErrorSound();
         }
     }
 }

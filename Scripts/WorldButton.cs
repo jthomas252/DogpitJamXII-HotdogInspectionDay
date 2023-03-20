@@ -21,6 +21,5 @@ public class WorldButton:Node
     {
         EmitSignal(nameof(Pressed));
         _sound.Play();
-        GD.Print(_sound.Playing.ToString());
     }
 }

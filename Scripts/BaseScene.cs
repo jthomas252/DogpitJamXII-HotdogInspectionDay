@@ -4,7 +4,13 @@ using System;
 public class BaseScene : Spatial
 {
 	[Signal]
-	public delegate void OnStateChange();
+	public delegate void Inspection();
+
+	[Signal]
+	public delegate void Grabbed();
+	
+	[Signal]
+	public delegate void Normal();
 	
 	public enum PlayerState
 	{
@@ -20,8 +26,27 @@ public class BaseScene : Spatial
 
 	public static void ChangePlayerState(PlayerState newState)
 	{
-		// Emit an event and change the state accordingly 
+		GD.Print($"SWITCHED TO STATE {_currentState.ToString()}");
+		
 		_currentState = newState;
+		ComputerScreen.UpdateBodyBottomText(_currentState.ToString());
+		
+		// Emit an event and change the state accordingly 
+		switch (_currentState)
+		{
+			case PlayerState.Inspecting:
+				_instance.EmitEvent("Inspection");
+				break; 
+			
+			case PlayerState.Grabbing:
+				_instance.EmitEvent("Grabbed");
+				break;
+			
+			default:
+			case PlayerState.Normal:
+				_instance.EmitEvent("Normal");
+				break;
+		}
 	}
 
 	public static PlayerState GetPlayerState()
@@ -42,5 +67,13 @@ public class BaseScene : Spatial
 	{
 		GetTree().Paused = true; 
 		GD.Print("Received an input from the menu button.");
+	}
+
+	/**
+	 * So we can call Emit from a static function
+	 */
+	private void EmitEvent(string ev)
+	{
+		EmitSignal(ev);
 	}
 }

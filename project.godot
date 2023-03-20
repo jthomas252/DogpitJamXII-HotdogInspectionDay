@@ -24,6 +24,10 @@ window/stretch/mode="2d"
 
 enabled=PoolStringArray(  )
 
+[global]
+
+grav=false
+
 [gui]
 
 common/drop_mouse_on_gui_input_disabled=true
@@ -35,7 +39,9 @@ project/assembly_name="Dogpit Jam Xii"
 [physics]
 
 common/enable_pause_aware_picking=true
-3d/default_gravity=15.0
+3d/default_gravity=40.0
+3d/default_linear_damp=-0.995
+3d/default_angular_damp=-1.0
 
 [rendering]
 
