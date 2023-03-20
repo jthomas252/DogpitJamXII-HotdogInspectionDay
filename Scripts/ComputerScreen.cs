@@ -3,6 +3,11 @@ using System;
 
 public class ComputerScreen : Control
 {
+    private const float FLASH_DURATION = 2.5f;
+    
+    [Export] public AudioStream errorSound;
+    [Export] public AudioStream successSound;
+    
     private static ComputerScreen _instance; 
     
     private ColorRect headerRect;
@@ -16,6 +21,7 @@ public class ComputerScreen : Control
     private Label flashText;
 
     private AudioStreamPlayer3D audioPlayer;
+    private float flashDuration;
 
     public override void _Ready()
     {
@@ -26,7 +32,24 @@ public class ComputerScreen : Control
         
         bodyRect = GetNode<ColorRect>("BodyRect");
         bodyTopText = bodyRect.GetNode<Label>("TopText");        
-        bodyBottomText = bodyRect.GetNode<Label>("BottomText");        
+        bodyBottomText = bodyRect.GetNode<Label>("BottomText");
+
+        flashRect = GetNode<ColorRect>("FlashRect");
+        flashText = flashRect.GetNode<Label>("Text");
+        
+        audioPlayer = GetNode<AudioStreamPlayer3D>("Sound");
+
+        flashDuration = 0;
+    }
+
+    public override void _Process(float delta)
+    {
+        if (flashDuration > 0f)
+        {
+            GD.Print(flashDuration);
+            flashDuration -= delta;
+            if (flashDuration < 0f) HideFlash();
+        }
     }
 
     public static void UpdateHeaderText(string newText)
@@ -47,12 +70,19 @@ public class ComputerScreen : Control
             _instance.bodyBottomText.Text = newText;
     }
 
+    public static void HideFlash()
+    {
+        _instance.flashRect.Visible = false;
+    }
+
     /**
      * Pop up a message on the computer screen for a moment
      */
     public static void FlashMessage(string flashText)
     {
-        
+        _instance.flashRect.Visible = true;
+        _instance.flashText.Text = flashText;
+        _instance.flashDuration = FLASH_DURATION;
     }
 
     /**
@@ -60,14 +90,38 @@ public class ComputerScreen : Control
      */
     public static void FlashWarningMessage(string flashText)
     {
-        
+        _instance.flashRect.Visible = true;
+        _instance.flashText.Text = flashText;
+        _instance.flashDuration = FLASH_DURATION;
     }
 
+    public static void PlaySuccessSound()
+    {
+        if (!_instance.audioPlayer.Playing)
+        {
+            _instance.audioPlayer.Stream = _instance.successSound;
+            _instance.audioPlayer.Play();
+        }
+    }
+    
+    public static void PlayErrorSound()
+    {
+        if (!_instance.audioPlayer.Playing)
+        {
+            _instance.audioPlayer.Stream = _instance.errorSound;
+            _instance.audioPlayer.Play();
+        }        
+    }
+    
     /**
      * Play a sound effect at the computer
      */
-    public static void PlaySound(AudioStream stream)
+    public static void PlayAudioStream(AudioStream stream)
     {
-        
+        if (!_instance.audioPlayer.Playing)
+        {
+            _instance.audioPlayer.Stream = stream;
+            _instance.audioPlayer.Play();
+        }          
     }
 }

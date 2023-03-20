@@ -1,8 +1,9 @@
-[gd_scene load_steps=7 format=2]
+[gd_scene load_steps=8 format=2]
 
 [ext_resource path="res://Scripts/InteractableObject.cs" type="Script" id=1]
 [ext_resource path="res://Assets/Materials/GreenPlasticTransparent.tres" type="Material" id=2]
 [ext_resource path="res://Assets/Materials/EnvironmentFloor.tres" type="Material" id=3]
+[ext_resource path="res://Assets/Sounds/UtilityButton_2.ogg" type="AudioStream" id=4]
 
 [sub_resource type="CapsuleShape" id=1]
 radius = 2.304
@@ -39,3 +40,5 @@ light_energy = 3.852
 omni_range = 1.0
 
 [node name="Sound" type="AudioStreamPlayer3D" parent="."]
+stream = ExtResource( 4 )
+unit_db = 20.0

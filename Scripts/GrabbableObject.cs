@@ -33,6 +33,8 @@ public class GrabbableObject : RigidBody
 
     public void Drop()
     {
+        ComputerScreen.FlashMessage("HOTDOG DROPPED");
+        ComputerScreen.PlayErrorSound();
         GD.Print("Hotdog Dropped");
         isGrabbed = false; 
     }
@@ -42,23 +44,26 @@ public class GrabbableObject : RigidBody
         // TODO: Change this to a state
         if (isGrabbed)
         {
+            // Use for inspect mode and when I'm sick of physics bullshit
+            GlobalTranslation = targetPosition;
+            
             // Move and slide, if distance is within range
-            float targetDistance = GlobalTranslation.DistanceTo(targetPosition);
-            if (targetDistance > MOVEMENT_DISTANCE_THRESHOLD)
-            {
-                SetAxisVelocity(GlobalTranslation.DirectionTo(targetPosition) * (targetDistance * delta * MOVEMENT_SCALE));
-            }
-            else
-            {
-                AngularVelocity = Vector3.Zero;
-                LinearVelocity = Vector3.Zero;
-            }
-
-            ComputerScreen.UpdateBodyText(
-                $"DIR: {GlobalTranslation.DirectionTo(targetPosition).ToString()}\n" +
-                $"VEL: {LinearVelocity.ToString()}\n" +
-                $"DIS: {targetDistance.ToString()}\n"
-            );
+            // float targetDistance = GlobalTranslation.DistanceTo(targetPosition);
+            // if (targetDistance > MOVEMENT_DISTANCE_THRESHOLD)
+            // {
+            //     SetAxisVelocity(GlobalTranslation.DirectionTo(targetPosition) * (targetDistance * delta * MOVEMENT_SCALE));
+            // }
+            // else
+            // {
+            //     AngularVelocity = Vector3.Zero;
+            //     LinearVelocity = Vector3.Zero;
+            // }
+            //
+            // ComputerScreen.UpdateBodyText(
+            //     $"DIR: {GlobalTranslation.DirectionTo(targetPosition).ToString()}\n" +
+            //     $"VEL: {LinearVelocity.ToString()}\n" +
+            //     $"DIS: {targetDistance.ToString()}\n"
+            // );
             
             // Rotate the object with shift pressed
             if (BaseScene.GetPlayerState() == BaseScene.PlayerState.Inspecting)
@@ -68,7 +73,7 @@ public class GrabbableObject : RigidBody
                 
                 Transform transform = GlobalTransform;
                 transform.basis = transform.basis.Rotated(
-                    camera.Transform.basis[1], 
+                    Input.IsKeyPressed((int)KeyList.Alt) ? camera.Transform.basis[0] : camera.Transform.basis[1], 
                     mousePosition.x * ROTATION_MOUSE_SCALE
                 );
                 

@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/SpawnerWarning_1.ogg-33d3c983f703a6a36ee56d7efc94d05b.oggstr"
+
+[deps]
+
+source_file="res://Assets/Sounds/SpawnerWarning_1.ogg"
+dest_files=[ "res://.import/SpawnerWarning_1.ogg-33d3c983f703a6a36ee56d7efc94d05b.oggstr" ]
+
+[params]
+
+loop=false
+loop_offset=0

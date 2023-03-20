@@ -13,8 +13,7 @@
 [ext_resource path="res://Scripts/Cursor.cs" type="Script" id=11]
 [ext_resource path="res://Prefab/default_env.tres" type="Environment" id=12]
 [ext_resource path="res://Scripts/WorldButton.cs" type="Script" id=13]
-[ext_resource path="res://Prefab/RedButton.tscn" type="PackedScene" id=14]
-[ext_resource path="res://Prefab/IconButton.tscn" type="PackedScene" id=15]
+[ext_resource path="res://Scripts/TriggerZone.cs" type="Script" id=14]
 [ext_resource path="res://Prefab/Hotdog.tscn" type="PackedScene" id=16]
 [ext_resource path="res://Scripts/Spawner.cs" type="Script" id=17]
 [ext_resource path="res://Prefab/ComputerPrefab.tscn" type="PackedScene" id=18]
@@ -59,6 +58,9 @@ data = PoolVector3Array( -50, 100, 2.5, 50, 100, 2.5, -50, -100, 2.5, 50, 100, 2
 
 [sub_resource type="CubeMesh" id=36]
 
+[sub_resource type="BoxShape" id=37]
+extents = Vector3( 200, 5, 200 )
+
 [node name="SceneRoot" type="Spatial"]
 script = ExtResource( 1 )
 
@@ -93,15 +95,9 @@ transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3.06537, 3.21453 )
 visible = false
 mesh = SubResource( 30 )
 
-[node name="AcceptButton" parent="." instance=ExtResource( 9 )]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 20, -10.5, 20 )
+[node name="SpawnButton" parent="." instance=ExtResource( 9 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -52.4307, -10.5, 8.78572 )
 script = ExtResource( 13 )
-
-[node name="DenyButton" parent="." instance=ExtResource( 14 )]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 25, -10.5, 20 )
-
-[node name="LightToggleButton" parent="." instance=ExtResource( 15 )]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 30, -10.5, 20 )
 
 [node name="Lights" type="Spatial" parent="."]
 
@@ -237,4 +233,12 @@ skeleton = NodePath("")
 script = ExtResource( 17 )
 hotdog = ExtResource( 16 )
 
-[connection signal="Pressed" from="AcceptButton" to="Spawner" method="OnSpawnButton"]
+[node name="Kill" type="Area" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 53.7074, -50.838, 4.98852 )
+script = ExtResource( 14 )
+isKillZone = true
+
+[node name="CollisionShape" type="CollisionShape" parent="Kill"]
+shape = SubResource( 37 )
+
+[connection signal="Pressed" from="SpawnButton" to="Spawner" method="OnSpawnButton"]
