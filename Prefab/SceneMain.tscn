@@ -1,4 +1,4 @@
-[gd_scene load_steps=32 format=2]
+[gd_scene load_steps=34 format=2]
 
 [ext_resource path="res://Scripts/BaseScene.cs" type="Script" id=1]
 [ext_resource path="res://Assets/Textures/cursor_clicked.png" type="Texture" id=2]
@@ -14,9 +14,11 @@
 [ext_resource path="res://Prefab/default_env.tres" type="Environment" id=12]
 [ext_resource path="res://Scripts/WorldButton.cs" type="Script" id=13]
 [ext_resource path="res://Scripts/TriggerZone.cs" type="Script" id=14]
+[ext_resource path="res://Assets/Models/trashcan/trashcan.obj" type="ArrayMesh" id=15]
 [ext_resource path="res://Prefab/Hotdog.tscn" type="PackedScene" id=16]
 [ext_resource path="res://Scripts/Spawner.cs" type="Script" id=17]
 [ext_resource path="res://Prefab/ComputerPrefab.tscn" type="PackedScene" id=18]
+[ext_resource path="res://Assets/Materials/trashcan.tres" type="Material" id=19]
 
 [sub_resource type="CubeMesh" id=30]
 
@@ -219,6 +221,11 @@ shape = SubResource( 35 )
 [node name="Computer" parent="Environment" instance=ExtResource( 18 )]
 transform = Transform( 1.33326, -0.687322, 3.00438e-08, 0, -6.55671e-08, -1.5, 0.687322, 1.33326, -5.82787e-08, 49.4118, 18.2542, -22.2414 )
 
+[node name="Trashcan" type="MeshInstance" parent="Environment"]
+transform = Transform( -4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -14.549, -25.647, -4.337 )
+mesh = ExtResource( 15 )
+material/0 = ExtResource( 19 )
+
 [node name="Hotdog" parent="." instance=ExtResource( 16 )]
 transform = Transform( 1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, -20.7874, -2.73842, 10.3916 )
 
@@ -236,7 +243,6 @@ hotdog = ExtResource( 16 )
 [node name="Kill" type="Area" parent="."]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 53.7074, -50.838, 4.98852 )
 script = ExtResource( 14 )
-isKillZone = true
 
 [node name="CollisionShape" type="CollisionShape" parent="Kill"]
 shape = SubResource( 37 )
