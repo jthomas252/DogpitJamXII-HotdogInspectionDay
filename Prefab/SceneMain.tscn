@@ -1,4 +1,4 @@
-[gd_scene load_steps=42 format=2]
+[gd_scene load_steps=43 format=2]
 
 [ext_resource path="res://Scripts/BaseScene.cs" type="Script" id=1]
 [ext_resource path="res://Assets/Textures/cursor_clicked.png" type="Texture" id=2]
@@ -22,6 +22,7 @@
 [ext_resource path="res://Scripts/ScanZone.cs" type="Script" id=20]
 [ext_resource path="res://Scripts/ViewableObject.cs" type="Script" id=21]
 [ext_resource path="res://Assets/Textures/handbook/handbook_serial_numbers.png" type="Texture" id=22]
+[ext_resource path="res://Prefab/spawner_tube.tscn" type="PackedScene" id=23]
 
 [sub_resource type="SphereMesh" id=39]
 
@@ -312,5 +313,8 @@ texture = ExtResource( 22 )
 
 [node name="CollisionShape" type="CollisionShape" parent="KinematicBody"]
 shape = SubResource( 45 )
+
+[node name="spawner_tube" parent="." instance=ExtResource( 23 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -39.1366, -7.54769, -28.963 )
 
 [connection signal="Pressed" from="SpawnButton" to="Spawner" method="OnSpawnButton"]

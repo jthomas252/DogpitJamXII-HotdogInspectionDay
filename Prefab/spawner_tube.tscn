@@ -1,0 +1,11 @@
+[gd_scene load_steps=4 format=2]
+
+[ext_resource path="res://Assets/Models/spawner_tube/hose.material" type="Material" id=1]
+[ext_resource path="res://Assets/Models/spawner_tube/snout.material" type="Material" id=2]
+[ext_resource path="res://Assets/Models/spawner_tube/spawner_tube.fbx" type="PackedScene" id=3]
+
+[node name="spawner_tube" instance=ExtResource( 3 )]
+
+[node name="spawner_tube" parent="RootNode" index="0"]
+material/0 = ExtResource( 1 )
+material/1 = ExtResource( 2 )
