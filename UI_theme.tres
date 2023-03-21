@@ -1,0 +1,17 @@
+[gd_resource type="Theme" load_steps=5 format=2]
+
+[ext_resource path="res://Assets/Fonts/StencilFont.tres" type="DynamicFont" id=1]
+[ext_resource path="res://button_style_pressed.tres" type="StyleBox" id=2]
+[ext_resource path="res://button_style_hover.tres" type="StyleBox" id=3]
+[ext_resource path="res://button_style_normal.tres" type="StyleBox" id=4]
+
+[resource]
+default_font = ExtResource( 1 )
+/styles/test = null
+Button/colors/font_color = Color( 0.129412, 0.109804, 0.109804, 1 )
+Button/colors/font_color_hover = Color( 0.227451, 0.188235, 0.160784, 1 )
+Button/colors/font_color_pressed = Color( 0.0666667, 0.0588235, 0.0588235, 1 )
+Button/fonts/font = ExtResource( 1 )
+Button/styles/hover = ExtResource( 3 )
+Button/styles/normal = ExtResource( 4 )
+Button/styles/pressed = ExtResource( 2 )

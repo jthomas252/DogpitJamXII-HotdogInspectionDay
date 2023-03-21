@@ -33,14 +33,11 @@
     - Food and dog administration 
 
 # Unsorted
+- Solve errors with the inspect prev/next function
+
 - Come up with a name for the game
 	- 917: Hotdog Inspection Day
 	- Food and Dog Administration
-
-- Add forward and back buttons for documents
-	- Should call Inspect() on the next document
-	- Use interactable object child with Sprite3D 
-	- Create forward, back, and X icons
 
 - Add a SpawnGeneric to the Spawner
 
@@ -97,8 +94,6 @@
 
 - Generate a radioactivity score (scale for failures)
 
-- Generate a dirt score (scale randomly)
-
 - Generate a coldnesss stat (requires thawing)
 
 - Generate a icon field on the hotdog 
@@ -131,7 +126,7 @@
 	- Place in water basin to clean out
 
 # Model
-- Play generic animation on model
+- Play generic animation on model via script
 
 # Rat
 - Add rat spawn

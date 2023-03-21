@@ -7,7 +7,8 @@ public class ViewableObject : KinematicBody
     private Vector3 _originalRotation;
     private Spatial _inspectPoint;
     private Sprite3D _sprite;
-
+    protected bool _inspecting = false;
+    
     public override void _Ready()
     {
         _originalPoint = GlobalTranslation;
@@ -16,23 +17,28 @@ public class ViewableObject : KinematicBody
         _sprite = GetNode<Sprite3D>("Sprite3D");
     }
 
-    public void Inspect()
+    public virtual void Inspect()
     {
-        GD.Print("Document grabbed");
+        if (_inspecting) return;
+        GD.Print($"Document grabbed {Name}");
         
         GlobalTranslation = _inspectPoint.GlobalTranslation;
         GlobalRotation = _inspectPoint.GlobalRotation;
 
         _sprite.Billboard = SpatialMaterial.BillboardMode.Enabled;
+        _inspecting = true;
     }
 
-    public void Drop()
+    public virtual void Drop()
     {
-        GD.Print("Document dropped");
+        if (!_inspecting) return;
+        
+        GD.Print($"Document dropped {Name}");
         
         GlobalTranslation = _originalPoint;
         GlobalRotation = _originalRotation;
 
         _sprite.Billboard = SpatialMaterial.BillboardMode.Disabled;
+        _inspecting = false;
     }
 }

@@ -24,6 +24,11 @@ public class BaseScene : Spatial
 	// TODO: Protect this with defined Get/Set methods if needed? 
 	private static PlayerState _currentState = PlayerState.Normal;
 
+	public static bool Inspecting()
+	{
+		return _currentState == PlayerState.Inspecting;
+	}
+	
 	public static void ChangePlayerState(PlayerState newState)
 	{
 		GD.Print($"SWITCHED TO STATE {_currentState.ToString()}");

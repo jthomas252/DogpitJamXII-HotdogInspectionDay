@@ -1,12 +1,15 @@
-[gd_scene load_steps=35 format=2]
+[gd_scene load_steps=37 format=2]
 
 [ext_resource path="res://Scripts/BaseScene.cs" type="Script" id=1]
 [ext_resource path="res://Prefab/Cursor.tscn" type="PackedScene" id=2]
+[ext_resource path="res://UI_theme.tres" type="Theme" id=3]
+[ext_resource path="res://Assets/Textures/handbook/SerialNumbers_hires.png" type="Texture" id=4]
 [ext_resource path="res://Assets/Models/desk/desk.obj" type="ArrayMesh" id=5]
 [ext_resource path="res://Assets/Materials/Desk.tres" type="Material" id=6]
 [ext_resource path="res://Assets/Materials/EnvironmentWall.tres" type="Material" id=7]
 [ext_resource path="res://Assets/Materials/EnvironmentFloor.tres" type="Material" id=8]
 [ext_resource path="res://Prefab/GreenButton.tscn" type="PackedScene" id=9]
+[ext_resource path="res://Scripts/ViewableDocument.cs" type="Script" id=10]
 [ext_resource path="res://Prefab/default_env.tres" type="Environment" id=12]
 [ext_resource path="res://Scripts/WorldButton.cs" type="Script" id=13]
 [ext_resource path="res://Scripts/TriggerZone.cs" type="Script" id=14]
@@ -15,7 +18,6 @@
 [ext_resource path="res://Prefab/ComputerPrefab.tscn" type="PackedScene" id=18]
 [ext_resource path="res://Assets/Materials/trashcan.tres" type="Material" id=19]
 [ext_resource path="res://Scripts/ScanZone.cs" type="Script" id=20]
-[ext_resource path="res://Scripts/ViewableObject.cs" type="Script" id=21]
 [ext_resource path="res://Assets/Textures/handbook/handbook_serial_numbers.png" type="Texture" id=22]
 [ext_resource path="res://Prefab/spawner_tube.tscn" type="PackedScene" id=23]
 
@@ -76,6 +78,36 @@ script = ExtResource( 1 )
 anchor_right = 1.0
 anchor_bottom = 1.0
 
+[node name="PrevButton" type="Button" parent="Interface"]
+visible = false
+anchor_top = 0.5
+anchor_bottom = 0.5
+margin_left = 50.0
+margin_top = -50.0
+margin_right = 250.0
+margin_bottom = 50.0
+focus_mode = 0
+theme = ExtResource( 3 )
+enabled_focus_mode = 0
+text = "Previous"
+
+[node name="NextButton" type="Button" parent="Interface"]
+visible = false
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+margin_left = -250.0
+margin_top = -50.0
+margin_right = -50.0
+margin_bottom = 50.0
+focus_mode = 0
+theme = ExtResource( 3 )
+enabled_focus_mode = 0
+text = "Next"
+
+[node name="Sound" type="AudioStreamPlayer2D" parent="Interface"]
+
 [node name="Camera" type="Camera" parent="."]
 transform = Transform( 0.999969, 0.0078539, 0, -0.00700748, 0.892202, 0.451582, 0.00354668, -0.451569, 0.892229, 0, 24.8409, 48.4861 )
 environment = ExtResource( 12 )
@@ -88,6 +120,7 @@ light_indirect_energy = 0.673
 omni_range = 6.56
 
 [node name="Cursor" parent="." instance=ExtResource( 2 )]
+visible = false
 
 [node name="Points" type="Spatial" parent="."]
 
@@ -100,7 +133,7 @@ visible = false
 mesh = SubResource( 30 )
 
 [node name="InspectPointDocument" type="Spatial" parent="Points"]
-transform = Transform( 1, 0, 0, 0, 0.819152, 0.573577, 0, -0.573577, 0.819152, 0, 23.0243, 44.8656 )
+transform = Transform( 1, 0, 0, 0, 0.819152, 0.573577, 0, -0.573577, 0.819152, 0, 23.024, 40 )
 
 [node name="Sprite3D" type="Sprite3D" parent="Points/InspectPointDocument"]
 visible = false
@@ -274,10 +307,12 @@ shape = SubResource( 37 )
 
 [node name="Paper" type="KinematicBody" parent="."]
 physics_interpolation_mode = 1
-transform = Transform( 0.899235, 0.437466, 1.91222e-08, 0, -4.37114e-08, 1, 0.437466, -0.899235, -3.93068e-08, 29.6238, -10.5208, 8.31874 )
+transform = Transform( 0.991048, 0.133507, 5.83575e-09, 0, -4.37114e-08, 1, 0.133507, -0.991048, -4.33201e-08, 8.25737, -10.5208, 8.31874 )
 collision_layer = 2
 collision_mask = 2
-script = ExtResource( 21 )
+script = ExtResource( 10 )
+previous = NodePath("../Paper3")
+next = NodePath("../Paper2")
 
 [node name="Sprite3D" type="Sprite3D" parent="Paper"]
 shaded = true
@@ -285,6 +320,44 @@ double_sided = false
 texture = ExtResource( 22 )
 
 [node name="CollisionShape" type="CollisionShape" parent="Paper"]
+shape = SubResource( 45 )
+
+[node name="Paper2" type="KinematicBody" parent="."]
+physics_interpolation_mode = 1
+transform = Transform( 0.996815, 0.079752, 3.48603e-09, 0, -4.37114e-08, 1, 0.079752, -0.996815, -4.35721e-08, 17.9265, -10.5208, 8.31874 )
+collision_layer = 2
+collision_mask = 2
+script = ExtResource( 10 )
+previous = NodePath("../Paper")
+next = NodePath("../Paper3")
+
+[node name="Sprite3D" type="Sprite3D" parent="Paper2"]
+pixel_size = 0.006
+shaded = true
+double_sided = false
+texture = ExtResource( 4 )
+
+[node name="CollisionShape" type="CollisionShape" parent="Paper2"]
+shape = SubResource( 45 )
+
+[node name="Paper3" type="KinematicBody" parent="."]
+physics_interpolation_mode = 1
+transform = Transform( 0.916169, -0.400792, -1.75192e-08, 0, -4.37114e-08, 1, -0.400792, -0.916169, -4.0047e-08, 27.0814, -10.5208, 8.31874 )
+collision_layer = 2
+collision_mask = 2
+script = ExtResource( 10 )
+previous = NodePath("../Paper2")
+next = NodePath("../Paper")
+
+[node name="Sprite3D" type="Sprite3D" parent="Paper3"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 7.10543e-15, 1, 0, 0, 0 )
+modulate = Color( 1, 0.796078, 0.796078, 1 )
+pixel_size = 0.006
+shaded = true
+double_sided = false
+texture = ExtResource( 4 )
+
+[node name="CollisionShape" type="CollisionShape" parent="Paper3"]
 shape = SubResource( 45 )
 
 [node name="Spawner" parent="." instance=ExtResource( 23 )]

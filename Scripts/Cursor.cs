@@ -143,6 +143,7 @@ public class Cursor : Sprite3D
 
     public override void _Process(float delta)
     {
+        hoverObject = null;
         camera = GetViewport().GetCamera();
         
         // Attempt to match the cursor position in world 
@@ -242,6 +243,11 @@ public class Cursor : Sprite3D
                 Texture = handTextureOpen;
                 break;
         }
+    }
+
+    public void ChangeGrabbedObject(Spatial s)
+    {
+        grabbedObject = s; 
     }
     
 }
