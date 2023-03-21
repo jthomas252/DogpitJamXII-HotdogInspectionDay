@@ -1,18 +1,46 @@
+# Models To Do (Priority is top to bottom)
+- Heat lamp
+- Buttons with animation 
+    - Should have ones that hang off the desk
+    - At least one should fit the look of the spawner
+- CRT Monitor
+    - Screen should accept a separate material 
+- Environment models
+    - Can be untextured or loosely textured 
+    - Should include some basic enviromental details in the distance to give a sense of depth
+    - Room should follow a similar pattern to current layout in Godot with a back wall, right hand wall, opening leading into factory
+    - Possibly add meathooks or small animation in the background 
+- Geiger counter
+- Clipboard 
+    - Just the clipboard, documents exist as Sprite3D in game
+- Rat model
+- Cardboard box
+    - Used if we do the secret condition 
+    - Should be just large enough to fit a hotdog in 
+- Arbitrary models (non-hotdogs)
+    - Human finger
+    - Banana
+    - Dynamite
+    - Bone
+- Tesla coil
+    - Attacks a rat if it wanders too close
+    - Will also couple with fire sprite / burn mark 
+- Cleaning bottle
+    - Potential mechanic, low priority
+
+# Asset To Do
+- Agency logo
+    - Food and dog administration 
+
 # Unsorted
 - Come up with a name for the game
 	- 917: Hotdog Inspection Day
 	- Food and Dog Administration
 
-- Add a sidebar to the word documents
-	- Make for easier recalling when viewing at a glance
-
 - Add forward and back buttons for documents
 	- Should call Inspect() on the next document
 	- Use interactable object child with Sprite3D 
 	- Create forward, back, and X icons
-
-- Add rotation to viewable object
-	- Use BillboardY instead of Billboard
 
 - Add a SpawnGeneric to the Spawner
 
@@ -30,10 +58,6 @@
 - Add scanning area decal
 
 - Add spawn area decal
-
-- Fire burn effect decal
-
-- Fire burning sprite
 
 - Sprite animation prefab
 	- Iterate through a list of frames, repeating
@@ -140,11 +164,6 @@
 - Add geiger counter
 	- Scans nearby objects for radiation state
 	- Ticks up if detecting radiation
-
-- Add cleaner
-	- Objects placed inside will float or sink based on properties
-	- A "flush" button ejects the object afterwards
-	- Object might not be sufficiently clean
 
 - Add level timer
 	- Display in world somewhere

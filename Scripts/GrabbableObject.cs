@@ -16,7 +16,8 @@ public class GrabbableObject : RigidBody
     private Vector3 targetDirection;
     private Camera camera; 
     private Vector2 mouseOffset = new Vector2(0f,0f);
-
+    private Spatial _inspectPoint; 
+    
     public override void _Ready()
     {
         camera = GetViewport().GetCamera();
@@ -31,19 +32,18 @@ public class GrabbableObject : RigidBody
         {
             GD.PrintErr("BaseScene not present on root.");
         }
+        
+        _inspectPoint = GetTree().CurrentScene.GetNode<Spatial>("Points/InspectPointDocument");
     }
 
     private void OnInspection()
     {
         if (isGrabbed)
         {
-            GlobalRotation = Vector3.Zero;
-            
+            GlobalTranslation = _inspectPoint.GlobalTranslation;
+            GlobalRotation = _inspectPoint.GlobalRotation;
             Sleeping = true;
             mouseOffset = GetViewport().GetMousePosition();
-
-            GD.Print(GlobalRotation);
-            // Maybe capture previous position / rotation to easily return?
         }
     }
 

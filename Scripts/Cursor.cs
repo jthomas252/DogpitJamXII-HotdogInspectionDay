@@ -23,6 +23,7 @@ public class Cursor : Sprite3D
     [Export] public Texture handTextureOpen;
     [Export] public Texture handTextureClosed;
     [Export] public Texture handTexturePoint;
+    [Export] public Texture handTextureMagnify;
     [Export] public Texture handTextureClicked;
 
     private Camera camera;
@@ -38,6 +39,7 @@ public class Cursor : Sprite3D
         HandOpen,
         HandClosed,
         HandPoint,
+        HandMagnify,
         HandClicked,
     }
     
@@ -66,7 +68,7 @@ public class Cursor : Sprite3D
             {
                 viewableObject.Inspect();
                 grabbedObject = viewableObject;
-                ChangeCursorState(CursorState.HandClicked);
+                ChangeCursorState(CursorState.HandOpen);
             }
 
             if (hoverObject is GrabbableObject grabbableObject)
@@ -159,7 +161,7 @@ public class Cursor : Sprite3D
         {
             Vector3 hitPoint = (Vector3)hand["position"];
             float distance = pos.DistanceTo(hitPoint);
-            objectHoldPoint = pos + (normal * (distance)) + (Vector3.Up * 15f); 
+            objectHoldPoint = pos + (normal * (distance)) + (Vector3.Up * 10f); 
         }
         else
         {
@@ -182,6 +184,9 @@ public class Cursor : Sprite3D
                 if (interacts["collider"] is InteractableObject interactiveObject && !Input.IsMouseButtonPressed((int)ButtonList.Left))
                 {
                     ChangeCursorState(CursorState.HandPoint);
+                } else if (interacts["collider"] is ViewableObject viewableObject)
+                {
+                    ChangeCursorState(CursorState.HandMagnify);
                 }
             }
             else
@@ -226,6 +231,10 @@ public class Cursor : Sprite3D
                 
             case CursorState.HandClosed:
                 Texture = handTextureClosed;
+                break; 
+            
+            case CursorState.HandMagnify:
+                Texture = handTextureMagnify;
                 break; 
             
             default:
