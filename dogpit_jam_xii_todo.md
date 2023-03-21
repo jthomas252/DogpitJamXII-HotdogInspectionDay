@@ -41,6 +41,16 @@
 
 - Add a SpawnGeneric to the Spawner
 
+# Interface
+- Change custom cursor to reflect states like 3D model
+
+- Add start screen interface 
+
+- Add credits
+
+- Add between level screen 
+    - Have text here to tell the player how they did
+
 # Level Iteration
 - Unlock new mechanics based on level progression
 
@@ -124,9 +134,6 @@
 - Create a shader material that applies a dirt texture to the Hotdog
 	- Use decals for this, have 1-2 that cover the model 
 	- Place in water basin to clean out
-
-# Model
-- Play generic animation on model via script
 
 # Rat
 - Add rat spawn
