@@ -159,7 +159,7 @@ public class Cursor : Sprite3D
         {
             Vector3 hitPoint = (Vector3)hand["position"];
             float distance = pos.DistanceTo(hitPoint);
-            objectHoldPoint = pos + (normal * (distance)); 
+            objectHoldPoint = pos + (normal * (distance)) + (Vector3.Up * 15f); 
         }
         else
         {
