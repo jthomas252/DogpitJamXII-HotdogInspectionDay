@@ -1,4 +1,4 @@
-[gd_scene load_steps=37 format=2]
+[gd_scene load_steps=38 format=2]
 
 [ext_resource path="res://Scripts/BaseScene.cs" type="Script" id=1]
 [ext_resource path="res://Prefab/Cursor.tscn" type="PackedScene" id=2]
@@ -10,6 +10,7 @@
 [ext_resource path="res://Assets/Materials/EnvironmentFloor.tres" type="Material" id=8]
 [ext_resource path="res://Prefab/GreenButton.tscn" type="PackedScene" id=9]
 [ext_resource path="res://Scripts/ViewableDocument.cs" type="Script" id=10]
+[ext_resource path="res://Prefab/ConveyorBelt.tscn" type="PackedScene" id=11]
 [ext_resource path="res://Prefab/default_env.tres" type="Environment" id=12]
 [ext_resource path="res://Scripts/WorldButton.cs" type="Script" id=13]
 [ext_resource path="res://Scripts/TriggerZone.cs" type="Script" id=14]
@@ -362,5 +363,8 @@ shape = SubResource( 45 )
 
 [node name="Spawner" parent="." instance=ExtResource( 23 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -39.1366, -7.54769, -28.963 )
+
+[node name="conveyor_belt" parent="." instance=ExtResource( 11 )]
+transform = Transform( -4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -14.5645, -10.1189, -4.86644 )
 
 [connection signal="Pressed" from="SpawnButton" to="Spawner" method="OnSpawnButton"]
