@@ -1,4 +1,4 @@
-[gd_scene load_steps=47 format=2]
+[gd_scene load_steps=49 format=2]
 
 [ext_resource path="res://Scripts/BaseScene.cs" type="Script" id=1]
 [ext_resource path="res://Prefab/Cursor.tscn" type="PackedScene" id=2]
@@ -71,6 +71,12 @@ size = Vector3( 20, 45, 90 )
 
 [sub_resource type="SpatialMaterial" id=51]
 albedo_texture = ExtResource( 24 )
+
+[sub_resource type="CubeMesh" id=52]
+size = Vector3( 100, 150, 100 )
+
+[sub_resource type="ConvexPolygonShape" id=53]
+points = PoolVector3Array( -50, -75, -50, -50, -75, 50, -50, 75, -50, 50, -75, -50, 50, -75, 50, -50, 75, 50, 50, 75, -50, 50, 75, 50 )
 
 [sub_resource type="CubeMesh" id=49]
 
@@ -161,7 +167,7 @@ billboard = 1
 texture = ExtResource( 4 )
 
 [node name="SpawnPoint" type="Spatial" parent="Points"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -38.9641, 70.1364, -10.3944 )
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -37.6763, 70.1364, -26.1795 )
 
 [node name="Sprite3D" type="Sprite3D" parent="Points/SpawnPoint"]
 texture = ExtResource( 22 )
@@ -347,16 +353,18 @@ material/0 = ExtResource( 7 )
 shape = SubResource( 41 )
 
 [node name="Wall4" type="StaticBody" parent="Environment/Static"]
-transform = Transform( -4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -105.797, 109.253, -205.704 )
+transform = Transform( -4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -105.554, 42.7001, -9.19177 )
 collision_layer = 5
 collision_mask = 5
 
 [node name="MeshInstance" type="MeshInstance" parent="Environment/Static/Wall4"]
-mesh = SubResource( 25 )
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 17.0954, 0 )
+mesh = SubResource( 52 )
 material/0 = ExtResource( 7 )
 
 [node name="CollisionShape" type="CollisionShape" parent="Environment/Static/Wall4"]
-shape = SubResource( 41 )
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 17.0954, 0 )
+shape = SubResource( 53 )
 
 [node name="RatHoleEdge" type="Spatial" parent="Environment/Static"]
 transform = Transform( -4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -105.797, 109.253, -205.704 )
@@ -367,11 +375,9 @@ collision_layer = 5
 collision_mask = 5
 
 [node name="MeshInstance" type="MeshInstance" parent="Environment/Static/RatHoleEdge/Wall6"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -1.16602 )
 mesh = SubResource( 49 )
 material/0 = ExtResource( 7 )
-
-[node name="CollisionShape" type="CollisionShape" parent="Environment/Static/RatHoleEdge/Wall6"]
-shape = SubResource( 41 )
 
 [node name="Wall7" type="StaticBody" parent="Environment/Static/RatHoleEdge"]
 transform = Transform( 0.99374, 0.111719, -2.73644e-10, -0.111719, 0.99374, -4.88338e-09, -2.73644e-10, 4.88338e-09, 1, -201.164, -125.061, 50.1318 )
@@ -383,9 +389,6 @@ transform = Transform( 1, 0, 0, 0, 1, 0, 0, 4.44089e-16, 1, 0, 0, -0.566807 )
 mesh = SubResource( 49 )
 material/0 = ExtResource( 7 )
 
-[node name="CollisionShape" type="CollisionShape" parent="Environment/Static/RatHoleEdge/Wall7"]
-shape = SubResource( 41 )
-
 [node name="Wall8" type="StaticBody" parent="Environment/Static/RatHoleEdge"]
 transform = Transform( 0.906549, -0.422099, -4.08485e-09, 0.422099, 0.906549, 1.84506e-08, -4.08486e-09, -1.84506e-08, 1, -201.164, -130.656, 48.9051 )
 collision_layer = 5
@@ -394,9 +397,6 @@ collision_mask = 5
 [node name="MeshInstance" type="MeshInstance" parent="Environment/Static/RatHoleEdge/Wall8"]
 mesh = SubResource( 49 )
 material/0 = ExtResource( 7 )
-
-[node name="CollisionShape" type="CollisionShape" parent="Environment/Static/RatHoleEdge/Wall8"]
-shape = SubResource( 41 )
 
 [node name="Wall9" type="StaticBody" parent="Environment/Static/RatHoleEdge"]
 transform = Transform( 0.906549, -0.422099, -4.08485e-09, 0.422099, 0.906549, 1.84506e-08, -4.08486e-09, -1.84506e-08, 1, -201.164, -128.55, 48.9051 )
@@ -407,9 +407,6 @@ collision_mask = 5
 mesh = SubResource( 49 )
 material/0 = ExtResource( 7 )
 
-[node name="CollisionShape" type="CollisionShape" parent="Environment/Static/RatHoleEdge/Wall9"]
-shape = SubResource( 41 )
-
 [node name="Wall10" type="StaticBody" parent="Environment/Static/RatHoleEdge"]
 transform = Transform( 0.906549, -0.422099, -4.08485e-09, 0.422099, 0.906549, 1.84506e-08, -4.08486e-09, -1.84506e-08, 1, -201.164, -125.606, 48.9051 )
 collision_layer = 5
@@ -418,9 +415,6 @@ collision_mask = 5
 [node name="MeshInstance" type="MeshInstance" parent="Environment/Static/RatHoleEdge/Wall10"]
 mesh = SubResource( 49 )
 material/0 = ExtResource( 7 )
-
-[node name="CollisionShape" type="CollisionShape" parent="Environment/Static/RatHoleEdge/Wall10"]
-shape = SubResource( 41 )
 
 [node name="Wall19" type="StaticBody" parent="Environment/Static/RatHoleEdge"]
 transform = Transform( 0.991682, 0.128714, -3.63606e-10, -0.128714, 0.991682, -5.62628e-09, -3.63606e-10, 5.62628e-09, 1, -205.29, -125.606, 48.9051 )
@@ -431,9 +425,6 @@ collision_mask = 5
 mesh = SubResource( 49 )
 material/0 = ExtResource( 7 )
 
-[node name="CollisionShape" type="CollisionShape" parent="Environment/Static/RatHoleEdge/Wall19"]
-shape = SubResource( 41 )
-
 [node name="Wall20" type="StaticBody" parent="Environment/Static/RatHoleEdge"]
 transform = Transform( 0.905262, -0.424854, -4.14112e-09, 0.424854, 0.905262, 1.85709e-08, -4.14113e-09, -1.85709e-08, 1, -207.477, -125.606, 48.9051 )
 collision_layer = 5
@@ -442,9 +433,6 @@ collision_mask = 5
 [node name="MeshInstance" type="MeshInstance" parent="Environment/Static/RatHoleEdge/Wall20"]
 mesh = SubResource( 49 )
 material/0 = ExtResource( 7 )
-
-[node name="CollisionShape" type="CollisionShape" parent="Environment/Static/RatHoleEdge/Wall20"]
-shape = SubResource( 41 )
 
 [node name="Wall21" type="StaticBody" parent="Environment/Static/RatHoleEdge"]
 transform = Transform( 0.905262, -0.424854, -4.14112e-09, 0.424854, 0.905262, 1.85709e-08, -4.14113e-09, -1.85709e-08, 1, -202.112, -125.606, 48.9051 )
@@ -455,9 +443,6 @@ collision_mask = 5
 mesh = SubResource( 49 )
 material/0 = ExtResource( 7 )
 
-[node name="CollisionShape" type="CollisionShape" parent="Environment/Static/RatHoleEdge/Wall21"]
-shape = SubResource( 41 )
-
 [node name="Wall11" type="StaticBody" parent="Environment/Static/RatHoleEdge"]
 transform = Transform( 0.936791, 0.349889, -2.76295e-09, -0.349889, 0.936791, -1.52941e-08, -2.76295e-09, 1.52941e-08, 1, -201.164, -134.289, 48.9051 )
 collision_layer = 5
@@ -467,9 +452,6 @@ collision_mask = 5
 mesh = SubResource( 49 )
 material/0 = ExtResource( 7 )
 
-[node name="CollisionShape" type="CollisionShape" parent="Environment/Static/RatHoleEdge/Wall11"]
-shape = SubResource( 41 )
-
 [node name="Wall12" type="StaticBody" parent="Environment/Static/RatHoleEdge"]
 transform = Transform( 0.995671, 0.0929449, -1.89218e-10, -0.0929449, 0.995671, -4.06275e-09, -1.89221e-10, 4.06275e-09, 1, -201.164, -132.544, 48.9051 )
 collision_layer = 5
@@ -478,9 +460,6 @@ collision_mask = 5
 [node name="MeshInstance" type="MeshInstance" parent="Environment/Static/RatHoleEdge/Wall12"]
 mesh = SubResource( 49 )
 material/0 = ExtResource( 7 )
-
-[node name="CollisionShape" type="CollisionShape" parent="Environment/Static/RatHoleEdge/Wall12"]
-shape = SubResource( 41 )
 
 [node name="Wall13" type="StaticBody" parent="Environment/Static/RatHoleEdge"]
 transform = Transform( 0.99374, 0.111719, -2.73644e-10, -0.111719, 0.99374, -4.88338e-09, -2.73644e-10, 4.88338e-09, 1, -209.442, -125.061, 50.1318 )
@@ -492,9 +471,6 @@ transform = Transform( 1, 0, 0, 0, 1, 0, 0, 4.44089e-16, 1, 0, 0, -0.868198 )
 mesh = SubResource( 49 )
 material/0 = ExtResource( 7 )
 
-[node name="CollisionShape" type="CollisionShape" parent="Environment/Static/RatHoleEdge/Wall13"]
-shape = SubResource( 41 )
-
 [node name="Wall14" type="StaticBody" parent="Environment/Static/RatHoleEdge"]
 transform = Transform( 0.906549, -0.422099, -4.08485e-09, 0.422099, 0.906549, 1.84506e-08, -4.08486e-09, -1.84506e-08, 1, -209.442, -130.656, 48.9051 )
 collision_layer = 5
@@ -503,9 +479,6 @@ collision_mask = 5
 [node name="MeshInstance" type="MeshInstance" parent="Environment/Static/RatHoleEdge/Wall14"]
 mesh = SubResource( 49 )
 material/0 = ExtResource( 7 )
-
-[node name="CollisionShape" type="CollisionShape" parent="Environment/Static/RatHoleEdge/Wall14"]
-shape = SubResource( 41 )
 
 [node name="Wall15" type="StaticBody" parent="Environment/Static/RatHoleEdge"]
 transform = Transform( 0.906549, -0.422099, -4.08485e-09, 0.422099, 0.906549, 1.84506e-08, -4.08486e-09, -1.84506e-08, 1, -209.442, -128.55, 48.9051 )
@@ -516,9 +489,6 @@ collision_mask = 5
 mesh = SubResource( 49 )
 material/0 = ExtResource( 7 )
 
-[node name="CollisionShape" type="CollisionShape" parent="Environment/Static/RatHoleEdge/Wall15"]
-shape = SubResource( 41 )
-
 [node name="Wall16" type="StaticBody" parent="Environment/Static/RatHoleEdge"]
 transform = Transform( 0.906549, -0.422099, -4.08485e-09, 0.422099, 0.906549, 1.84506e-08, -4.08486e-09, -1.84506e-08, 1, -209.442, -125.606, 48.9051 )
 collision_layer = 5
@@ -527,9 +497,6 @@ collision_mask = 5
 [node name="MeshInstance" type="MeshInstance" parent="Environment/Static/RatHoleEdge/Wall16"]
 mesh = SubResource( 49 )
 material/0 = ExtResource( 7 )
-
-[node name="CollisionShape" type="CollisionShape" parent="Environment/Static/RatHoleEdge/Wall16"]
-shape = SubResource( 41 )
 
 [node name="Wall17" type="StaticBody" parent="Environment/Static/RatHoleEdge"]
 transform = Transform( 0.936791, 0.349889, -2.76295e-09, -0.349889, 0.936791, -1.52941e-08, -2.76295e-09, 1.52941e-08, 1, -209.442, -134.289, 48.9051 )
@@ -540,9 +507,6 @@ collision_mask = 5
 mesh = SubResource( 49 )
 material/0 = ExtResource( 7 )
 
-[node name="CollisionShape" type="CollisionShape" parent="Environment/Static/RatHoleEdge/Wall17"]
-shape = SubResource( 41 )
-
 [node name="Wall18" type="StaticBody" parent="Environment/Static/RatHoleEdge"]
 transform = Transform( 0.995671, 0.0929449, -1.89218e-10, -0.0929449, 0.995671, -4.06275e-09, -1.89221e-10, 4.06275e-09, 1, -209.442, -132.544, 48.9051 )
 collision_layer = 5
@@ -551,9 +515,6 @@ collision_mask = 5
 [node name="MeshInstance" type="MeshInstance" parent="Environment/Static/RatHoleEdge/Wall18"]
 mesh = SubResource( 49 )
 material/0 = ExtResource( 7 )
-
-[node name="CollisionShape" type="CollisionShape" parent="Environment/Static/RatHoleEdge/Wall18"]
-shape = SubResource( 41 )
 
 [node name="Wall5" type="StaticBody" parent="Environment/Static"]
 transform = Transform( -4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -105.797, -150.757, -205.704 )
@@ -655,7 +616,7 @@ texture = ExtResource( 4 )
 shape = SubResource( 45 )
 
 [node name="Spawner" parent="." instance=ExtResource( 23 )]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -39.1366, -7.54769, -28.963 )
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -37.4838, -15.8078, -44.4093 )
 
 [node name="Triggers" type="Spatial" parent="."]
 

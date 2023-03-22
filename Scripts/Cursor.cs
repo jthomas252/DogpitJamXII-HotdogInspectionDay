@@ -92,6 +92,7 @@ public class Cursor : Sprite3D
             // Drop the grabbed object, release the reference
             ChangeCursorState(CursorState.HandOpen);
             grabbedObject = null;
+            ignoreObjects = null;
         }
     }
 
@@ -181,6 +182,7 @@ public class Cursor : Sprite3D
         if (interacts.Count > 0)
         {
             hoverObject = (Node)interacts["collider"];
+            ComputerScreen.UpdateBodyBottomText($"{hoverObject.Name}");
             
             if (hoverObject is InteractableObject && !Input.IsMouseButtonPressed((int)ButtonList.Left) && !IsGrabbing())
             {
@@ -197,6 +199,7 @@ public class Cursor : Sprite3D
         }
         else
         {
+            ComputerScreen.UpdateBodyBottomText("NO INTERACT");
             ChangeCursorState(CursorState.HandOpen);
         }
     }

@@ -27,6 +27,5 @@ handTextureClicked = ExtResource( 3 )
 
 [node name="Debug" type="MeshInstance" parent="."]
 transform = Transform( 2, 0, 0, 0, 2, 0, 0, 0, 2, 0, 0, 0 )
-visible = false
 mesh = SubResource( 39 )
 material/0 = SubResource( 40 )

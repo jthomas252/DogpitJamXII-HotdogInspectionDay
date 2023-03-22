@@ -28,6 +28,8 @@
 - Cleaning bottle
     - Potential mechanic, low priority
 
+# Bugs
+
 # Interface
 - Add start screen interface 
 
@@ -61,10 +63,6 @@
 - Issue a penalty token if failure (Set up event on BaseScene)
 	- Issue a citation on the monitor explaining the error
 	- Possibly put a label on these to detail the error
-
-- Add positive flash screen for success
-	- Flash to a green
-	- Play a chime
 
 # Hotdog Generation
 - Generate quality score on the hotdog creation
@@ -145,14 +143,9 @@
 	- Should display a countdown of remaining hotdogs
 
 # Nice to have's
--  Pan the screen on the document viewer
-
 - Dynamite which randomly spawns instead of hotdog
 	- If it explodes trigger a gameover or physics event
 	- If sent up the conveyor triggers a unique ending?
-
-- Random sounds
-	- Play assorted sounds from elsewhere in the vicinity
 
 - Gamepad controls
 	- Move the cursor in a virtual space, use in place of mousePos

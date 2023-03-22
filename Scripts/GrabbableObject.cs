@@ -71,9 +71,7 @@ public class GrabbableObject : RigidBody
 
     public void Drop()
     {
-        ComputerScreen.FlashMessage("HOTDOG DROPPED");
-        ComputerScreen.PlayErrorSound();
-        GD.Print("Hotdog Dropped");
+        GD.Print("Hotdog dropped");
         isGrabbed = false;
         Sleeping = false;
     }

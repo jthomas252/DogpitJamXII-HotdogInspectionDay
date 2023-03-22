@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 public class Hotdog : Spatial
 {
-    private readonly float CHANCE_VALID = 0.5f;
+    private readonly float CHANCE_VALID = 0.6f;
 
     private bool isValid;
 

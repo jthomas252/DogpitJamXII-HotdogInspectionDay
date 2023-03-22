@@ -77,11 +77,28 @@ public class ComputerScreen : Control
     /**
      * Pop up a message on the computer screen for a moment
      */
-    public static void FlashMessage(string flashText)
+    public static void FlashMessage(string flashText, Color flashColor)
     {
+        _instance.flashRect.Color = flashColor;
         _instance.flashRect.Visible = true;
         _instance.flashText.Text = flashText;
         _instance.flashDuration = FLASH_DURATION;
+    }
+
+    public static void FlashSuccess(string flashText)
+    {
+        _instance.flashRect.Color = Colors.Green;
+        _instance.flashRect.Visible = true;
+        _instance.flashText.Text = flashText;
+        _instance.flashDuration = FLASH_DURATION;
+    }
+
+    public static void FlashError(string flashText)
+    {
+        _instance.flashRect.Color = Colors.Red;
+        _instance.flashRect.Visible = true;
+        _instance.flashText.Text = flashText;
+        _instance.flashDuration = FLASH_DURATION;        
     }
 
     /**
