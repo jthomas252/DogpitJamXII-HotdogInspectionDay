@@ -4,12 +4,23 @@ using System.Collections.Generic;
 
 public class Hotdog : Spatial
 {
+    private readonly float FROZEN_TEMPERATURE = 0f; 
+    private readonly float BURN_TEMPERATURE = 20f;
     private readonly float CHANCE_VALID = 0.6f;
-
-    private bool isValid;
+    private bool _isValid;
 
     private string _serialNumber;
     private Label3D _serialNumberLabel;
+
+    private float _moldLevel;
+    private float _dirtLevel;
+    private float _burntLevel;
+    private float _radioactivity;
+    private float _temperature; 
+    
+    private string _invalidReason;
+
+    private ShaderMaterial _material; 
 
     // TODO: Nice to have? Move this into JSON or some serialized format rather than in code. 
     public enum HotdogChallenge
@@ -77,7 +88,7 @@ public class Hotdog : Spatial
 
     private HotdogBrand _brand;
     private List<MeatContent> _meats;
-
+    
     private Dictionary<HotdogChallenge, HotdogBrand[]> _challengeBrands = new Dictionary<HotdogChallenge, HotdogBrand[]>()
         {
             {
@@ -194,13 +205,18 @@ public class Hotdog : Spatial
 
     public override void _Ready()
     {
+        // Try to get the shader material and set the threshold to 1
+        MeshInstance test = GetNode<MeshInstance>("GrabbableObject/HotdogMesh");
+        _material = (ShaderMaterial)test.GetActiveMaterial(0);
+        _material.SetShaderParam("Threshold", 1f);
+
         _serialNumberLabel = GetNode<Label3D>("GrabbableObject/SerialNumber");
         
         // Set relevant stats
-        isValid = (GD.Randf() > CHANCE_VALID);
+        _isValid = (GD.Randf() > CHANCE_VALID);
 
         // Determine which challenge to use, check which are available and fall back if needed
-
+        
         // Get the brand to use
         _brand = GetBrand();
         
@@ -208,15 +224,20 @@ public class Hotdog : Spatial
         _serialNumber = GetSerialNumber();
         _serialNumberLabel.Text = _serialNumber;
 
+        _invalidReason = "SERIAL NUMBER INVALID";
+        
         _meats = GetMeats();
     }
 
     public string GetInfo()
     {
         string output =
-            $"BRAND  {_brand.ToString()}\n" +
-            $"SERIAL {_serialNumber}\n" +
-            $"VALID  {isValid.ToString()}\n" +
+            $"BRAND   {_brand.ToString()}\n" +
+            $"SERIAL  {_serialNumber}\n" +
+            $"QUALITY {_serialNumber}\n" +
+            $"MOLD    {_serialNumber}\n" +
+            $"COLD    {_serialNumber}\n" +
+            $"RADIO   {_serialNumber}\n" +
             "\n:::MEAT CONTENTS:::\n";
         
         // Iterate through meats and add to output
@@ -231,7 +252,7 @@ public class Hotdog : Spatial
 
     private string GetSerialNumber()
     {
-        if (isValid)
+        if (_isValid)
         {
             return _validSerialNumber[_brand][GD.Randi() % _validSerialNumber[_brand].Length];
         }
@@ -251,5 +272,15 @@ public class Hotdog : Spatial
         }
         
         return meat; 
+    }
+    
+    public string GetInvalidReason()
+    {
+        return _invalidReason;
+    }
+    
+    public bool IsValid()
+    {
+        return _isValid;
     }
 }

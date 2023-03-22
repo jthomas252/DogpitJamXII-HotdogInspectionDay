@@ -1,4 +1,4 @@
-[gd_scene load_steps=49 format=2]
+[gd_scene load_steps=50 format=2]
 
 [ext_resource path="res://Scripts/BaseScene.cs" type="Script" id=1]
 [ext_resource path="res://Prefab/Cursor.tscn" type="PackedScene" id=2]
@@ -24,6 +24,7 @@
 [ext_resource path="res://Assets/Textures/handbook/handbook_serial_numbers.png" type="Texture" id=22]
 [ext_resource path="res://Prefab/spawner_tube.tscn" type="PackedScene" id=23]
 [ext_resource path="res://Assets/Textures/tile_ceilingacoustic.png" type="Texture" id=24]
+[ext_resource path="res://Scripts/ProcessTrigger.cs" type="Script" id=25]
 
 [sub_resource type="CubeMesh" id=30]
 
@@ -141,9 +142,9 @@ fov = 90.0
 far = 1000.0
 
 [node name="OmniLight" type="OmniLight" parent="Camera"]
-light_energy = 1.261
+light_energy = 2.264
 light_indirect_energy = 0.673
-omni_range = 6.56
+omni_range = 11.642
 
 [node name="Cursor" parent="." instance=ExtResource( 2 )]
 
@@ -636,7 +637,7 @@ shape = SubResource( 37 )
 
 [node name="ProcessTrigger" type="Area" parent="Triggers"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 45.2887, -1.91454, -92.5094 )
-script = ExtResource( 20 )
+script = ExtResource( 25 )
 
 [node name="CollisionShape" type="CollisionShape" parent="Triggers/ProcessTrigger"]
 shape = SubResource( 37 )

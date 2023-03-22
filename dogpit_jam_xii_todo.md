@@ -1,5 +1,4 @@
 # Models To Do (Priority is top to bottom)
-- Heat lamp
 - Buttons with animation 
     - Should have ones that hang off the desk
     - At least one should fit the look of the spawner
@@ -29,6 +28,9 @@
     - Potential mechanic, low priority
 
 # Bugs
+- Hotdog shader triplanar uses the world state and not the local one
+
+- Threshold being set does not affect shader
 
 # Interface
 - Add start screen interface 
@@ -53,9 +55,6 @@
 
 - Add spawn area decal
 
-- Sprite animation prefab
-	- Iterate through a list of frames, repeating
-
 # Hotdog Conveyor
 - Issue a score token if success (Set up event on BaseScene)
 	- Issue a positive flash on the monitor 
@@ -79,9 +78,6 @@
 
 - Generate a coldnesss stat (requires thawing)
 
-- Generate a icon field on the hotdog 
-	- Small decal, opposite side of serial number
-
 # Audio
 - Add sound effects to the Hotdog to play on collision
 	- Will need to put these somewhere on the rigidbody
@@ -99,9 +95,6 @@
 - Create instructions for the geiger counter
 
 - Create instructions for the heat lamp 
-
-# Shader
-- Set the shader threshold / offset from the Hotdog class
 
 # Rat
 - Add rat spawn
@@ -129,7 +122,6 @@
 - Add heat lamp
 	- Applies heat to objects within its radius
 	- Can use Godot lighting for this
-	- Reveals hidden icons on dogs 
 
 - Add geiger counter
 	- Scans nearby objects for radiation state
@@ -147,35 +139,6 @@
 	- If it explodes trigger a gameover or physics event
 	- If sent up the conveyor triggers a unique ending?
 
-- Gamepad controls
-	- Move the cursor in a virtual space, use in place of mousePos
-
-- Crazy idea: DRM extension document
-	- Generate a document that adds a device
-	- Device is a keypad where if clicked in sequence validates
-	- Serial numbers represent numpad pattern 
-	- When clicked in sequence shows a serial code on a separate monitor
-	- Compare against scanner result
-
-- Revisit Skeleton 
-	- Try and use the rigidbody and armature movement
-	- Use the platformer demo as a basis
-	- Will need a version of GrabbableObject that support skeletons
-	- Test new model 
-
 - Add secret items
 	- Scale that tells you the Hotdog quality
 	- Only active when something is "sacrificed" 
-
-# Code Cleanup
-- Convert inputs into actions 
-	- Track all inputs as actions
-	- Would need to convert the following
-		- MouseLeft (interact, grab)
-		- MouseRight (drop)
-		- Shift (inspection mode)
-
-- Refactor naming scheme
-	- BaseScene should reflect itself as a GameHandler 
-
-- Refactor events to occur based on Emitters / Signals 

@@ -58,6 +58,15 @@ public class BaseScene : Spatial
 	{
 		return _currentState;
 	}
+
+	/**
+	 * Run when a valid Hotdog passes through the process trigger
+	 */
+	public static void IterateScore()
+	{
+		// TODO
+	}
+	
 	
 	public override void _Ready()
 	{

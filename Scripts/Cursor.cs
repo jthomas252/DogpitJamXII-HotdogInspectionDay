@@ -175,7 +175,8 @@ public class Cursor : Sprite3D
             pos + (normal * 1000f), 
             ignoreObjects, 
             LAYER_INTERACTIVE,
-            true, true
+            true, 
+            IsGrabbing() // Resolves a bug where a hotdog / interaction cannot be accessed through a snaptrigger
         );
 
         // Reveal the pointing finger when over something that can be clicked
