@@ -12,8 +12,8 @@ noise = SubResource( 2 )
 
 [resource]
 shader = ExtResource( 1 )
-shader_param/threshold = 0.465825
-shader_param/offset = 0.288401
+shader_param/threshold = 0.05
+shader_param/offset = 0.0
 shader_param/uv1_blend_sharpness = 0.1
 shader_param/uv1_scale = Vector3( 0.1, 0.1, 0.1 )
 shader_param/uv1_offset = null

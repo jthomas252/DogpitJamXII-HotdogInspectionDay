@@ -97,15 +97,10 @@ public class GrabbableObject : RigidBody
                 Transform transform = GlobalTransform;
 
                 transform.basis = transform.basis.Rotated(
-                    Input.IsKeyPressed((int)KeyList.Alt) ? camera.Transform.basis.x : camera.Transform.basis.y, 
+                    camera.Transform.basis.y,
                     (mousePosition.x + keyboardInput.x) * ROTATION_MOUSE_SCALE
                 );
-                
-                transform.basis = transform.basis.Rotated(
-                     camera.Transform.basis.z, 
-                    (mousePosition.y + keyboardInput.y) * ROTATION_MOUSE_SCALE
-                );
-                
+
                 GlobalTransform = transform;
 
                 mouseOffset = GetViewport().GetMousePosition();

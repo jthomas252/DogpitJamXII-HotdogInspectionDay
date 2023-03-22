@@ -12,17 +12,108 @@ public class Hotdog : Spatial
     private string _serialNumber;
     private Label3D _serialNumberLabel;
 
+    private MeshInstance _decal; 
+    
+    // Assignable problem factors
+    private float _qualityLevel;
     private float _moldLevel;
     private float _dirtLevel;
     private float _burntLevel;
     private float _radioactivity;
-    private float _temperature; 
-    
+    private float _temperature;
     private string _invalidReason;
+    private ShaderMaterial _material;
 
-    private ShaderMaterial _material; 
+    public override void _Ready()
+    {
+        // Set relevant stats
+        _qualityLevel = GD.Randf();
+        _isValid = _qualityLevel >= CHANCE_VALID;
+        
+        // Try to get the shader material and set the threshold to 1
+        MeshInstance test = GetNode<MeshInstance>("GrabbableObject/HotdogMesh");
+        Material material = test.GetSurfaceMaterial(0);
+        _material = material as ShaderMaterial;
+        _material.ResourceLocalToScene = true;
+        _material.SetShaderParam("offset", _qualityLevel);
+        
+        _serialNumberLabel = GetNode<Label3D>("GrabbableObject/SerialNumber");
+        
 
-    // TODO: Nice to have? Move this into JSON or some serialized format rather than in code. 
+        
+        // Determine which challenge to use, check which are available and fall back if needed
+        // TODO
+        
+        // Get the brand to use
+        _brand = GetBrand();
+        
+        // Generate other relevant stats
+        _serialNumber = GetSerialNumber();
+        _serialNumberLabel.Text = _serialNumber;
+
+        _invalidReason = "SERIAL NUMBER INVALID";
+        
+        _meats = GetMeats();
+    }
+
+    public string GetInfo()
+    {
+        string output =
+            $"BRAND   {_brand.ToString()}\n" +
+            $"SERIAL  {_serialNumber}\n" +
+            $"QUALITY {_qualityLevel}\n" +
+            $"MOLD    {_moldLevel}\n" +
+            $"COLD    {_temperature}\n" +
+            $"RADIO   {_radioactivity}\n" +
+            "\n### MEAT CONTENTS ######!\n";
+        
+        // Iterate through meats and add to output
+
+        return output.ToUpper();
+    }
+
+    private HotdogBrand GetBrand()
+    {
+        return _challengeBrands[HotdogChallenge.SERIAL_NUMBER][GD.Randi() % _challengeBrands[HotdogChallenge.SERIAL_NUMBER].Length];
+    }
+
+    private string GetSerialNumber()
+    {
+        if (_isValid)
+        {
+            return _validSerialNumber[_brand][GD.Randi() % _validSerialNumber[_brand].Length];
+        }
+
+        return _invalidSerialNumber[_brand][GD.Randi() % _invalidSerialNumber[_brand].Length];
+    }
+
+    // Using the brands and provided lists 
+    private List<MeatContent> GetMeats()
+    {
+        List<MeatContent> meat = new List<MeatContent>();
+        
+        // Generate the meats to use
+        for (int i = 0; i < 4; ++i)
+        {
+            
+        }
+        
+        return meat; 
+    }
+    
+    public string GetInvalidReason()
+    {
+        return _invalidReason;
+    }
+    
+    public bool IsValid()
+    {
+        return _isValid;
+    }
+    
+    // ------------
+    // Game Data
+    // ------------
     public enum HotdogChallenge
     {
         SERIAL_NUMBER,
@@ -201,86 +292,5 @@ public class Hotdog : Spatial
                 MeatContent.CHICKEN,
             } 
         }
-    };
-
-    public override void _Ready()
-    {
-        // Try to get the shader material and set the threshold to 1
-        MeshInstance test = GetNode<MeshInstance>("GrabbableObject/HotdogMesh");
-        _material = (ShaderMaterial)test.GetActiveMaterial(0);
-        _material.SetShaderParam("Threshold", 1f);
-
-        _serialNumberLabel = GetNode<Label3D>("GrabbableObject/SerialNumber");
-        
-        // Set relevant stats
-        _isValid = (GD.Randf() > CHANCE_VALID);
-
-        // Determine which challenge to use, check which are available and fall back if needed
-        
-        // Get the brand to use
-        _brand = GetBrand();
-        
-        // Generate other relevant stats
-        _serialNumber = GetSerialNumber();
-        _serialNumberLabel.Text = _serialNumber;
-
-        _invalidReason = "SERIAL NUMBER INVALID";
-        
-        _meats = GetMeats();
-    }
-
-    public string GetInfo()
-    {
-        string output =
-            $"BRAND   {_brand.ToString()}\n" +
-            $"SERIAL  {_serialNumber}\n" +
-            $"QUALITY {_serialNumber}\n" +
-            $"MOLD    {_serialNumber}\n" +
-            $"COLD    {_serialNumber}\n" +
-            $"RADIO   {_serialNumber}\n" +
-            "\n:::MEAT CONTENTS:::\n";
-        
-        // Iterate through meats and add to output
-
-        return output.ToUpper();
-    }
-
-    private HotdogBrand GetBrand()
-    {
-        return _challengeBrands[HotdogChallenge.SERIAL_NUMBER][GD.Randi() % _challengeBrands[HotdogChallenge.SERIAL_NUMBER].Length];
-    }
-
-    private string GetSerialNumber()
-    {
-        if (_isValid)
-        {
-            return _validSerialNumber[_brand][GD.Randi() % _validSerialNumber[_brand].Length];
-        }
-
-        return _invalidSerialNumber[_brand][GD.Randi() % _invalidSerialNumber[_brand].Length];
-    }
-
-    // Using the brands and provided lists 
-    private List<MeatContent> GetMeats()
-    {
-        List<MeatContent> meat = new List<MeatContent>();
-        
-        // Generate the meats to use
-        for (int i = 0; i < 4; ++i)
-        {
-            
-        }
-        
-        return meat; 
-    }
-    
-    public string GetInvalidReason()
-    {
-        return _invalidReason;
-    }
-    
-    public bool IsValid()
-    {
-        return _isValid;
-    }
+    };    
 }

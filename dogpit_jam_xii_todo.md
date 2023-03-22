@@ -27,11 +27,6 @@
 - Cleaning bottle
     - Potential mechanic, low priority
 
-# Bugs
-- Hotdog shader triplanar uses the world state and not the local one
-
-- Threshold being set does not affect shader
-
 # Interface
 - Add start screen interface 
 
@@ -64,15 +59,10 @@
 	- Possibly put a label on these to detail the error
 
 # Hotdog Generation
-- Generate quality score on the hotdog creation
-	- Use the score to determine stat metrics
-
 - Set up meats randomizer in Hotdog creation
 	- Use random selection for non-trigger ones
 	- Have list of good, okay, and bad ingredients
 	- Representation of the quality score to determine failure / success
-
-- Generate a mold score (scale for failures)
 
 - Generate a radioactivity score (scale for failures)
 

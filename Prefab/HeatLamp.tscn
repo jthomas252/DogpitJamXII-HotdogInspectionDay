@@ -93,4 +93,5 @@ shape = SubResource( 3 )
 
 [node name="SnapPoint" type="MeshInstance" parent="SnapTrigger"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 5.33031, 8.29651, -14.1559 )
+visible = false
 mesh = SubResource( 4 )
