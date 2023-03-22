@@ -1,4 +1,4 @@
-[gd_scene load_steps=42 format=2]
+[gd_scene load_steps=43 format=2]
 
 [ext_resource path="res://Scripts/BaseScene.cs" type="Script" id=1]
 [ext_resource path="res://Prefab/Cursor.tscn" type="PackedScene" id=2]
@@ -20,6 +20,7 @@
 [ext_resource path="res://Prefab/ComputerPrefab.tscn" type="PackedScene" id=18]
 [ext_resource path="res://Assets/Materials/trashcan.tres" type="Material" id=19]
 [ext_resource path="res://Scripts/ScanTrigger.cs" type="Script" id=20]
+[ext_resource path="res://Prefab/HeatLamp.tscn" type="PackedScene" id=21]
 [ext_resource path="res://Assets/Textures/handbook/handbook_serial_numbers.png" type="Texture" id=22]
 [ext_resource path="res://Prefab/spawner_tube.tscn" type="PackedScene" id=23]
 
@@ -373,5 +374,8 @@ mesh = SubResource( 46 )
 
 [node name="CollisionShape" type="CollisionShape" parent="SnapTriggerConveyor"]
 shape = SubResource( 48 )
+
+[node name="heat_lamp" parent="." instance=ExtResource( 21 )]
+transform = Transform( 0.0186216, 0, -0.999827, 0, 1, 0, 0.999827, 0, 0.0186216, -29.1277, -11.8183, -28.6369 )
 
 [connection signal="Pressed" from="SpawnButton" to="Spawner" method="OnSpawnButton"]
