@@ -1,6 +1,6 @@
 using Godot;
 
-public class ScanZone : TriggerZone
+public class ScanTrigger : Trigger
 {
     public override void OnChildEntered(Node node)
     {

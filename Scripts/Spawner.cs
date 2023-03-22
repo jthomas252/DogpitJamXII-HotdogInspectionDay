@@ -34,4 +34,17 @@ public class Spawner : Spatial
             ComputerScreen.PlayErrorSound();
         }
     }
+
+    /**
+     * Use for spawning any non-hotdog objects
+     * Assumes that there's at least a Spatial on them
+     */
+    public void SpawnGenericObject(PackedScene scene)
+    {
+        Spatial obj = (Spatial)hotdog.Instance();
+        GetTree().CurrentScene.AddChild(obj);
+        GD.Print($"Object named {obj.Name} spawned at ${_spawnPoint.ToString()}");
+        obj.GlobalTranslation = _spawnPoint;
+        obj.GlobalRotation = new Vector3(GD.Randf(), GD.Randf(), GD.Randf());        
+    }
 }

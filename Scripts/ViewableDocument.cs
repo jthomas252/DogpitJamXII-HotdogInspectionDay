@@ -35,15 +35,15 @@ public class ViewableDocument : ViewableObject
     {
         base.Inspect();
         _cursor.ChangeGrabbedObject(this);
-        _prevButton.Visible = true;
-        _nextButton.Visible = true;
+        if (_prev != null) _prevButton.Visible = true;
+        if (_next != null) _nextButton.Visible = true;
     }
 
     public override void Drop()
     {
         base.Drop();
-        _prevButton.Visible = false;
-        _nextButton.Visible = false;
+        if (_prev != null) _prevButton.Visible = false;
+        if (_next != null) _nextButton.Visible = false;
     }
 
     public void OnPrevButton()
@@ -56,7 +56,6 @@ public class ViewableDocument : ViewableObject
 
     public void OnNextButton()
     {
-        GD.Print($"{Name} {_inspecting}");
         if (_inspecting && _next != null && !_switchedThisFrame)
         {
             SwitchTo(_next);

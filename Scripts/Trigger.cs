@@ -1,6 +1,6 @@
 using Godot;
 
-public class TriggerZone : Area
+public class Trigger : Area
 {
     [Export] public bool isKillZone = false; 
     

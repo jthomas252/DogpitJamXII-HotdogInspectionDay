@@ -32,18 +32,7 @@
 - Agency logo
     - Food and dog administration 
 
-# Unsorted
-- Solve errors with the inspect prev/next function
-
-- Come up with a name for the game
-	- 917: Hotdog Inspection Day
-	- Food and Dog Administration
-
-- Add a SpawnGeneric to the Spawner
-
 # Interface
-- Change custom cursor to reflect states like 3D model
-
 - Add start screen interface 
 
 - Add credits
