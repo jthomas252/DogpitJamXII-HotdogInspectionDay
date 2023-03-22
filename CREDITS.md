@@ -1,5 +1,6 @@
 # Team Credits
 - Modeling: Obsurveyor
+- Rat Model: Beowulf71 @ Blendswap.org (CC-BY)
 - Sound: 917
 - Programming: Nanomachine Son / Jonathan Thomas
 
