@@ -28,10 +28,6 @@
 - Cleaning bottle
     - Potential mechanic, low priority
 
-# Asset To Do
-- Agency logo
-    - Food and dog administration 
-
 # Interface
 - Add start screen interface 
 
@@ -59,22 +55,12 @@
 	- Iterate through a list of frames, repeating
 
 # Hotdog Conveyor
-- Create a generic GrabbableObject template
-	- For tokens and other items
-
 - Issue a score token if success (Set up event on BaseScene)
 	- Issue a positive flash on the monitor 
 
 - Issue a penalty token if failure (Set up event on BaseScene)
 	- Issue a citation on the monitor explaining the error
 	- Possibly put a label on these to detail the error
-
-- Conveyor Belt movement
-	- Apply fixed velocity 
-
-- Add Hotdog check trigger
-	- This is at the end of the conveyor 
-	- Validates if the dog was good or bad
 
 - Add positive flash screen for success
 	- Flash to a green
