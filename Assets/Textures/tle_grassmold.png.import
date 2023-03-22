@@ -2,8 +2,8 @@
 
 importer="texture"
 type="StreamTexture"
-path.s3tc="res://.import/texture_gold.jpeg-b6ca8df3b064a8e908ba07670cc419f2.s3tc.stex"
-path.etc="res://.import/texture_gold.jpeg-b6ca8df3b064a8e908ba07670cc419f2.etc.stex"
+path.s3tc="res://.import/tle_grassmold.png-3c15233f4fb055ecad4122220b435e44.s3tc.stex"
+path.etc="res://.import/tle_grassmold.png-3c15233f4fb055ecad4122220b435e44.etc.stex"
 metadata={
 "imported_formats": [ "s3tc", "etc" ],
 "vram_texture": true
@@ -11,8 +11,8 @@ metadata={
 
 [deps]
 
-source_file="res://Assets/Textures/texture_gold.jpeg"
-dest_files=[ "res://.import/texture_gold.jpeg-b6ca8df3b064a8e908ba07670cc419f2.s3tc.stex", "res://.import/texture_gold.jpeg-b6ca8df3b064a8e908ba07670cc419f2.etc.stex" ]
+source_file="res://Assets/Textures/tle_grassmold.png"
+dest_files=[ "res://.import/tle_grassmold.png-3c15233f4fb055ecad4122220b435e44.s3tc.stex", "res://.import/tle_grassmold.png-3c15233f4fb055ecad4122220b435e44.etc.stex" ]
 
 [params]
 

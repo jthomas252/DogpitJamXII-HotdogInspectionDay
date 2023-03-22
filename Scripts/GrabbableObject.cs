@@ -14,8 +14,9 @@ public class GrabbableObject : RigidBody
     private bool isGrabbed = false;
     private Vector3 targetPosition;
     private Vector3 targetDirection;
-    private Camera camera; 
-    private Vector2 mouseOffset = new Vector2(0f,0f);
+    private Camera camera;
+    private Vector2 mouseOffset;
+    private Vector2 rotOffset;
     private Spatial _inspectPoint; 
     
     public override void _Ready()
@@ -44,6 +45,7 @@ public class GrabbableObject : RigidBody
             GlobalRotation = _inspectPoint.GlobalRotation;
             Sleeping = true;
             mouseOffset = GetViewport().GetMousePosition();
+            rotOffset = new Vector2(0f, 0f);
         }
     }
 
@@ -93,17 +95,19 @@ public class GrabbableObject : RigidBody
                     Input.IsKeyPressed((int)KeyList.A) ? -ROTATION_KEYBOARD_SCALE : (Input.IsKeyPressed((int)KeyList.D) ? ROTATION_KEYBOARD_SCALE : 0f),
                     Input.IsKeyPressed((int)KeyList.W) ? -ROTATION_KEYBOARD_SCALE : (Input.IsKeyPressed((int)KeyList.S) ? ROTATION_KEYBOARD_SCALE : 0f)
                 );
-                
+
                 Transform transform = GlobalTransform;
+
                 transform.basis = transform.basis.Rotated(
-                    Input.IsKeyPressed((int)KeyList.Alt) ? camera.Transform.basis[0] : camera.Transform.basis[1], 
+                    Input.IsKeyPressed((int)KeyList.Alt) ? camera.Transform.basis.x : camera.Transform.basis.y, 
                     (mousePosition.x + keyboardInput.x) * ROTATION_MOUSE_SCALE
                 );
                 
                 transform.basis = transform.basis.Rotated(
-                     camera.Transform.basis[0], 
+                     camera.Transform.basis.z, 
                     (mousePosition.y + keyboardInput.y) * ROTATION_MOUSE_SCALE
                 );
+                
                 GlobalTransform = transform;
 
                 mouseOffset = GetViewport().GetMousePosition();

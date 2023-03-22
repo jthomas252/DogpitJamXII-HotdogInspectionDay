@@ -103,12 +103,7 @@
 - Create instructions for the heat lamp 
 
 # Shader
-- Try to combine a noise texture and second material pass for Mold 
-	- Should render only on a small % of the model
-
-- Create a shader material that applies a dirt texture to the Hotdog
-	- Use decals for this, have 1-2 that cover the model 
-	- Place in water basin to clean out
+- Set the shader threshold / offset from the Hotdog class
 
 # Rat
 - Add rat spawn
