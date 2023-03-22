@@ -5,9 +5,16 @@
 [resource]
 background_mode = 1
 background_sky = SubResource( 1 )
-background_color = Color( 0.0823529, 0.0823529, 0.0823529, 1 )
-ambient_light_color = Color( 0.321569, 0.313726, 0.180392, 1 )
-ambient_light_energy = 0.61
+background_color = Color( 0.160784, 0.160784, 0.160784, 1 )
+ambient_light_color = Color( 0.266667, 0.211765, 0.168627, 1 )
+ambient_light_energy = 0.17
+fog_enabled = true
+fog_color = Color( 0.603922, 0.513726, 0.454902, 1 )
+fog_sun_color = Color( 1, 0.960784, 0.905882, 1 )
+fog_depth_begin = 130.8
+fog_depth_end = 909.6
+fog_depth_curve = 1.23114
+ssao_enabled = true
 dof_blur_far_distance = 11.26
 dof_blur_far_transition = 1030.16
 dof_blur_far_quality = 0
