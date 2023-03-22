@@ -1,31 +1,34 @@
 # Models To Do (Priority is top to bottom)
-- Buttons with animation 
-    - Should have ones that hang off the desk
-    - At least one should fit the look of the spawner
+- Rat model
+
 - CRT Monitor
     - Screen should accept a separate material 
-- Environment models
-    - Can be untextured or loosely textured 
-    - Should include some basic enviromental details in the distance to give a sense of depth
-    - Room should follow a similar pattern to current layout in Godot with a back wall, right hand wall, opening leading into factory
-    - Possibly add meathooks or small animation in the background 
+
+- Digital clock body
+	- Will use a viewport texture to control the on-screen time
+
 - Geiger counter
-- Clipboard 
-    - Just the clipboard, documents exist as Sprite3D in game
-- Rat model
+
+- Environment models
+	- Optional, we can use the environment currently in Godot instead
+    - Should include some basic enviromental details in the distance to give a sense of depth
+    - Possibly add meathooks or small animation in the background 
+
 - Cardboard box
     - Used if we do the secret condition 
     - Should be just large enough to fit a hotdog in 
+
 - Arbitrary models (non-hotdogs)
     - Human finger
     - Banana
     - Dynamite
     - Bone
-- Tesla coil
-    - Attacks a rat if it wanders too close
-    - Will also couple with fire sprite / burn mark 
+	- Non-interactives to leave on the desk 
+
 - Cleaning bottle
     - Potential mechanic, low priority
+	- Would need a particle animation
+	- Only could be used to clean dirt 
 
 # Interface
 - Add start screen interface 
@@ -102,16 +105,11 @@
 	- Set up animation parameters in other behaviors
 
 # Tools
-- Rat repelant
-	- Tesla coil that will explode a rat if it gets too close
-
 - Add secret box
 	- It asks for a specific condition hotdog in a note
 	- If fulfilled gives some kind of unique reward
 
-- Add heat lamp
-	- Applies heat to objects within its radius
-	- Can use Godot lighting for this
+- Add heat lamp triggers and functionality
 
 - Add geiger counter
 	- Scans nearby objects for radiation state
@@ -123,12 +121,3 @@
 
 - Add counter object to spawner
 	- Should display a countdown of remaining hotdogs
-
-# Nice to have's
-- Dynamite which randomly spawns instead of hotdog
-	- If it explodes trigger a gameover or physics event
-	- If sent up the conveyor triggers a unique ending?
-
-- Add secret items
-	- Scale that tells you the Hotdog quality
-	- Only active when something is "sacrificed" 

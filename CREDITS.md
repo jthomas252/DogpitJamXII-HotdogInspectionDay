@@ -14,5 +14,6 @@
 - Fonts
     - https://fontstruct.com/fontstructions/show/2217682/stencil-block-1
     - https://int10h.org/oldschool-pc-fonts/fontlist/font?phoenix_bios#-
+    - https://fontstruct.com/fontstructions/show/2111913/m-nimo-reloj-cuadrado-1
 
 - DecalCo for model decals

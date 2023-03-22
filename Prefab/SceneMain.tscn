@@ -624,7 +624,7 @@ transform = Transform( 1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, -20.787
 
 [node name="HandbookPage" type="KinematicBody" parent="."]
 physics_interpolation_mode = 1
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 5.96636, 12.6079, -49.6416 )
+transform = Transform( 0.909563, 0.415567, 1.8165e-08, 0, -4.37114e-08, 1, 0.415567, -0.909563, -3.97582e-08, 27.0697, -10.2467, 12.7856 )
 collision_layer = 2
 collision_mask = 2
 script = ExtResource( 10 )
@@ -698,9 +698,9 @@ mesh = SubResource( 46 )
 shape = SubResource( 48 )
 
 [node name="spawner_pendant" parent="." instance=ExtResource( 26 )]
-transform = Transform( -4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 25.6677, 3.12633, -33.9218 )
+transform = Transform( 0.586613, 0, -0.809867, 0, 1, 0, 0.809867, 0, 0.586613, -8.34363, -0.84741, -33.2176 )
 
 [node name="button_dimple" parent="." instance=ExtResource( 27 )]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -11.7308, 28.7733, -28.8136 )
+transform = Transform( 0.809867, 0, 0.586613, 0, 1, 0, -0.586613, 0, 0.809867, -35.6349, 24.7996, -7.1422 )
 
 [connection signal="Pressed" from="SpawnButton" to="Spawner" method="OnSpawnButton"]
