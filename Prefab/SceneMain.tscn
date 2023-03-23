@@ -220,7 +220,7 @@ theme = ExtResource( 3 )
 text = "Begin"
 
 [node name="Camera" type="Camera" parent="."]
-transform = Transform( 0.999969, 0.0078539, 0, -0.00700748, 0.892202, 0.451582, 0.00354668, -0.451569, 0.892229, 0, 24.8409, 48.4861 )
+transform = Transform( 0.999969, 0.0078539, 5.61134e-09, -0.00733194, 0.933512, 0.35847, 0.00281539, -0.358459, 0.933541, 0, 24.8409, 48.4861 )
 environment = ExtResource( 12 )
 fov = 90.0
 far = 1000.0
@@ -706,7 +706,7 @@ transform = Transform( 1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, -20.787
 
 [node name="HandbookPage" type="KinematicBody" parent="."]
 physics_interpolation_mode = 1
-transform = Transform( 0.909563, 0.415567, 1.8165e-08, 0, -4.37114e-08, 1, 0.415567, -0.909563, -3.97582e-08, 27.8298, -10.2467, -25.8024 )
+transform = Transform( 0.909563, 0, -0.415567, 0.147871, 0.934551, 0.323649, 0.388368, -0.355829, 0.850033, 23.335, -4.54485, -39.0516 )
 collision_layer = 2
 collision_mask = 2
 script = ExtResource( 10 )
@@ -714,6 +714,7 @@ previous = NodePath("")
 next = NodePath("")
 
 [node name="Sprite3D" type="Sprite3D" parent="HandbookPage"]
+transform = Transform( 0.992729, -0.0383622, 0.114095, 0.0404167, 0.999059, -0.015748, -0.113383, 0.0202449, 0.993345, -0.225388, -1.42446, -0.493313 )
 pixel_size = 0.006
 shaded = true
 double_sided = false
