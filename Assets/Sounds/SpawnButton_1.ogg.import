@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/SpawnButton_1.ogg-6f7f7cb95aa1ed5b644526a8c50671f6.oggstr"
+
+[deps]
+
+source_file="res://Assets/Sounds/SpawnButton_1.ogg"
+dest_files=[ "res://.import/SpawnButton_1.ogg-6f7f7cb95aa1ed5b644526a8c50671f6.oggstr" ]
+
+[params]
+
+loop=false
+loop_offset=0

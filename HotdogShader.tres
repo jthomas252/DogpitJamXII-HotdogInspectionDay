@@ -7,8 +7,13 @@ render_mode async_visible,blend_mix,depth_draw_opaque,cull_disabled,diffuse_burl
 uniform sampler2D baseMap : hint_albedo;
 uniform sampler2D noiseMap : hint_albedo; 
 uniform sampler2D moldMap : hint_albedo;
-uniform float threshold : hint_range(0.05, 1.0, 0.05);
-uniform float offset : hint_range(0.0, 1.0, 0.0);
+uniform sampler2D burntMap : hint_albedo;
+
+uniform float threshold : hint_range(0.01, 1.0, 0.0);
+uniform float offset : hint_range(0.01, 1.0, 0.0);
+
+uniform float mold : hint_range(0.0, 1.0, 0.0);
+uniform float burnt : hint_range(0.0, 1.0, 0.0);
 
 uniform float uv1_blend_sharpness;
 varying vec3 uv1_triplanar_pos;
@@ -41,12 +46,19 @@ void vertex() {
 
 void fragment() {
 	float noise = mod(triplanar_texture(noiseMap, uv1_power_normal, uv1_triplanar_pos).x, threshold) + offset;
-	vec4 base = triplanar_texture(baseMap, uv1_power_normal, uv1_triplanar_pos); 
-	vec4 mold = triplanar_texture(moldMap, uv1_power_normal, uv1_triplanar_pos); 
+	vec4 baseTex = triplanar_texture(baseMap, uv1_power_normal, uv1_triplanar_pos); 
+	vec4 moldTex = triplanar_texture(moldMap, uv1_power_normal, uv1_triplanar_pos); 
+	vec4 burntTex = triplanar_texture(burntMap, uv1_power_normal, uv1_triplanar_pos);
 	
 	ALBEDO = vec3(
-		mix(base.x, mold.x, noise),
-		mix(base.y, mold.y, noise),
-		mix(base.z, mold.z, noise)
+		mix(baseTex.x, moldTex.x, noise + mold),
+		mix(baseTex.y, moldTex.y, noise + mold),
+		mix(baseTex.z, moldTex.z, noise + mold)
+	);
+	
+	ALBEDO = vec3(
+		mix(ALBEDO.x, burntTex.x, noise + burnt),
+		mix(ALBEDO.y, burntTex.y, noise + burnt),
+		mix(ALBEDO.z, burntTex.z, noise + burnt)
 	);
 }"

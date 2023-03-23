@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/MachineryStatic_Loop.ogg-8704b0b3d57266101467f30d8753b66d.oggstr"
+
+[deps]
+
+source_file="res://Assets/Sounds/MachineryStatic_Loop.ogg"
+dest_files=[ "res://.import/MachineryStatic_Loop.ogg-8704b0b3d57266101467f30d8753b66d.oggstr" ]
+
+[params]
+
+loop=true
+loop_offset=0

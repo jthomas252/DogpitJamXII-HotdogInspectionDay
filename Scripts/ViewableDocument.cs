@@ -11,8 +11,6 @@ public class ViewableDocument : ViewableObject
     private ViewableObject _prev;
     private ViewableObject _next;
 
-    private Cursor _cursor;
-
     private static bool _switchedThisFrame;
     
     public override void _Ready()
@@ -22,7 +20,6 @@ public class ViewableDocument : ViewableObject
         // Get the UI buttons for next and previous 
         _prevButton = GetTree().CurrentScene.GetNode<Button>("Interface/PrevButton");
         _nextButton = GetTree().CurrentScene.GetNode<Button>("Interface/NextButton");
-        _cursor = GetTree().CurrentScene.GetNode<Cursor>("Cursor");
 
         if (previous != null) _prev = GetNodeOrNull<ViewableObject>(previous);
         if (next != null) _next = GetNodeOrNull<ViewableObject>(next);
@@ -34,7 +31,7 @@ public class ViewableDocument : ViewableObject
     public override void Inspect()
     {
         base.Inspect();
-        _cursor.ChangeGrabbedObject(this);
+        Cursor.ChangeGrabbedObject(this);
         if (_prev != null) _prevButton.Visible = true;
         if (_next != null) _nextButton.Visible = true;
     }

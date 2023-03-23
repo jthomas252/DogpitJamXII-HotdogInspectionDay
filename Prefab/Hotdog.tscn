@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=2]
+[gd_scene load_steps=17 format=2]
 
 [ext_resource path="res://Scripts/Hotdog.cs" type="Script" id=1]
 [ext_resource path="res://Scripts/GrabbableObject.cs" type="Script" id=2]
@@ -6,6 +6,10 @@
 [ext_resource path="res://Assets/Materials/Hotdog.material" type="Material" id=4]
 [ext_resource path="res://HotdogShaderMaterial.tres" type="Material" id=5]
 [ext_resource path="res://Assets/Textures/tile_ice.jpeg" type="Texture" id=6]
+[ext_resource path="res://Assets/Textures/tile_ice_Normal.png" type="Texture" id=7]
+[ext_resource path="res://Assets/Textures/tile_ice_Roughness.png" type="Texture" id=8]
+[ext_resource path="res://decalco/src/Decal.shader" type="Shader" id=9]
+[ext_resource path="res://Assets/Textures/decal_scanner.png" type="Texture" id=10]
 
 [sub_resource type="ArrayMesh" id=2]
 resource_name = "hotdog_fixed_Cube001"
@@ -42,11 +46,33 @@ bind/3/pose = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -3, 0 )
 flags_transparent = true
 albedo_color = Color( 0.352941, 0.541176, 0.678431, 0.631373 )
 albedo_texture = ExtResource( 6 )
+roughness_texture = ExtResource( 8 )
+normal_enabled = true
+normal_scale = 1.0
+normal_texture = ExtResource( 7 )
 uv1_scale = Vector3( 0.5, 0.5, 0.5 )
 uv1_triplanar = true
 
 [sub_resource type="CapsuleShape" id=4]
 height = 11.272
+
+[sub_resource type="CubeMesh" id=6]
+
+[sub_resource type="ShaderMaterial" id=7]
+shader = ExtResource( 9 )
+shader_param/albedo_tint = Color( 1, 1, 1, 1 )
+shader_param/emission_tint = Color( 0, 0, 0, 1 )
+shader_param/emission_strength = 1.0
+shader_param/occlusion_strength = 1.0
+shader_param/specular_strength = 1.0
+shader_param/metallic_strength = 1.0
+shader_param/animation_speed = 1.0
+shader_param/flipbook_columns_count = 1
+shader_param/one_shot = false
+shader_param/start_time = null
+shader_param/current_frame_blend = 0.0
+shader_param/use_normal_map = false
+shader_param/albedo = ExtResource( 10 )
 
 [node name="BonelessHotdog" type="Spatial"]
 script = ExtResource( 1 )
@@ -83,3 +109,9 @@ modulate = Color( 0.0862745, 0.0666667, 0.0588235, 1 )
 text = "42069"
 font = ExtResource( 3 )
 horizontal_alignment = 2
+
+[node name="Decal" type="MeshInstance" parent="GrabbableObject"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 4.74149, 0.823935 )
+visible = false
+mesh = SubResource( 6 )
+material/0 = SubResource( 7 )

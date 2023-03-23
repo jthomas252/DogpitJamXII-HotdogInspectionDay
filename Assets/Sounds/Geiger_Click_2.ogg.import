@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/Geiger_Click_2.ogg-5ded4209932e8f0d459cc1e769710c8b.oggstr"
+
+[deps]
+
+source_file="res://Assets/Sounds/Geiger_Click_2.ogg"
+dest_files=[ "res://.import/Geiger_Click_2.ogg-5ded4209932e8f0d459cc1e769710c8b.oggstr" ]
+
+[params]
+
+loop=false
+loop_offset=0

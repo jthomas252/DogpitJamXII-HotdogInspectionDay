@@ -3,6 +3,19 @@ using System;
 
 public class BaseScene : Spatial
 {
+	private const int PLAYER_QUOTA = 8;
+	private const int PLAYER_QUOTA_PER_LEVEL = 2;
+	private const int PLAYER_CITATION_THRESHOLD = 3;
+	private const float PLAYER_LEVEL_LENGTH = 30f; 
+	
+	private int _playerMistake;
+	private int _playerScore;
+	private int _playerLevel; 
+	private int _playerQuota;
+	private float _playerTimer;
+
+	private Label3D _timer; 
+	
 	[Signal]
 	public delegate void Inspection();
 
@@ -64,9 +77,46 @@ public class BaseScene : Spatial
 	 */
 	public static void IterateScore()
 	{
-		// TODO
+		_instance._playerScore++;
+		UpdateScoreDisplay();
+	}
+
+	/**
+	 * Only issue citations right now
+	 */
+	public static void DecrementScore()
+	{
+		_instance._playerMistake++;
+		if (_instance._playerMistake > 0 && _instance._playerMistake % PLAYER_CITATION_THRESHOLD == 0)
+		{
+			// Replace this with a citation object
+			_instance.GetNode<Spawner>("Spawner").SpawnGenericObject(new PackedScene());
+		}
+		UpdateScoreDisplay();
+	}
+
+	public static void UpdateScoreDisplay()
+	{
+		ComputerScreen.UpdateBodyBottomText($"QUOTA {_instance._playerScore} OF {_instance._playerQuota}");
 	}
 	
+	public static void StartNextLevel()
+	{
+		// Clear any hotdogs still in the scene
+		// Call the spawner and reset the spawn count / timers
+		// Spawn any unique packed scenes 
+		// Set the rat spawn timer to function 
+		_instance._playerLevel++; 
+		_instance._playerQuota = PLAYER_QUOTA + _instance._playerLevel * PLAYER_QUOTA_PER_LEVEL;
+		_instance._playerTimer = PLAYER_LEVEL_LENGTH; 
+	}
+
+	public static void OnLevelEnd()
+	{
+		// Show the between levels score display
+		// Tell the player how they did
+		// Start the next level 
+	}
 	
 	public override void _Ready()
 	{
@@ -74,10 +124,26 @@ public class BaseScene : Spatial
 		
 		// Set the mouse to be hidden, reconsider enabling when in menus (disable while working on MacOS)
 		// Input.MouseMode = Input.MouseModeEnum.Hidden;
+
+		_timer = GetNode<Label3D>("Timer");
+		StartNextLevel();
 	}
-	
+
+	public override void _Process(float delta)
+	{
+		if (_playerTimer > 0)
+		{
+			_playerTimer -= delta;
+			_timer.Text = _playerTimer.ToString("0");
+			if (_playerTimer < 0)
+			{
+				OnLevelEnd();
+			}
+		}
+	}
+
 	// Pause the game from progressing while the menu is active
-	public void OnMenuButton()
+	public void OnBeginButton()
 	{
 		GetTree().Paused = true; 
 		GD.Print("Received an input from the menu button.");

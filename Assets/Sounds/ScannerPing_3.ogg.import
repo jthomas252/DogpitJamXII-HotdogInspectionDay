@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/ScannerPing_3.ogg-50176be2fe662bf49805372c797cf0de.oggstr"
+
+[deps]
+
+source_file="res://Assets/Sounds/ScannerPing_3.ogg"
+dest_files=[ "res://.import/ScannerPing_3.ogg-50176be2fe662bf49805372c797cf0de.oggstr" ]
+
+[params]
+
+loop=false
+loop_offset=0

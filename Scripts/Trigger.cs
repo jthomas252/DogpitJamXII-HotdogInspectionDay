@@ -3,7 +3,8 @@ using Godot;
 public class Trigger : Area
 {
     [Export] public bool isKillZone = false; 
-    
+    [Export] public string tooltipText = "";
+
     public override void _Ready()
     {
         Connect("body_entered", this, nameof(OnChildEntered));
@@ -26,4 +27,9 @@ public class Trigger : Area
     {
         
     }
+    
+    public virtual string GetTooltip()
+    {
+        return tooltipText; 
+    }    
 }

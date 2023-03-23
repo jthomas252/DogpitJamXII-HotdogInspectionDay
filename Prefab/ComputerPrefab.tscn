@@ -1,8 +1,6 @@
-[gd_scene load_steps=7 format=2]
+[gd_scene load_steps=5 format=2]
 
 [ext_resource path="res://Prefab/ComputerScreen.tscn" type="PackedScene" id=1]
-[ext_resource path="res://Assets/Sounds/SpawnerWarning_2.ogg" type="AudioStream" id=2]
-[ext_resource path="res://Assets/Sounds/SpawnerWarning_1.ogg" type="AudioStream" id=3]
 
 [sub_resource type="PlaneMesh" id=39]
 size = Vector2( 20, 15 )
@@ -24,8 +22,6 @@ hdr = false
 render_target_v_flip = true
 
 [node name="Screen" parent="ComputerDisplay" instance=ExtResource( 1 )]
-errorSound = ExtResource( 3 )
-successSound = ExtResource( 2 )
 
 [node name="Sound" type="AudioStreamPlayer3D" parent="ComputerDisplay/Screen"]
 unit_db = 25.0

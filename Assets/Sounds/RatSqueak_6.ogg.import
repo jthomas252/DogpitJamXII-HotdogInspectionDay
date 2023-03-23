@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/RatSqueak_6.ogg-9cbc42f767a7ce07cba5958a04de23de.oggstr"
+
+[deps]
+
+source_file="res://Assets/Sounds/RatSqueak_6.ogg"
+dest_files=[ "res://.import/RatSqueak_6.ogg-9cbc42f767a7ce07cba5958a04de23de.oggstr" ]
+
+[params]
+
+loop=true
+loop_offset=0

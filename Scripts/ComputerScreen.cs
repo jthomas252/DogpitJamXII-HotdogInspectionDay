@@ -7,7 +7,10 @@ public class ComputerScreen : Control
     
     [Export] public AudioStream errorSound;
     [Export] public AudioStream successSound;
-    
+
+    [Export] public Color errorColor;
+    [Export] public Color successColor; 
+
     private static ComputerScreen _instance; 
     
     private ColorRect headerRect;
@@ -87,18 +90,22 @@ public class ComputerScreen : Control
 
     public static void FlashSuccess(string flashText)
     {
-        _instance.flashRect.Color = Colors.Green;
+        _instance.flashRect.Color = _instance.successColor;
         _instance.flashRect.Visible = true;
         _instance.flashText.Text = flashText;
         _instance.flashDuration = FLASH_DURATION;
+        
+        PlaySuccessSound();
     }
 
     public static void FlashError(string flashText)
     {
-        _instance.flashRect.Color = Colors.Red;
+        _instance.flashRect.Color = _instance.errorColor;
         _instance.flashRect.Visible = true;
         _instance.flashText.Text = flashText;
         _instance.flashDuration = FLASH_DURATION;        
+        
+        PlayErrorSound();
     }
 
     /**

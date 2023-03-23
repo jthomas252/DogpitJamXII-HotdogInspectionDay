@@ -1,0 +1,20 @@
+[gd_scene load_steps=2 format=2]
+
+[ext_resource path="res://Prefab/default_env.tres" type="Environment" id=1]
+
+[node name="PrerenderLook (Remove if needed)" type="Viewport"]
+pause_mode = 1
+size = Vector2( 640, 360 )
+msaa = 4
+fxaa = true
+sharpen_intensity = 0.267
+hdr = false
+usage = 0
+render_target_v_flip = true
+
+[node name="Camera" type="Camera" parent="."]
+pause_mode = 1
+transform = Transform( 0.999969, 0.0078539, 0, -0.00700748, 0.892202, 0.451582, 0.00354668, -0.451569, 0.892229, 0, 24.8409, 48.4861 )
+environment = ExtResource( 1 )
+fov = 90.0
+far = 1000.0

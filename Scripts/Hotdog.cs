@@ -4,56 +4,78 @@ using System.Collections.Generic;
 
 public class Hotdog : Spatial
 {
-    private readonly float FROZEN_TEMPERATURE = 0f; 
+    private readonly float SHADER_THRESHOLD_MIN = 0.01f; // Prevent rendering issues with the shader
+    private readonly float ICE_MAX_SCALE = 1.3f; 
+    private readonly float ICE_MIN_SCALE = 0.95f;
+    
+    private readonly float FROZEN_TEMPERATURE = 0f;
+    private readonly float NORMAL_TEMPERATURE = 10f; 
     private readonly float BURN_TEMPERATURE = 20f;
     private readonly float CHANCE_VALID = 0.6f;
-    private bool _isValid;
 
-    private string _serialNumber;
+    private readonly float MOLD_DENY_LEVEL = 0.5f;
+    private readonly float BURN_DENY_LEVEL = 0.5f;
+
+    private readonly float MOLD_SHADER_MULT = 1.8f;
+    private readonly float BURN_SHADER_MULT = 2.2f; 
+
+    // Child objects
+    private MeshInstance _decal;
+    private Spatial _ice;
     private Label3D _serialNumberLabel;
-
-    private MeshInstance _decal; 
+    private ShaderMaterial _material;
     
-    // Assignable problem factors
+    // Internal components
+    private HotdogChallenge _challenge;
+    private HotdogBrand _brand;
+    private List<MeatContent> _meats;
+    private string _serialNumber;
+    private bool _isValid;
     private float _qualityLevel;
     private float _moldLevel;
-    private float _dirtLevel;
     private float _burntLevel;
     private float _radioactivity;
     private float _temperature;
     private string _invalidReason;
-    private ShaderMaterial _material;
 
     public override void _Ready()
     {
+        // Set up the shader material 
+        MeshInstance mesh = GetNode<MeshInstance>("GrabbableObject/HotdogMesh");
+        Material material = mesh.GetSurfaceMaterial(0);
+        _material = material as ShaderMaterial;
+        _material.ResourceLocalToScene = true;
+
         // Set relevant stats
         _qualityLevel = GD.Randf();
         _isValid = _qualityLevel >= CHANCE_VALID;
-        
-        // Try to get the shader material and set the threshold to 1
-        MeshInstance test = GetNode<MeshInstance>("GrabbableObject/HotdogMesh");
-        Material material = test.GetSurfaceMaterial(0);
-        _material = material as ShaderMaterial;
-        _material.ResourceLocalToScene = true;
-        _material.SetShaderParam("offset", _qualityLevel);
-        
-        _serialNumberLabel = GetNode<Label3D>("GrabbableObject/SerialNumber");
-        
+        _temperature = 10f;
+        _moldLevel = GD.Randf() % (1f - _qualityLevel);
+        _burntLevel = 0f;
+        _radioactivity = 0f;
 
+        // Update the shader now that we have basic info 
+        UpdateShader();
+
+        // Get all child objects that we'll need
+        _serialNumberLabel = GetNode<Label3D>("GrabbableObject/SerialNumber");
+        _ice = GetNode<Spatial>("GrabbableObject/IceMesh");
+        _ice.Visible = _temperature < NORMAL_TEMPERATURE;
+        _decal = GetNode<MeshInstance>("GrabbableObject/Decal");
         
         // Determine which challenge to use, check which are available and fall back if needed
-        // TODO
-        
+        _challenge = HotdogChallenge.SERIAL_NUMBER;
+
         // Get the brand to use
         _brand = GetBrand();
         
         // Generate other relevant stats
-        _serialNumber = GetSerialNumber();
+        _serialNumber = GetSerialNumberFromData();
         _serialNumberLabel.Text = _serialNumber;
 
-        _invalidReason = "SERIAL NUMBER INVALID";
+        _invalidReason = GetInvalidReasonFromData();
         
-        _meats = GetMeats();
+        _meats = GetMeatsFromData();
     }
 
     public string GetInfo()
@@ -65,11 +87,66 @@ public class Hotdog : Spatial
             $"MOLD    {_moldLevel}\n" +
             $"COLD    {_temperature}\n" +
             $"RADIO   {_radioactivity}\n" +
+            $"BURNT   {_burntLevel}\n" + 
             "\n### MEAT CONTENTS ######!\n";
         
         // Iterate through meats and add to output
 
         return output.ToUpper();
+    }
+    
+    public string GetInvalidReason()
+    {
+        return _invalidReason;
+    }
+    
+    public bool IsValid()
+    {
+        if (IsFrozen())
+        {
+            _invalidReason = "HOTDOG TOO FROZEN";
+            return false;
+        }
+        
+        if (_burntLevel > BURN_DENY_LEVEL)
+        {
+            _invalidReason = "HOTDOG TOO BURNT";
+            return false;
+        }
+
+        if (_moldLevel > MOLD_DENY_LEVEL)
+        {
+            _invalidReason = "HOTDOG TOO MOLDY";
+            return false;
+        } 
+        return _isValid;
+    }
+
+    public bool IsFrozen()
+    {
+        return _temperature < NORMAL_TEMPERATURE; 
+    }
+
+    public void ApplyHeat(float amount)
+    {
+        _temperature += amount;
+        _ice.Visible = _temperature < NORMAL_TEMPERATURE;
+        
+        if (_temperature < NORMAL_TEMPERATURE) // Scale ice
+        {
+            _ice.Scale = Vector3.One * Mathf.Lerp(ICE_MIN_SCALE, ICE_MAX_SCALE, 1f - (_temperature / NORMAL_TEMPERATURE));
+        } else if (_temperature > BURN_TEMPERATURE) // Apply burns
+        {
+            _burntLevel = Mathf.Lerp(0f, 1f, (_temperature - BURN_TEMPERATURE) / BURN_TEMPERATURE);
+        }
+        UpdateShader();
+    }
+
+    private void UpdateShader()
+    {
+        _material.SetShaderParam("threshold", (_burntLevel > _moldLevel ? _burntLevel : _moldLevel) + SHADER_THRESHOLD_MIN);
+        _material.SetShaderParam("burnt", _burntLevel);
+        _material.SetShaderParam("mold", _moldLevel);        
     }
 
     private HotdogBrand GetBrand()
@@ -77,7 +154,12 @@ public class Hotdog : Spatial
         return _challengeBrands[HotdogChallenge.SERIAL_NUMBER][GD.Randi() % _challengeBrands[HotdogChallenge.SERIAL_NUMBER].Length];
     }
 
-    private string GetSerialNumber()
+    private string GetInvalidReasonFromData()
+    {
+        return "INVALID SERIAL NUMBER";
+    }
+
+    private string GetSerialNumberFromData()
     {
         if (_isValid)
         {
@@ -88,7 +170,7 @@ public class Hotdog : Spatial
     }
 
     // Using the brands and provided lists 
-    private List<MeatContent> GetMeats()
+    private List<MeatContent> GetMeatsFromData()
     {
         List<MeatContent> meat = new List<MeatContent>();
         
@@ -100,17 +182,7 @@ public class Hotdog : Spatial
         
         return meat; 
     }
-    
-    public string GetInvalidReason()
-    {
-        return _invalidReason;
-    }
-    
-    public bool IsValid()
-    {
-        return _isValid;
-    }
-    
+
     // ------------
     // Game Data
     // ------------
@@ -177,9 +249,6 @@ public class Hotdog : Spatial
         UNKNOWN
     }
 
-    private HotdogBrand _brand;
-    private List<MeatContent> _meats;
-    
     private Dictionary<HotdogChallenge, HotdogBrand[]> _challengeBrands = new Dictionary<HotdogChallenge, HotdogBrand[]>()
         {
             {

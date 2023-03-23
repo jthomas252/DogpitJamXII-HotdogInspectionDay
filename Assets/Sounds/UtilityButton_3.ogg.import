@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/UtilityButton_3.ogg-de1120a828b17809d7280b5b7a4275a1.oggstr"
+
+[deps]
+
+source_file="res://Assets/Sounds/UtilityButton_3.ogg"
+dest_files=[ "res://.import/UtilityButton_3.ogg-de1120a828b17809d7280b5b7a4275a1.oggstr" ]
+
+[params]
+
+loop=false
+loop_offset=0

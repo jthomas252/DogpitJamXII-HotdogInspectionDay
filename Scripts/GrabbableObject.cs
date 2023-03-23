@@ -11,12 +11,11 @@ public class GrabbableObject : RigidBody
     private readonly float MOVEMENT_SCALE = 200f;
     private readonly float MOVEMENT_DISTANCE_THRESHOLD = 1f;
     
-    private bool isGrabbed = false;
+    private bool isGrabbed;
     private Vector3 targetPosition;
     private Vector3 targetDirection;
     private Camera camera;
     private Vector2 mouseOffset;
-    private Vector2 rotOffset;
     private Spatial _inspectPoint; 
     
     public override void _Ready()
@@ -45,7 +44,6 @@ public class GrabbableObject : RigidBody
             GlobalRotation = _inspectPoint.GlobalRotation;
             Sleeping = true;
             mouseOffset = GetViewport().GetMousePosition();
-            rotOffset = new Vector2(0f, 0f);
         }
     }
 
@@ -59,7 +57,7 @@ public class GrabbableObject : RigidBody
 
     public void Grab()
     {
-        GD.Print("Hotdog Grabbed");
+        GD.Print($"{Name} Grabbed");
         isGrabbed = true;
     }
 
@@ -71,7 +69,7 @@ public class GrabbableObject : RigidBody
 
     public void Drop()
     {
-        GD.Print("Hotdog dropped");
+        GD.Print($"{Name} dropped");
         isGrabbed = false;
         Sleeping = false;
     }

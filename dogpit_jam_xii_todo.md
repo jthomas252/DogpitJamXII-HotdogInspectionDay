@@ -4,10 +4,9 @@
 - CRT Monitor
     - Screen should accept a separate material 
 
-- Digital clock body
-	- Will use a viewport texture to control the on-screen time
-
 - Geiger counter
+
+- Uranium Rod
 
 - Environment models
 	- Optional, we can use the environment currently in Godot instead
@@ -25,10 +24,21 @@
     - Bone
 	- Non-interactives to leave on the desk 
 
+- Digital clock body (Optional)
+	
 - Cleaning bottle
     - Potential mechanic, low priority
 	- Would need a particle animation
 	- Only could be used to clean dirt 
+
+# Misc
+- Need to add a seed to the random for Godot startup
+
+- Have a "Start Shift" button, maybe on the spawner button arm
+	- Trigger the spot lights to flash
+	- Conveyor animation starts
+	- Computer turns on
+	- Gives the player a chance to read the manual or examine notices
 
 # Interface
 - Add credits
@@ -42,21 +52,12 @@
 - Show screen between levels telling the player how they did
 
 - Reset hotdogs on screen, item states, and spawner count
-	- Use EmitSignal here
-
-# Textures
-- Add warning label decals
-
-- Add scanning area decal
-
-- Add spawn area decal
+	- Remove the remaining hotdogs on the scene
+	- Set the spawner back up to a full count
+	- Reset the game timer
 
 # Scoring
-- Iterate a score in BaseScene
-
-- Display Quota on the Computer Screen
-
-- Issue citations if  >3 valid hotdogs are tossed in the trash
+- Display Quota on the Computer Screen, bugfix
 
 # Hotdog Generation
 - Set up meats randomizer in Hotdog creation
@@ -66,18 +67,9 @@
 
 - Generate a radioactivity score (scale for failures)
 
-- Generate a coldnesss stat (requires thawing)
-
-- Generate mold stat and assign to the shader
-
 # Audio
-- Import new SFX 
-
 - Add sound effects to the Hotdog to play on collision
 	- Will need to put these somewhere on the rigidbody
-
-- Set up ambient audio playback
-	- Computer hum
 
 # Instruction Pages
 - Create basic instruction page explaining gameplay loop
@@ -87,8 +79,16 @@
 	- Could use a datatable here to determine stats for each
 
 - Create instructions for the geiger counter
+	- Explain that it will trigger when radiation is detected 
+	- Explain that it can be picked up 
 
 - Create instructions for the heat lamp 
+	- Mention some hotdogs arrive frozen
+	- Frozen hotdogs cant scan
+
+- Warning page about rats 
+
+- Export to images and apply effects
 
 # Rat
 - Add rat spawn
@@ -110,15 +110,9 @@
 	- It asks for a specific condition hotdog in a note
 	- If fulfilled gives some kind of unique reward
 
-- Add heat lamp triggers and functionality
-
 - Add geiger counter
 	- Scans nearby objects for radiation state
 	- Ticks up if detecting radiation
-
-- Add level timer
-	- Display in world somewhere
-	- Tick down and end the level at the threshold being reached
 
 - Add a delay to the spawner button
 	- Should allow for a few spawns before a wait time 

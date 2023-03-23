@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/RatAlert_2.ogg-05c576d16244a7d6fea82c02a66f3208.oggstr"
+
+[deps]
+
+source_file="res://Assets/Sounds/RatAlert_2.ogg"
+dest_files=[ "res://.import/RatAlert_2.ogg-05c576d16244a7d6fea82c02a66f3208.oggstr" ]
+
+[params]
+
+loop=true
+loop_offset=0

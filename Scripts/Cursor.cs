@@ -25,38 +25,45 @@ public class Cursor : Sprite3D
     [Export] public Texture handTexturePoint;
     [Export] public Texture handTextureMagnify;
     [Export] public Texture handTextureClicked;
+    [Export] public Texture handTextureGrab; 
 
+    private static Cursor _instance;
+    private static Label3D _tooltip; 
     private Camera camera;
     private Node hoverObject;
     private Spatial grabbedObject;
     private Vector3 objectHoldPoint;
     private Array ignoreObjects;
     private PhysicsDirectSpaceState spaceState;
-    private MeshInstance debugCursor;
 
     public enum CursorState
     {
         HandOpen,
         HandClosed,
         HandPoint,
+        HandGrab,
         HandMagnify,
         HandClicked,
     }
 
     public override void _Ready()
     {
+        _instance = this;
+        
         // Find relevant world objects
         inspectPoint = GetTree().CurrentScene.GetNode<Spatial>("Points/InspectPoint");
         objectHoldPoint = Vector3.Zero;
         spaceState = GetWorld().DirectSpaceState;
         camera = GetViewport().GetCamera();
-        debugCursor = GetNode<MeshInstance>("Debug");
+        _tooltip = GetNode<Label3D>("Tooltip");
     }
 
     private void AttemptInteraction()
     {
         if (hoverObject != null)
         {
+            ClearTooltip();
+            
             // Validate the object has an InteractiveObject script 
             if (hoverObject is InteractableObject interactiveObject)
             {
@@ -164,7 +171,7 @@ public class Cursor : Sprite3D
             objectHoldPoint = pos + (normal * cursorDistance);
         }
 
-        debugCursor.GlobalTranslation = objectHoldPoint;
+        //_tooltip.GlobalTranslation = objectHoldPoint;
         Translation = pos + (normal * cursorDistance);
     }
 
@@ -183,24 +190,35 @@ public class Cursor : Sprite3D
         if (interacts.Count > 0)
         {
             hoverObject = (Node)interacts["collider"];
-            ComputerScreen.UpdateBodyBottomText($"{hoverObject.Name}");
-            
+
             if (hoverObject is InteractableObject && !Input.IsMouseButtonPressed((int)ButtonList.Left) && !IsGrabbing())
             {
                 ChangeCursorState(CursorState.HandPoint);
+                ChangeTooltip("Interact");
             }
             else if (hoverObject is ViewableObject && !IsGrabbing())
             {
                 ChangeCursorState(CursorState.HandMagnify);
+                ChangeTooltip("View");
+            }
+            else if (hoverObject is GrabbableObject && !IsGrabbing())
+            {
+                ChangeCursorState(CursorState.HandGrab);
+                ChangeTooltip("Grab");
             }
             else if (hoverObject is SnapTrigger snapTrigger)
             {
                 objectHoldPoint = snapTrigger.GetSnapPoint();
+                ClearTooltip();
+            }
+            else if (hoverObject is Trigger trigger)
+            {
+                ChangeTooltip(trigger.GetTooltip());
             }
         }
         else
         {
-            ComputerScreen.UpdateBodyBottomText("NO INTERACT");
+            ClearTooltip();
             ChangeCursorState(CursorState.HandOpen);
         }
     }
@@ -211,10 +229,12 @@ public class Cursor : Sprite3D
         {
             if (BaseScene.Inspecting())
             {
+                ChangeCursorState(CursorState.HandOpen);
                 grabbableObject.UpdateTargetPosition(inspectPoint.GlobalTranslation);
             }
             else
             {
+                ChangeCursorState(CursorState.HandClosed);
                 grabbableObject.UpdateTargetPosition(objectHoldPoint);
             }
         }
@@ -261,6 +281,10 @@ public class Cursor : Sprite3D
                 Texture = handTextureMagnify;
                 break;
 
+            case CursorState.HandGrab:
+                Texture = handTextureGrab;
+                break; 
+            
             default:
             case CursorState.HandOpen:
                 Texture = handTextureOpen;
@@ -268,8 +292,20 @@ public class Cursor : Sprite3D
         }
     }
 
-    public void ChangeGrabbedObject(Spatial s)
+    public static void ChangeTooltip(string text)
     {
-        grabbedObject = s;
+        if (_tooltip != null) _tooltip.Text = text; 
+        else GD.PrintErr("Tooltip not assigned");
+    }
+
+    public static void ClearTooltip()
+    {
+        if (_tooltip != null) _tooltip.Text = "";
+        else GD.PrintErr("Tooltip not assigned");
+    }
+
+    public static void ChangeGrabbedObject(Spatial newGrab)
+    {
+        _instance.grabbedObject = newGrab;
     }
 }

@@ -1,0 +1,11 @@
+[gd_resource type="DynamicFont" load_steps=2 format=2]
+
+[sub_resource type="DynamicFontData" id=58]
+antialiased = false
+override_oversampling = 1.0
+font_path = "res://Assets/Fonts/klok.ttf"
+
+[resource]
+size = 128
+outline_color = Color( 0, 0, 0, 1 )
+font_data = SubResource( 58 )

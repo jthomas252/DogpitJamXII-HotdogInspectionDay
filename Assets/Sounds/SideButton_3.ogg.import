@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/SideButton_3.ogg-b466ed7cbcab96f5861405a43a725b9e.oggstr"
+
+[deps]
+
+source_file="res://Assets/Sounds/SideButton_3.ogg"
+dest_files=[ "res://.import/SideButton_3.ogg-b466ed7cbcab96f5861405a43a725b9e.oggstr" ]
+
+[params]
+
+loop=false
+loop_offset=0

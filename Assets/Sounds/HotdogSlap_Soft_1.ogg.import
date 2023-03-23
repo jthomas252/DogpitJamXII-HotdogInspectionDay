@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/HotdogSlap_Soft_1.ogg-b44d66ae4b9ca0e2e998b25918468bf9.oggstr"
+
+[deps]
+
+source_file="res://Assets/Sounds/HotdogSlap_Soft_1.ogg"
+dest_files=[ "res://.import/HotdogSlap_Soft_1.ogg-b44d66ae4b9ca0e2e998b25918468bf9.oggstr" ]
+
+[params]
+
+loop=false
+loop_offset=0

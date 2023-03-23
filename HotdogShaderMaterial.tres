@@ -1,8 +1,9 @@
-[gd_resource type="ShaderMaterial" load_steps=6 format=2]
+[gd_resource type="ShaderMaterial" load_steps=7 format=2]
 
 [ext_resource path="res://HotdogShader.tres" type="Shader" id=1]
 [ext_resource path="res://Assets/Textures/tle_grassmold.png" type="Texture" id=2]
 [ext_resource path="res://Assets/Textures/texture_hotdog.png" type="Texture" id=3]
+[ext_resource path="res://Assets/Textures/tile_ice_Roughness.png" type="Texture" id=4]
 
 [sub_resource type="OpenSimplexNoise" id=2]
 
@@ -12,11 +13,14 @@ noise = SubResource( 2 )
 
 [resource]
 shader = ExtResource( 1 )
-shader_param/threshold = 0.05
+shader_param/threshold = 0.0123824
 shader_param/offset = 0.0
+shader_param/mold = 0.0
+shader_param/burnt = 0.0
 shader_param/uv1_blend_sharpness = 0.1
 shader_param/uv1_scale = Vector3( 0.1, 0.1, 0.1 )
 shader_param/uv1_offset = null
 shader_param/baseMap = ExtResource( 3 )
 shader_param/noiseMap = SubResource( 1 )
 shader_param/moldMap = ExtResource( 2 )
+shader_param/burntMap = ExtResource( 4 )

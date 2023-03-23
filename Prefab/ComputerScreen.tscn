@@ -1,12 +1,18 @@
-[gd_scene load_steps=3 format=2]
+[gd_scene load_steps=5 format=2]
 
 [ext_resource path="res://Scripts/ComputerScreen.cs" type="Script" id=1]
 [ext_resource path="res://Assets/Fonts/DosFont.tres" type="DynamicFont" id=2]
+[ext_resource path="res://Assets/Sounds/ScannerResult_Negative_1.ogg" type="AudioStream" id=3]
+[ext_resource path="res://Assets/Sounds/ScannerResult_Positive_1.ogg" type="AudioStream" id=4]
 
 [node name="Screen" type="Control"]
 margin_right = 320.0
 margin_bottom = 240.0
 script = ExtResource( 1 )
+errorSound = ExtResource( 3 )
+successSound = ExtResource( 4 )
+errorColor = Color( 0.701961, 0, 0, 1 )
+successColor = Color( 0.117647, 0.521569, 0.0509804, 1 )
 
 [node name="HeaderRect" type="ColorRect" parent="."]
 margin_right = 320.0
