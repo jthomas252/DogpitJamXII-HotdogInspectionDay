@@ -1,4 +1,4 @@
-[gd_scene load_steps=52 format=2]
+[gd_scene load_steps=55 format=2]
 
 [ext_resource path="res://Scripts/BaseScene.cs" type="Script" id=1]
 [ext_resource path="res://Prefab/Cursor.tscn" type="PackedScene" id=2]
@@ -27,6 +27,9 @@
 [ext_resource path="res://Scripts/ProcessTrigger.cs" type="Script" id=25]
 [ext_resource path="res://Prefab/SpawnerPendant.tscn" type="PackedScene" id=26]
 [ext_resource path="res://Prefab/ButtonLitDimple.tscn" type="PackedScene" id=27]
+[ext_resource path="res://Assets/Textures/Logo.svg" type="Texture" id=28]
+[ext_resource path="res://Assets/Fonts/StencilFont.tres" type="DynamicFont" id=29]
+[ext_resource path="res://Assets/Textures/texture_hotdog.png" type="Texture" id=30]
 
 [sub_resource type="CubeMesh" id=30]
 
@@ -136,6 +139,60 @@ enabled_focus_mode = 0
 text = "Next"
 
 [node name="Sound" type="AudioStreamPlayer2D" parent="Interface"]
+
+[node name="StartScreen" type="ColorRect" parent="Interface"]
+visible = false
+anchor_right = 1.0
+anchor_bottom = 1.0
+color = Color( 0.901961, 0.756863, 0.686275, 1 )
+
+[node name="TextureRect2" type="TextureRect" parent="Interface/StartScreen"]
+modulate = Color( 1, 1, 1, 0.584314 )
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_right = 1280.0
+margin_bottom = 720.0
+rect_scale = Vector2( 0.5, 0.5 )
+texture = ExtResource( 30 )
+expand = true
+stretch_mode = 2
+
+[node name="TextureRect" type="TextureRect" parent="Interface/StartScreen"]
+anchor_left = 1.0
+anchor_right = 1.0
+margin_left = -1088.0
+margin_top = 64.0
+margin_right = 192.0
+margin_bottom = 1344.0
+rect_scale = Vector2( 0.32, 0.32 )
+rect_pivot_offset = Vector2( 32, 32 )
+size_flags_horizontal = 0
+size_flags_vertical = 0
+texture = ExtResource( 28 )
+stretch_mode = 4
+
+[node name="Label" type="Label" parent="Interface/StartScreen"]
+margin_left = 208.0
+margin_top = 472.0
+margin_right = 575.0
+margin_bottom = 541.0
+rect_scale = Vector2( 2.08, 2.08 )
+custom_colors/font_color = Color( 0, 0, 0, 1 )
+custom_fonts/font = ExtResource( 29 )
+text = "Hotdog Inspection Day
+"
+
+[node name="Button" type="Button" parent="Interface/StartScreen"]
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+margin_left = -100.0
+margin_top = -140.0
+margin_right = 100.0
+margin_bottom = -40.0
+theme = ExtResource( 3 )
+text = "Begin"
 
 [node name="Camera" type="Camera" parent="."]
 transform = Transform( 0.999969, 0.0078539, 0, -0.00700748, 0.892202, 0.451582, 0.00354668, -0.451569, 0.892229, 0, 24.8409, 48.4861 )

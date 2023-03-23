@@ -31,8 +31,6 @@
 	- Only could be used to clean dirt 
 
 # Interface
-- Add start screen interface 
-
 - Add credits
 
 - Add between level screen 
@@ -53,13 +51,12 @@
 
 - Add spawn area decal
 
-# Hotdog Conveyor
-- Issue a score token if success (Set up event on BaseScene)
-	- Issue a positive flash on the monitor 
+# Scoring
+- Iterate a score in BaseScene
 
-- Issue a penalty token if failure (Set up event on BaseScene)
-	- Issue a citation on the monitor explaining the error
-	- Possibly put a label on these to detail the error
+- Display Quota on the Computer Screen
+
+- Issue citations if  >3 valid hotdogs are tossed in the trash
 
 # Hotdog Generation
 - Set up meats randomizer in Hotdog creation
@@ -71,7 +68,11 @@
 
 - Generate a coldnesss stat (requires thawing)
 
+- Generate mold stat and assign to the shader
+
 # Audio
+- Import new SFX 
+
 - Add sound effects to the Hotdog to play on collision
 	- Will need to put these somewhere on the rigidbody
 
@@ -119,5 +120,5 @@
 	- Display in world somewhere
 	- Tick down and end the level at the threshold being reached
 
-- Add counter object to spawner
-	- Should display a countdown of remaining hotdogs
+- Add a delay to the spawner button
+	- Should allow for a few spawns before a wait time 
