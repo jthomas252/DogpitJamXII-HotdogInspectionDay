@@ -421,7 +421,7 @@ collision_layer = 5
 collision_mask = 5
 
 [node name="MeshInstance" type="MeshInstance" parent="Environment/Static/Wall6"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -66.3011, -48.6505, 74.7923 )
+transform = Transform( 0.983748, -0.179557, -7.10418e-10, 0.179557, 0.983748, 7.8487e-09, -7.10418e-10, -7.8487e-09, 1, -66.3011, -48.6505, 74.7923 )
 mesh = SubResource( 50 )
 material/0 = SubResource( 51 )
 

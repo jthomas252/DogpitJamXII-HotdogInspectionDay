@@ -27,24 +27,86 @@
 - Digital clock body (Optional)
 
 # Misc
-- Need to add a seed to the random for Godot startup
-
 - Have a "Start Shift" button, maybe on the spawner button arm
 	- Trigger the spot lights to flash
 	- Conveyor animation starts
 	- Computer turns on
 	- Gives the player a chance to read the manual or examine notices
 
+- End and reset the level when the timer hits zero
+
+- Move Timer to its own class and object
+
+- Set up leading zeroes on the timer
+
+# Sound setup
+- Play title theme on the start screen
+
+- Play title theme on the between-days pop-up
+
+- Add sound FX to the Hotdog to play on collisions 
+	- Use an array of the different SFX
+	- Modulate volume based on the impacts velocity 
+
+- Add geiger clicks 
+	- Increase the effect # when the radiation level is higher
+
+- Add rat noises
+	- Alert when it spawns
+	- Squeaks when it moves
+
+- Add rulebook noise 
+
+- Add the "HOTDOG" noise
+	- Title screen?
+	- Easter egg or hidden button
+
+- Change scanner success 
+
+# Scanner
+- Prevent read if the hotdog is too burnt or frozen
+
 # Interface
+- Make the start screen start the game
+	- Try to do a fadeout or something
+	- Trigger the initial day text 
+
 - Add credits
 
 - Add between level screen 
     - Have text here to tell the player how they did
+	- Play music here
+
+- Scanning noise when Hotdog is sent through
+
+- Spawner noise when out of hotdogs 
+
+- Spawner specific button sounds
 
 # Level Iteration
 - Unlock new mechanics based on level progression
+	- Day 1
+		- Inspect serial numbers
+		- Inspect for mold
+		- Inspect for meat quality (basic)
+	- Day 2
+		- Rat spawns
+		- Hotdogs arrive frozen
+		- Random objects from spawner (non-dangerous)
+	- Day 3
+		- Meat quality adds more checks
+		- Hotdogs arrive radioactive
+	- Day 4
+		- Dangerous random objects come from the spawner (dynamite, uranium rods, etc.)
+		- Rats spawn more aggressively and move faster
+	- Day 5
+		- Ending / things devolve into chaos 
+		- Final screen detailing how the factory was shut down due to excessive rats 
 
 - Show screen between levels telling the player how they did
+	- Let them know if they fulfilled quota
+	- Fulfilled secret item
+	- Number of citations issued 
 
 - Reset hotdogs on screen, item states, and spawner count
 	- Remove the remaining hotdogs on the scene
@@ -58,10 +120,6 @@
 	- Representation of the quality score to determine failure / success
 
 - Generate a radioactivity score (scale for failures)
-
-# Audio
-- Add sound effects to the Hotdog to play on collision
-	- Will need to put these somewhere on the rigidbody
 
 # Instruction Pages
 - Create basic instruction page explaining gameplay loop
@@ -82,9 +140,18 @@
 
 - Export to images and apply effects
 
+- Remove the colliders for the additional pages 
+	- Only need one with the main rulebook page
+
 # Rat
 - Add rat spawn
 	- Rat is grabbable object and can be put in trash or conveyor
+
+- Have rat move between scurry points
+	- Set up a series of points on the desk where the rat can run to
+
+- Have rat move away when cursor approaches
+	- Set up a trigger here that alerts the rat
 
 - Have rat calculate hotdog list
 
@@ -110,3 +177,22 @@
 	- Should allow for a few spawns before a wait time 
 
 - Add multiple spawns to the spawner, delayed slightly 
+
+# Nice to have
+- Toggle the light on the spawner button
+
+- Add gamepad support
+	- Move a virtual cursor instead of the mouse one
+
+- Change axis of inspection rotation
+	- Move if the Y > X along a different axis
+	- Scrap if this introduces more issues
+
+- Change document inspection to copy a sprite, rather than move the object
+	- Lets scale be handled in a better way 
+
+- Glitch dogs
+	- Randomly mess with a vertex shader
+	- If scanned, they break the scanner for a period of time
+
+- Improve the next/prev buttons 
