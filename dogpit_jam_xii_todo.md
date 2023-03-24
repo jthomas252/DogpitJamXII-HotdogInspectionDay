@@ -1,12 +1,11 @@
 # Models To Do (Priority is top to bottom)
-- Rat model
-
 - CRT Monitor
     - Screen should accept a separate material 
 
 - Geiger counter
 
 - Uranium Rod
+	- Green cylinder, just add some materials / glow to it
 
 - Environment models
 	- Optional, we can use the environment currently in Godot instead
@@ -22,14 +21,10 @@
     - Banana
     - Dynamite
     - Bone
-	- Non-interactives to leave on the desk 
+	- Non-interactives to leave on the desk, places for the rat to scurry
+	- Pipes, wall objects, etc. 
 
 - Digital clock body (Optional)
-	
-- Cleaning bottle
-    - Potential mechanic, low priority
-	- Would need a particle animation
-	- Only could be used to clean dirt 
 
 # Misc
 - Need to add a seed to the random for Godot startup
@@ -55,9 +50,6 @@
 	- Remove the remaining hotdogs on the scene
 	- Set the spawner back up to a full count
 	- Reset the game timer
-
-# Scoring
-- Display Quota on the Computer Screen, bugfix
 
 # Hotdog Generation
 - Set up meats randomizer in Hotdog creation
@@ -116,3 +108,5 @@
 
 - Add a delay to the spawner button
 	- Should allow for a few spawns before a wait time 
+
+- Add multiple spawns to the spawner, delayed slightly 

@@ -120,6 +120,8 @@ public class BaseScene : Spatial
 	
 	public override void _Ready()
 	{
+		// Set initial seed 
+		GD.Randomize();
 		_instance = this;
 		
 		// Set the mouse to be hidden, reconsider enabling when in menus (disable while working on MacOS)
