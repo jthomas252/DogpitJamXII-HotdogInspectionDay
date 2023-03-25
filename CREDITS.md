@@ -1,6 +1,7 @@
 # Team Credits
 - Modeling: Obsurveyor
 - Rat Model: Beowulf71 @ Blendswap.org (CC-BY)
+- Banana Model: OGTS @ Blendswap.org (CC-0)
 - Sound: 917
 - Programming: Nanomachine Son / Jonathan Thomas
 
