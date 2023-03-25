@@ -1,7 +1,6 @@
-[gd_scene load_steps=17 format=2]
+[gd_scene load_steps=16 format=2]
 
 [ext_resource path="res://Scripts/Hotdog.cs" type="Script" id=1]
-[ext_resource path="res://Scripts/GrabbableObject.cs" type="Script" id=2]
 [ext_resource path="res://Assets/Fonts/StencilFont.tres" type="DynamicFont" id=3]
 [ext_resource path="res://Assets/Materials/Hotdog.material" type="Material" id=4]
 [ext_resource path="res://HotdogShaderMaterial.tres" type="Material" id=5]
@@ -74,22 +73,18 @@ shader_param/current_frame_blend = 0.0
 shader_param/use_normal_map = false
 shader_param/albedo = ExtResource( 10 )
 
-[node name="BonelessHotdog" type="Spatial"]
-script = ExtResource( 1 )
-
-[node name="GrabbableObject" type="RigidBody" parent="."]
+[node name="Hotdog" type="RigidBody"]
 collision_layer = 3
 collision_mask = 3
-mass = 100.0
-script = ExtResource( 2 )
+script = ExtResource( 1 )
 
-[node name="HotdogMesh" type="MeshInstance" parent="GrabbableObject"]
+[node name="HotdogMesh" type="MeshInstance" parent="."]
 mesh = SubResource( 2 )
 skin = SubResource( 3 )
 skeleton = NodePath("")
 material/0 = ExtResource( 5 )
 
-[node name="IceMesh" type="MeshInstance" parent="GrabbableObject"]
+[node name="IceMesh" type="MeshInstance" parent="."]
 transform = Transform( 1.1, 0, 0, 0, 1.1, 0, 0, 0, 1.1, 0, 0, 0 )
 visible = false
 mesh = SubResource( 2 )
@@ -97,11 +92,11 @@ skin = SubResource( 3 )
 skeleton = NodePath("")
 material/0 = SubResource( 5 )
 
-[node name="CollisionShape" type="CollisionShape" parent="GrabbableObject"]
+[node name="CollisionShape" type="CollisionShape" parent="."]
 transform = Transform( 1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 0 )
 shape = SubResource( 4 )
 
-[node name="SerialNumber" type="Label3D" parent="GrabbableObject"]
+[node name="SerialNumber" type="Label3D" parent="."]
 transform = Transform( -7.54979e-08, -1, -1.50996e-07, -1, 7.54979e-08, 8.74228e-08, -8.74228e-08, 1.50996e-07, -1, 0, -5.4165, -1.0013 )
 cast_shadow = 0
 pixel_size = 0.02
@@ -110,8 +105,9 @@ text = "42069"
 font = ExtResource( 3 )
 horizontal_alignment = 2
 
-[node name="Decal" type="MeshInstance" parent="GrabbableObject"]
+[node name="Decal" type="MeshInstance" parent="."]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 4.74149, 0.823935 )
 visible = false
 mesh = SubResource( 6 )
+skeleton = NodePath("")
 material/0 = SubResource( 7 )

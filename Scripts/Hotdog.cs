@@ -2,7 +2,7 @@ using Godot;
 using System;
 using System.Collections.Generic;
 
-public class Hotdog : Spatial
+public class Hotdog : GrabbableObject
 {
     private readonly float SHADER_THRESHOLD_MIN = 0.01f; // Prevent rendering issues with the shader
     private readonly float CHANCE_VALID = 0.6f;
@@ -45,8 +45,10 @@ public class Hotdog : Spatial
 
     public override void _Ready()
     {
+        base._Ready();
+        
         // Set up the shader material 
-        MeshInstance mesh = GetNode<MeshInstance>("GrabbableObject/HotdogMesh");
+        MeshInstance mesh = GetNode<MeshInstance>("HotdogMesh");
         Material material = mesh.GetSurfaceMaterial(0);
         _material = material as ShaderMaterial;
         _material.ResourceLocalToScene = true;
@@ -63,10 +65,10 @@ public class Hotdog : Spatial
         UpdateShader();
 
         // Get all child objects that we'll need
-        _serialNumberLabel = GetNode<Label3D>("GrabbableObject/SerialNumber");
-        _ice = GetNode<Spatial>("GrabbableObject/IceMesh");
+        _serialNumberLabel = GetNode<Label3D>("SerialNumber");
+        _ice = GetNode<Spatial>("IceMesh");
         _ice.Visible = _temperature < NORMAL_TEMPERATURE;
-        _decal = GetNode<MeshInstance>("GrabbableObject/Decal");
+        _decal = GetNode<MeshInstance>("Decal");
         
         // Determine which challenge to use, check which are available and fall back if needed
         _challenge = HotdogChallenge.SERIAL_NUMBER;

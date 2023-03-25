@@ -51,9 +51,7 @@ public class BaseScene : Spatial
 	public static void ChangePlayerState(PlayerState newState)
 	{
 		GD.Print($"SWITCHED TO STATE {_currentState.ToString()}");
-		
 		_currentState = newState;
-		ComputerScreen.UpdateBodyBottomText(_currentState.ToString());
 		
 		// Emit an event and change the state accordingly 
 		switch (_currentState)

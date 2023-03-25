@@ -9,7 +9,7 @@ public class ProcessTrigger:Trigger
     {
         if (node is RigidBody rigidBody)
         {
-            if (rigidBody.GetParent() is Hotdog hotdog)
+            if (rigidBody is Hotdog hotdog)
             {
                 GD.Print("Hotdog received");
 

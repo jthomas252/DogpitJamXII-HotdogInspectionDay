@@ -8,7 +8,7 @@ public class ScanTrigger : Trigger
 
         if (node is RigidBody rigidBody)
         {
-            if (rigidBody.GetParent() is Hotdog dog)
+            if (rigidBody is Hotdog dog)
             {
                 if (dog.IsFrozen())
                 {

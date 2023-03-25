@@ -108,6 +108,7 @@ transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -2.15757, 0 )
 collision_layer = 2
 collision_mask = 2
 script = ExtResource( 5 )
+extraHeat = 0.6
 
 [node name="CollisionShape" type="CollisionShape" parent="HeatTrigger"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 6.70991, 8.13961, -13.96 )
@@ -123,7 +124,7 @@ transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -2.15757, 0 )
 collision_layer = 2
 collision_mask = 2
 script = ExtResource( 5 )
-extraHeat = 1.0
+extraHeat = 3.2
 
 [node name="CollisionShape" type="CollisionShape" parent="HeatTriggerUpper"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 6.70991, 15.5868, -17.159 )

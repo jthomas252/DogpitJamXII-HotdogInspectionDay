@@ -201,6 +201,12 @@ public class Cursor : Sprite3D
                 ChangeCursorState(CursorState.HandMagnify);
                 ChangeTooltip("View");
             }
+            else if (hoverObject is Rat rat)
+            {
+                ChangeCursorState(CursorState.HandGrab);
+                ChangeTooltip("Rat Bastard!");
+                rat.Alert();
+            }            
             else if (hoverObject is GrabbableObject && !IsGrabbing())
             {
                 ChangeCursorState(CursorState.HandGrab);
@@ -307,5 +313,10 @@ public class Cursor : Sprite3D
     public static void ChangeGrabbedObject(Spatial newGrab)
     {
         _instance.grabbedObject = newGrab;
+    }
+
+    public static void ForceReleaseObject()
+    {
+        _instance.DropObject();
     }
 }

@@ -1,4 +1,4 @@
-[gd_scene load_steps=72 format=2]
+[gd_scene load_steps=75 format=2]
 
 [ext_resource path="res://Scripts/BaseScene.cs" type="Script" id=1]
 [ext_resource path="res://Prefab/Cursor.tscn" type="PackedScene" id=2]
@@ -40,6 +40,7 @@
 [ext_resource path="res://Assets/Textures/Logo.png" type="Texture" id=38]
 [ext_resource path="res://Assets/Sounds/ScannerIdleLoop.ogg" type="AudioStream" id=39]
 [ext_resource path="res://Scripts/AudioPoint.cs" type="Script" id=40]
+[ext_resource path="res://Prefab/Rat.tscn" type="PackedScene" id=41]
 
 [sub_resource type="CubeMesh" id=30]
 
@@ -135,6 +136,11 @@ extents = Vector3( 7, 10, 10 )
 
 [sub_resource type="BoxShape" id=48]
 extents = Vector3( 10, 10, 30 )
+
+[sub_resource type="SphereMesh" id=63]
+
+[sub_resource type="SpatialMaterial" id=64]
+albedo_color = Color( 0.898039, 0.270588, 0.270588, 1 )
 
 [node name="SceneRoot" type="Spatial"]
 script = ExtResource( 1 )
@@ -717,7 +723,7 @@ shape = SubResource( 27 )
 transform = Transform( -4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -14.5645, -23.4774, -4.86644 )
 
 [node name="HeatLamp" parent="Environment" instance=ExtResource( 21 )]
-transform = Transform( 0.000338808, 0, -1, 0, 1, 0, 1, 0, 0.000338808, -32.4577, -25.1768, -34.8081 )
+transform = Transform( 0.999591, 0, -0.0285936, 0, 1, 0, 0.0285936, 0, 0.999591, -18.1362, -25.1768, -13.6948 )
 
 [node name="Timer" type="Spatial" parent="Environment"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -13.3585, 0 )
@@ -752,23 +758,42 @@ horizontal_alignment = 2
 [node name="TestDog" parent="." instance=ExtResource( 16 )]
 transform = Transform( 1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, -20.7874, -2.73842, 10.3916 )
 
-[node name="HandbookPage" type="KinematicBody" parent="."]
+[node name="Handbook" type="KinematicBody" parent="."]
 physics_interpolation_mode = 1
-transform = Transform( 0.909563, 0, -0.415567, 0.147871, 0.934551, 0.323649, 0.388368, -0.355829, 0.850033, 23.335, -4.54485, -39.0516 )
+transform = Transform( 0.898388, 0.439202, 1.91982e-08, 0, -4.37114e-08, 1, 0.439202, -0.898388, -3.92698e-08, 7.1295, -9.42205, 13.7956 )
 collision_layer = 2
 collision_mask = 2
 script = ExtResource( 10 )
 previous = NodePath("")
 next = NodePath("")
 
-[node name="Sprite3D" type="Sprite3D" parent="HandbookPage"]
+[node name="Sprite3D" type="Sprite3D" parent="Handbook"]
 transform = Transform( 0.992729, -0.0383622, 0.114095, 0.0404167, 0.999059, -0.015748, -0.113383, 0.0202449, 0.993345, -0.225388, -1.42446, -0.493313 )
 pixel_size = 0.006
 shaded = true
 double_sided = false
 texture = ExtResource( 4 )
 
-[node name="CollisionShape" type="CollisionShape" parent="HandbookPage"]
+[node name="CollisionShape" type="CollisionShape" parent="Handbook"]
+shape = SubResource( 45 )
+
+[node name="CreditPoster" type="KinematicBody" parent="."]
+physics_interpolation_mode = 1
+transform = Transform( -4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -54.6925, 20.8471, 4.83691 )
+collision_layer = 2
+collision_mask = 2
+script = ExtResource( 10 )
+previous = NodePath("")
+next = NodePath("")
+
+[node name="Sprite3D" type="Sprite3D" parent="CreditPoster"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0 )
+pixel_size = 0.006
+shaded = true
+double_sided = false
+texture = ExtResource( 4 )
+
+[node name="CollisionShape" type="CollisionShape" parent="CreditPoster"]
 shape = SubResource( 45 )
 
 [node name="Spawner" parent="." instance=ExtResource( 23 )]
@@ -801,6 +826,14 @@ shape = SubResource( 37 )
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -4.90611, 0.145279 )
 mesh = SubResource( 56 )
 material/0 = SubResource( 57 )
+
+[node name="RatTrigger" type="Area" parent="Triggers"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -79.186, -5.72044, -0.630898 )
+script = ExtResource( 20 )
+
+[node name="CollisionShape" type="CollisionShape" parent="Triggers/RatTrigger"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1.74654, 0 )
+shape = SubResource( 37 )
 
 [node name="ProcessTrigger" type="Area" parent="Triggers"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 45.2887, -1.91454, -92.5094 )
@@ -857,6 +890,21 @@ stream = ExtResource( 39 )
 unit_db = 30.0
 max_db = 6.0
 script = ExtResource( 40 )
+
+[node name="RatPointList" type="Spatial" parent="."]
+
+[node name="RatPoint32" type="MeshInstance" parent="RatPointList"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -36.9764, -7.08144, 0.125956 )
+mesh = SubResource( 63 )
+material/0 = SubResource( 64 )
+
+[node name="RatPoint33" type="MeshInstance" parent="RatPointList"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -1.54435, -7.08144, 0.125956 )
+mesh = SubResource( 63 )
+material/0 = SubResource( 64 )
+
+[node name="Rat" parent="." instance=ExtResource( 41 )]
+transform = Transform( 0.0156913, 0, 0.999877, 0, 1, 0, -0.999877, 0, 0.0156913, -69.9028, -10.2901, -0.908009 )
 
 [connection signal="OnProcess" from="Triggers/ProcessTrigger" to="AudioPoints/ProcessAudio" method="OnEvent"]
 [connection signal="Pressed" from="SpawnButton" to="Spawner" method="OnSpawnButton"]

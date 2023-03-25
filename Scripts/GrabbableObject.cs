@@ -11,7 +11,7 @@ public class GrabbableObject : RigidBody
     private readonly float MOVEMENT_SCALE = 200f;
     private readonly float MOVEMENT_DISTANCE_THRESHOLD = 1f;
     
-    private bool isGrabbed;
+    protected bool isGrabbed;
     private Vector3 targetPosition;
     private Vector3 targetDirection;
     private Camera camera;
@@ -55,7 +55,7 @@ public class GrabbableObject : RigidBody
         }
     }
 
-    public void Grab()
+    public virtual void Grab()
     {
         GD.Print($"{Name} Grabbed");
         isGrabbed = true;
@@ -67,7 +67,7 @@ public class GrabbableObject : RigidBody
         targetDirection = GlobalTranslation.DirectionTo(targetPosition);
     }
 
-    public void Drop()
+    public virtual void Drop()
     {
         GD.Print($"{Name} dropped");
         isGrabbed = false;
@@ -76,7 +76,6 @@ public class GrabbableObject : RigidBody
 
     public override void _PhysicsProcess(float delta)
     {
-        // TODO: Change this to a state
         if (isGrabbed)
         {
             // Rotate the object with shift pressed
@@ -94,10 +93,20 @@ public class GrabbableObject : RigidBody
 
                 Transform transform = GlobalTransform;
 
-                transform.basis = transform.basis.Rotated(
-                    camera.Transform.basis.y,
-                    (mousePosition.x + keyboardInput.x) * ROTATION_MOUSE_SCALE
-                );
+                if (Mathf.Abs(mousePosition.x) > Mathf.Abs(mousePosition.y) | Mathf.Abs(keyboardInput.x) > Mathf.Abs(keyboardInput.y))
+                {
+                    transform.basis = transform.basis.Rotated(
+                        camera.Transform.basis.y,
+                        (mousePosition.x + keyboardInput.x) * ROTATION_MOUSE_SCALE
+                    );
+                }
+                else
+                {
+                    transform.basis = transform.basis.Rotated(
+                        camera.Transform.basis.x,
+                        (mousePosition.y + keyboardInput.y) * ROTATION_MOUSE_SCALE
+                    );
+                }
 
                 GlobalTransform = transform;
 

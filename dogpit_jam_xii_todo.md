@@ -20,7 +20,18 @@
 	- Non-interactives to leave on the desk, places for the rat to scurry
 	- Pipes, wall objects, etc. 
 
+# Builds
+- Test and make builds for Web
+
+- Test and make builds for Windows
+
+- Test and make builds for Mac
+
 # Misc
+- Fix issue where inspected objects have arbitrary Y position differences
+	- Noticeable on poster vs. handbook
+	- Ideally set these to write to a sprite in the inspect area 
+
 - Have a "Start Shift" button, maybe on the spawner button arm
 	- Trigger the spot lights to flash
 	- Conveyor animation starts
@@ -32,6 +43,8 @@
 # Sound setup
 - Play title theme on the start screen
 
+- Play in-game music 
+
 - Play title theme on the between-days pop-up
 
 - Add sound FX to the Hotdog to play on collisions 
@@ -40,10 +53,6 @@
 
 - Add geiger clicks 
 	- Increase the effect # when the radiation level is higher
-
-- Add rat noises
-	- Alert when it spawns
-	- Squeaks when it moves
 
 # Interface
 - Make the start screen start the game
@@ -121,31 +130,24 @@
 - Add credits poster
 
 # Rat
-- Add rat spawn
-	- Rat is grabbable object and can be put in trash or conveyor
+- Fix rat rotation on movement
+	- Cant apply rotation at same time as ApplyAxisVelocity
 
-- Have rat move between scurry points
-	- Set up a series of points on the desk where the rat can run to
-
-- Have rat move away when cursor approaches
-	- Set up a trigger here that alerts the rat
-
-- Have rat calculate hotdog list
-
-- Have rat pick up hotdog
+- Add rat noises
+	- Alert when it spawns
+	- Squeaks when it moves
 
 - Have rat move back to spawn point
+	- Currently is setting it to go back, but it doesn't follow that
 
 - Despawn rat & hotdog 
+	- Add logic to the RatTrigger object
+	- Despawn the rat if it has a hotdog 
 
-- Add rat model and animation
-	- Set up animation parameters in other behaviors
+- Fix problems when a rat escapes being held and cursor not being reset
+	- Make sure DropObject is called from Cursor
 
 # Tools
-- Add secret box
-	- It asks for a specific condition hotdog in a note
-	- If fulfilled gives some kind of unique reward
-
 - Add geiger counter
 	- Scans nearby objects for radiation state
 	- Ticks up if detecting radiation
@@ -164,10 +166,6 @@
 - Add gamepad support
 	- Move a virtual cursor instead of the mouse one
 
-- Change axis of inspection rotation
-	- Move if the Y > X along a different axis
-	- Scrap if this introduces more issues
-
 - Glitch dogs
 	- Randomly mess with a vertex shader
 	- If scanned, they break the scanner for a period of time
@@ -178,3 +176,13 @@
 - General code cleanup
 	- Move stuff to emitters and signals where it can be
 	- Keep a consistent pattern
+
+- Add secret box
+	- It asks for a specific condition hotdog in a note
+	- If fulfilled gives some kind of unique reward
+
+- Make an ending segment
+	- Newspaper article detailing how the factory was shut down
+	- Have the facility be run down or full of rats
+
+- Kill floor for stuff that falls off the desk
