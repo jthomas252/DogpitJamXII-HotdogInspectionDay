@@ -11,5 +11,5 @@ dest_files=[ "res://.import/ScannerIdleLoop.ogg-19a111e680f24d49a18f6dd184ee8a17
 
 [params]
 
-loop=true
+loop=false
 loop_offset=0

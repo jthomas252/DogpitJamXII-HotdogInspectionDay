@@ -1,8 +1,12 @@
 using Godot;
 using System;
+using System.Collections.Generic;
 
 public class BaseScene : Spatial
 {
+	[Export] public AudioStream hotdogNoise;
+	[Export] public AudioStream[] documentNoises;
+	
 	private const int PLAYER_QUOTA = 8;
 	private const int PLAYER_QUOTA_PER_LEVEL = 2;
 	private const int PLAYER_CITATION_THRESHOLD = 3;
@@ -14,6 +18,8 @@ public class BaseScene : Spatial
 	private int _playerQuota;
 	private float _playerTimer;
 
+	private AudioStreamPlayer2D _soundPlayer;
+	
 	private Label3D _timer; 
 	
 	[Signal]
@@ -117,7 +123,25 @@ public class BaseScene : Spatial
 		// Tell the player how they did
 		// Start the next level 
 	}
+
+	// Play a generic sound at the world position
+	public static void PlaySound(AudioStream stream, float volume = 10f)
+	{
+		_instance._soundPlayer.VolumeDb = volume; 
+		_instance._soundPlayer.Stream = stream; 
+		_instance._soundPlayer.Play();
+	}
+
+	public static AudioStream GetHotdogNoise()
+	{
+		return _instance.hotdogNoise; 
+	}
 	
+	public static AudioStream GetDocumentNoise()
+	{
+		return _instance.documentNoises[GD.Randi() % _instance.documentNoises.Length];
+	}
+
 	public override void _Ready()
 	{
 		// Set initial seed 
@@ -127,7 +151,9 @@ public class BaseScene : Spatial
 		// Set the mouse to be hidden, reconsider enabling when in menus (disable while working on MacOS)
 		// Input.MouseMode = Input.MouseModeEnum.Hidden;
 
-		_timer = GetNode<Label3D>("Timer");
+		_timer = GetNode<Label3D>("Environment/Timer/Main");
+		_soundPlayer = GetNode<AudioStreamPlayer2D>("Sound");
+		
 		StartNextLevel();
 	}
 

@@ -11,5 +11,5 @@ dest_files=[ "res://.import/RuleBookOpen_2.ogg-b4aaa0f79c9524b9bf5f352df1f036e9.
 
 [params]
 
-loop=true
+loop=false
 loop_offset=0

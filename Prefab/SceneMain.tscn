@@ -1,4 +1,4 @@
-[gd_scene load_steps=64 format=2]
+[gd_scene load_steps=72 format=2]
 
 [ext_resource path="res://Scripts/BaseScene.cs" type="Script" id=1]
 [ext_resource path="res://Prefab/Cursor.tscn" type="PackedScene" id=2]
@@ -26,12 +26,20 @@
 [ext_resource path="res://Assets/Textures/tile_ceilingacoustic.png" type="Texture" id=24]
 [ext_resource path="res://Scripts/ProcessTrigger.cs" type="Script" id=25]
 [ext_resource path="res://Assets/Textures/cursor_grab.png" type="Texture" id=26]
+[ext_resource path="res://Assets/Sounds/the_most_important_sound.wav" type="AudioStream" id=27]
 [ext_resource path="res://Assets/Textures/Logo.svg" type="Texture" id=28]
 [ext_resource path="res://Assets/Fonts/StencilFont.tres" type="DynamicFont" id=29]
 [ext_resource path="res://Assets/Textures/texture_hotdog.png" type="Texture" id=30]
 [ext_resource path="res://Assets/Sounds/ComputerHum_Loop.ogg" type="AudioStream" id=31]
 [ext_resource path="res://Assets/Textures/decal_scanner.png" type="Texture" id=32]
 [ext_resource path="res://Assets/Textures/decal_spawner.png" type="Texture" id=33]
+[ext_resource path="res://Assets/Sounds/RuleBookOpen_1.ogg" type="AudioStream" id=34]
+[ext_resource path="res://Assets/Sounds/RuleBookOpen_2.ogg" type="AudioStream" id=35]
+[ext_resource path="res://Assets/Sounds/RuleBookOpen_4.ogg" type="AudioStream" id=36]
+[ext_resource path="res://Assets/Sounds/RuleBookOpen_3.ogg" type="AudioStream" id=37]
+[ext_resource path="res://Assets/Textures/Logo.png" type="Texture" id=38]
+[ext_resource path="res://Assets/Sounds/ScannerIdleLoop.ogg" type="AudioStream" id=39]
+[ext_resource path="res://Scripts/AudioPoint.cs" type="Script" id=40]
 
 [sub_resource type="CubeMesh" id=30]
 
@@ -91,6 +99,15 @@ points = PoolVector3Array( -50, -75, -50, -50, -75, 50, -50, 75, -50, 50, -75, -
 [sub_resource type="ConcavePolygonShape" id=27]
 data = PoolVector3Array( -250, 125, 50, 250, 125, 50, -250, -125, 50, 250, 125, 50, 250, -125, 50, -250, -125, 50, 250, 125, -50, -250, 125, -50, 250, -125, -50, -250, 125, -50, -250, -125, -50, 250, -125, -50, 250, 125, 50, 250, 125, -50, 250, -125, 50, 250, 125, -50, 250, -125, -50, 250, -125, 50, -250, 125, -50, -250, 125, 50, -250, -125, -50, -250, 125, 50, -250, -125, 50, -250, -125, -50, 250, 125, 50, -250, 125, 50, 250, 125, -50, -250, 125, 50, -250, 125, -50, 250, 125, -50, -250, -125, 50, 250, -125, 50, -250, -125, -50, 250, -125, 50, 250, -125, -50, -250, -125, -50 )
 
+[sub_resource type="CubeMesh" id=60]
+size = Vector3( 25, 10, 2 )
+
+[sub_resource type="CubeMesh" id=61]
+size = Vector3( 24, 9, 2 )
+
+[sub_resource type="SpatialMaterial" id=62]
+albedo_color = Color( 0.341176, 0.341176, 0.341176, 1 )
+
 [sub_resource type="BoxShape" id=45]
 extents = Vector3( 3, 4.25, 0.1 )
 
@@ -119,17 +136,13 @@ extents = Vector3( 7, 10, 10 )
 [sub_resource type="BoxShape" id=48]
 extents = Vector3( 10, 10, 30 )
 
-[sub_resource type="CubeMesh" id=60]
-size = Vector3( 25, 10, 2 )
-
-[sub_resource type="CubeMesh" id=61]
-size = Vector3( 24, 9, 2 )
-
-[sub_resource type="SpatialMaterial" id=62]
-albedo_color = Color( 0.341176, 0.341176, 0.341176, 1 )
-
 [node name="SceneRoot" type="Spatial"]
 script = ExtResource( 1 )
+hotdogNoise = ExtResource( 27 )
+documentNoises = [ ExtResource( 34 ), ExtResource( 35 ), ExtResource( 37 ), ExtResource( 36 ) ]
+
+[node name="Sound" type="AudioStreamPlayer2D" parent="."]
+volume_db = 10.0
 
 [node name="Interface" type="Control" parent="."]
 anchor_right = 1.0
@@ -162,8 +175,6 @@ focus_mode = 0
 theme = ExtResource( 3 )
 enabled_focus_mode = 0
 text = "Next"
-
-[node name="Sound" type="AudioStreamPlayer2D" parent="Interface"]
 
 [node name="StartScreen" type="ColorRect" parent="Interface"]
 visible = false
@@ -226,7 +237,6 @@ fov = 90.0
 far = 1000.0
 
 [node name="Light" type="SpotLight" parent="Camera"]
-light_energy = 2.024
 light_indirect_energy = 0.673
 spot_range = 19.776
 spot_angle = 60.86
@@ -246,12 +256,14 @@ visible = false
 mesh = SubResource( 30 )
 
 [node name="InspectPointDocument" type="Spatial" parent="Points"]
-transform = Transform( 1, 0, 0, 0, 0.819152, 0.573577, 0, -0.573577, 0.819152, 0, 23.024, 43.4057 )
+transform = Transform( 1, 0, 0, 0, 0.819152, 0.573577, 0, -0.573577, 0.819152, 0, 24.3302, 43.4057 )
 
 [node name="Sprite3D" type="Sprite3D" parent="Points/InspectPointDocument"]
 transform = Transform( 1, 0, 0, 0, 1, 2.98023e-08, 0, -2.98023e-08, 1, 0, -0.199787, -2.42269 )
 visible = false
 billboard = 1
+shaded = true
+double_sided = false
 texture = ExtResource( 4 )
 
 [node name="SpawnPoint" type="Spatial" parent="Points"]
@@ -259,6 +271,12 @@ transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -37.6763, 70.1364, -26.1795 )
 
 [node name="Sprite3D" type="Sprite3D" parent="Points/SpawnPoint"]
 texture = ExtResource( 22 )
+
+[node name="RatSpawnPoint" type="Spatial" parent="Points"]
+
+[node name="Icon" type="Sprite3D" parent="Points/RatSpawnPoint"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -86.029, -7.02562, 0 )
+texture = ExtResource( 38 )
 
 [node name="Lights" type="Spatial" parent="."]
 
@@ -335,7 +353,7 @@ transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -44.9232 )
 shape = SubResource( 35 )
 
 [node name="Computer" parent="Environment" instance=ExtResource( 18 )]
-transform = Transform( 1.33326, -0.687322, 3.00438e-08, 0, -6.55671e-08, -1.5, 0.687322, 1.33326, -5.82787e-08, 49.4118, 18.2542, -22.2414 )
+transform = Transform( 0.888841, 0, -0.458215, 0, 1, 0, 0.458215, 0, 0.888841, 47.6742, 20.7906, -26.9269 )
 
 [node name="Trashcan" type="MeshInstance" parent="Environment"]
 transform = Transform( -4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -14.549, -25.647, -4.337 )
@@ -701,6 +719,36 @@ transform = Transform( -4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -14.564
 [node name="HeatLamp" parent="Environment" instance=ExtResource( 21 )]
 transform = Transform( 0.000338808, 0, -1, 0, 1, 0, 1, 0, 0.000338808, -32.4577, -25.1768, -34.8081 )
 
+[node name="Timer" type="Spatial" parent="Environment"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -13.3585, 0 )
+
+[node name="MeshInstance" type="MeshInstance" parent="Environment/Timer"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -7.00296, 42.9389, -46.6924 )
+mesh = SubResource( 60 )
+skeleton = NodePath("../Main")
+
+[node name="MeshInstance2" type="MeshInstance" parent="Environment/Timer"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -7.00296, 42.9389, -46.282 )
+mesh = SubResource( 61 )
+skeleton = NodePath("../Main")
+material/0 = SubResource( 62 )
+
+[node name="Main" type="Label3D" parent="Environment/Timer"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 4.99724, 42.9389, -45.0495 )
+pixel_size = 0.08
+modulate = Color( 1, 0, 0, 1 )
+text = "11:11"
+font = ExtResource( 13 )
+horizontal_alignment = 2
+
+[node name="Back" type="Label3D" parent="Environment/Timer"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 4.99724, 42.9389, -45.14 )
+pixel_size = 0.08
+modulate = Color( 0.290196, 0.290196, 0.290196, 1 )
+text = "00:00"
+font = ExtResource( 13 )
+horizontal_alignment = 2
+
 [node name="TestDog" parent="." instance=ExtResource( 16 )]
 transform = Transform( 1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, -20.7874, -2.73842, 10.3916 )
 
@@ -801,20 +849,14 @@ stream = ExtResource( 31 )
 unit_db = 4.72
 autoplay = true
 
-[node name="Timer" type="Label3D" parent="."]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 4.99724, 42.9389, -45.14 )
-pixel_size = 0.08
-modulate = Color( 1, 0, 0, 1 )
-text = "00:00"
-font = ExtResource( 13 )
+[node name="AudioPoints" type="Spatial" parent="."]
 
-[node name="MeshInstance" type="MeshInstance" parent="Timer"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -1.55243 )
-mesh = SubResource( 60 )
+[node name="ProcessAudio" type="AudioStreamPlayer3D" parent="AudioPoints"]
+transform = Transform( 1, 0, 0, 0, 0.99698, 0.0776591, 0, -0.0776591, 0.99698, 51.2902, 0, -62.3478 )
+stream = ExtResource( 39 )
+unit_db = 30.0
+max_db = 6.0
+script = ExtResource( 40 )
 
-[node name="MeshInstance2" type="MeshInstance" parent="Timer"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -1.14198 )
-mesh = SubResource( 61 )
-material/0 = SubResource( 62 )
-
+[connection signal="OnProcess" from="Triggers/ProcessTrigger" to="AudioPoints/ProcessAudio" method="OnEvent"]
 [connection signal="Pressed" from="SpawnButton" to="Spawner" method="OnSpawnButton"]

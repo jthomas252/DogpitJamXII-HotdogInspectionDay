@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/PCSpeaker_Positive_4.ogg-c4ac87ff76fcc60b3a1ec19fe80a4d5b.oggstr"
+
+[deps]
+
+source_file="res://Assets/Sounds/PCSpeaker_Positive_4.ogg"
+dest_files=[ "res://.import/PCSpeaker_Positive_4.ogg-c4ac87ff76fcc60b3a1ec19fe80a4d5b.oggstr" ]
+
+[params]
+
+loop=false
+loop_offset=0

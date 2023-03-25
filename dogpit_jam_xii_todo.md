@@ -1,7 +1,4 @@
 # Models To Do (Priority is top to bottom)
-- CRT Monitor
-    - Screen should accept a separate material 
-
 - Geiger counter
 
 - Uranium Rod
@@ -18,13 +15,10 @@
 
 - Arbitrary models (non-hotdogs)
     - Human finger
-    - Banana
     - Dynamite
     - Bone
 	- Non-interactives to leave on the desk, places for the rat to scurry
 	- Pipes, wall objects, etc. 
-
-- Digital clock body (Optional)
 
 # Misc
 - Have a "Start Shift" button, maybe on the spawner button arm
@@ -34,10 +28,6 @@
 	- Gives the player a chance to read the manual or examine notices
 
 - End and reset the level when the timer hits zero
-
-- Move Timer to its own class and object
-
-- Set up leading zeroes on the timer
 
 # Sound setup
 - Play title theme on the start screen
@@ -55,23 +45,10 @@
 	- Alert when it spawns
 	- Squeaks when it moves
 
-- Add rulebook noise 
-
-- Add the "HOTDOG" noise
-	- Title screen?
-	- Easter egg or hidden button
-
-- Change scanner success 
-
-# Scanner
-- Prevent read if the hotdog is too burnt or frozen
-
 # Interface
 - Make the start screen start the game
 	- Try to do a fadeout or something
 	- Trigger the initial day text 
-
-- Add credits
 
 - Add between level screen 
     - Have text here to tell the player how they did
@@ -119,8 +96,6 @@
 	- Have list of good, okay, and bad ingredients
 	- Representation of the quality score to determine failure / success
 
-- Generate a radioactivity score (scale for failures)
-
 # Instruction Pages
 - Create basic instruction page explaining gameplay loop
 
@@ -142,6 +117,8 @@
 
 - Remove the colliders for the additional pages 
 	- Only need one with the main rulebook page
+
+- Add credits poster
 
 # Rat
 - Add rat spawn
@@ -179,6 +156,9 @@
 - Add multiple spawns to the spawner, delayed slightly 
 
 # Nice to have
+- Add rotation to the snap points
+	- Lerp into the appropriate position 
+
 - Toggle the light on the spawner button
 
 - Add gamepad support
@@ -188,11 +168,13 @@
 	- Move if the Y > X along a different axis
 	- Scrap if this introduces more issues
 
-- Change document inspection to copy a sprite, rather than move the object
-	- Lets scale be handled in a better way 
-
 - Glitch dogs
 	- Randomly mess with a vertex shader
 	- If scanned, they break the scanner for a period of time
 
 - Improve the next/prev buttons 
+	- Should probably just be generic arrows 
+
+- General code cleanup
+	- Move stuff to emitters and signals where it can be
+	- Keep a consistent pattern

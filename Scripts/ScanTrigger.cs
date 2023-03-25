@@ -6,9 +6,27 @@ public class ScanTrigger : Trigger
     {
         base.OnChildEntered(node);
 
-        if (node is GrabbableObject grabbableObject && grabbableObject.GetParent() is Hotdog dog)
+        if (node is RigidBody rigidBody)
         {
-            ComputerScreen.UpdateBodyText(dog.GetInfo());
+            if (rigidBody.GetParent() is Hotdog dog)
+            {
+                if (dog.IsFrozen())
+                {
+                    ComputerScreen.UpdateBodyText("HOTDOG TOO FROZEN");
+                }
+                else if (dog.IsBurnt())
+                {
+                    ComputerScreen.UpdateBodyText("HOTDOG TOO BURNT");
+                }
+                else
+                {
+                    ComputerScreen.UpdateBodyText(dog.GetInfo());
+                }
+            }
+            else
+            {
+                ComputerScreen.UpdateBodyText("NOT HOTDOG");
+            }
         } 
     }
 

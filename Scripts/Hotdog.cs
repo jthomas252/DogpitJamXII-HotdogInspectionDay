@@ -5,14 +5,19 @@ using System.Collections.Generic;
 public class Hotdog : Spatial
 {
     private readonly float SHADER_THRESHOLD_MIN = 0.01f; // Prevent rendering issues with the shader
+    private readonly float CHANCE_VALID = 0.6f;
+    
+    // Frozen stats
+    private readonly float FROZEN_CHANCE = 0.9f;
     private readonly float ICE_MAX_SCALE = 1.3f; 
     private readonly float ICE_MIN_SCALE = 0.95f;
-    
     private readonly float FROZEN_TEMPERATURE = 0f;
     private readonly float NORMAL_TEMPERATURE = 10f; 
     private readonly float BURN_TEMPERATURE = 20f;
-    private readonly float CHANCE_VALID = 0.6f;
-
+    
+    // Radiation stats
+    private readonly float RADIATION_SCALE = 5f;
+    
     private readonly float MOLD_DENY_LEVEL = 0.5f;
     private readonly float BURN_DENY_LEVEL = 0.5f;
 
@@ -49,10 +54,10 @@ public class Hotdog : Spatial
         // Set relevant stats
         _qualityLevel = GD.Randf();
         _isValid = _qualityLevel >= CHANCE_VALID;
-        _temperature = 10f;
+        _temperature = GD.Randf() > FROZEN_CHANCE ? FROZEN_TEMPERATURE : NORMAL_TEMPERATURE;
         _moldLevel = GD.Randf() % (1f - _qualityLevel);
         _burntLevel = 0f;
-        _radioactivity = 0f;
+        _radioactivity = _challenge == HotdogChallenge.RADIOACTIVITY ? GD.Randf() * RADIATION_SCALE : 0f;
 
         // Update the shader now that we have basic info 
         UpdateShader();
@@ -125,6 +130,11 @@ public class Hotdog : Spatial
     public bool IsFrozen()
     {
         return _temperature < NORMAL_TEMPERATURE; 
+    }
+
+    public bool IsBurnt()
+    {
+        return _burntLevel >= BURN_DENY_LEVEL; 
     }
 
     public void ApplyHeat(float amount)

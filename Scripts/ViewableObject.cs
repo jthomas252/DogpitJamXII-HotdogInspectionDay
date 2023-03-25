@@ -7,7 +7,7 @@ public class ViewableObject : KinematicBody
     private Vector3 _originalRotation;
     private Spatial _inspectPoint;
     private Sprite3D _sprite;
-    protected bool _inspecting = false;
+    protected bool _inspecting;
     
     public override void _Ready()
     {

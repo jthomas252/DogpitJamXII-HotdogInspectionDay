@@ -2,23 +2,34 @@ using Godot;
 
 public class ProcessTrigger:Trigger
 {
+    [Signal]
+    public delegate void OnProcess(); 
+    
     public override void OnChildEntered(Node node)
     {
-        if (node.GetParent() is Hotdog hotdog)
+        if (node is RigidBody rigidBody)
         {
-            GD.Print("Hotdog received");
-
-            if (hotdog.IsValid())
+            if (rigidBody.GetParent() is Hotdog hotdog)
             {
-                BaseScene.IterateScore();
-                ComputerScreen.FlashSuccess("HOTDOG ACCEPTED");
+                GD.Print("Hotdog received");
+
+                if (hotdog.IsValid())
+                {
+                    BaseScene.IterateScore();
+                    ComputerScreen.FlashSuccess("HOTDOG ACCEPTED");
+                }
+                else
+                {
+                    BaseScene.DecrementScore();
+                    ComputerScreen.FlashError($"HOTDOG REJECTED\n{hotdog.GetInvalidReason()}");
+                }
             }
             else
             {
-                BaseScene.DecrementScore();
-                ComputerScreen.FlashError($"HOTDOG REJECTED\n{hotdog.GetInvalidReason()}");
+                ComputerScreen.FlashError("NOT HOTDOG");
             }
             
+            EmitSignal(nameof(OnProcess));
             node.QueueFree();
         }
     }

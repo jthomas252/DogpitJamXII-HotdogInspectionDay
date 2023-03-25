@@ -34,6 +34,8 @@ public class ViewableDocument : ViewableObject
         Cursor.ChangeGrabbedObject(this);
         if (_prev != null) _prevButton.Visible = true;
         if (_next != null) _nextButton.Visible = true;
+        
+        BaseScene.PlaySound(BaseScene.GetDocumentNoise());
     }
 
     public override void Drop()

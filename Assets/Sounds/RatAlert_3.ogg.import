@@ -11,5 +11,5 @@ dest_files=[ "res://.import/RatAlert_3.ogg-0d401f0691ecd9a46182ccb43c491014.oggs
 
 [params]
 
-loop=true
+loop=false
 loop_offset=0

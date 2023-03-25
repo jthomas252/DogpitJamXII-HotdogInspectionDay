@@ -11,5 +11,5 @@ dest_files=[ "res://.import/RatSqueak_5.ogg-a74abd7c2fa6948e54047e8086328de7.ogg
 
 [params]
 
-loop=true
+loop=false
 loop_offset=0

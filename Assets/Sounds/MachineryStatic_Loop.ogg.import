@@ -11,5 +11,5 @@ dest_files=[ "res://.import/MachineryStatic_Loop.ogg-8704b0b3d57266101467f30d875
 
 [params]
 
-loop=true
+loop=false
 loop_offset=0
