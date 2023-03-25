@@ -1,4 +1,4 @@
-[gd_scene load_steps=16 format=2]
+[gd_scene load_steps=12 format=2]
 
 [ext_resource path="res://Scripts/Hotdog.cs" type="Script" id=1]
 [ext_resource path="res://Assets/Fonts/StencilFont.tres" type="DynamicFont" id=3]
@@ -7,8 +7,6 @@
 [ext_resource path="res://Assets/Textures/tile_ice.jpeg" type="Texture" id=6]
 [ext_resource path="res://Assets/Textures/tile_ice_Normal.png" type="Texture" id=7]
 [ext_resource path="res://Assets/Textures/tile_ice_Roughness.png" type="Texture" id=8]
-[ext_resource path="res://decalco/src/Decal.shader" type="Shader" id=9]
-[ext_resource path="res://Assets/Textures/decal_scanner.png" type="Texture" id=10]
 
 [sub_resource type="ArrayMesh" id=2]
 resource_name = "hotdog_fixed_Cube001"
@@ -55,24 +53,6 @@ uv1_triplanar = true
 [sub_resource type="CapsuleShape" id=4]
 height = 11.272
 
-[sub_resource type="CubeMesh" id=6]
-
-[sub_resource type="ShaderMaterial" id=7]
-shader = ExtResource( 9 )
-shader_param/albedo_tint = Color( 1, 1, 1, 1 )
-shader_param/emission_tint = Color( 0, 0, 0, 1 )
-shader_param/emission_strength = 1.0
-shader_param/occlusion_strength = 1.0
-shader_param/specular_strength = 1.0
-shader_param/metallic_strength = 1.0
-shader_param/animation_speed = 1.0
-shader_param/flipbook_columns_count = 1
-shader_param/one_shot = false
-shader_param/start_time = null
-shader_param/current_frame_blend = 0.0
-shader_param/use_normal_map = false
-shader_param/albedo = ExtResource( 10 )
-
 [node name="Hotdog" type="RigidBody"]
 collision_layer = 3
 collision_mask = 3
@@ -104,10 +84,3 @@ modulate = Color( 0.0862745, 0.0666667, 0.0588235, 1 )
 text = "42069"
 font = ExtResource( 3 )
 horizontal_alignment = 2
-
-[node name="Decal" type="MeshInstance" parent="."]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 4.74149, 0.823935 )
-visible = false
-mesh = SubResource( 6 )
-skeleton = NodePath("")
-material/0 = SubResource( 7 )

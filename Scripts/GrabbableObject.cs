@@ -6,6 +6,8 @@ using Vector3 = Godot.Vector3;
 
 public class GrabbableObject : RigidBody
 {
+    [Export] public float radiation = 0f; 
+    
     private readonly float ROTATION_MOUSE_SCALE = 0.01f;
     private readonly float ROTATION_KEYBOARD_SCALE = 2.2f;
     private readonly float MOVEMENT_SCALE = 200f;
@@ -40,6 +42,11 @@ public class GrabbableObject : RigidBody
         }
         
         _inspectPoint = GetTree().CurrentScene.GetNode<Spatial>("Points/InspectPointDocument");
+    }
+
+    public virtual float GetRadiation()
+    {
+        return radiation; 
     }
 
     private void OnInspection()

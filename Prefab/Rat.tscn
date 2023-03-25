@@ -1505,7 +1505,7 @@ size = Vector3( 2, 6, 2 )
 [node name="Rat" type="RigidBody"]
 collision_layer = 3
 collision_mask = 3
-mass = 10.0
+mass = 0.5
 contacts_reported = 1
 can_sleep = false
 axis_lock_angular_x = true

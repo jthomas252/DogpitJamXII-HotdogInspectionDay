@@ -1,4 +1,4 @@
-[gd_scene load_steps=81 format=2]
+[gd_scene load_steps=83 format=2]
 
 [ext_resource path="res://Scripts/BaseScene.cs" type="Script" id=1]
 [ext_resource path="res://Prefab/Cursor.tscn" type="PackedScene" id=2]
@@ -43,6 +43,7 @@
 [ext_resource path="res://Scripts/RatSpawner.cs" type="Script" id=41]
 [ext_resource path="res://Scripts/RatTrigger.cs" type="Script" id=42]
 [ext_resource path="res://Prefab/Rat.tscn" type="PackedScene" id=43]
+[ext_resource path="res://Prefab/GeigerCounter.tscn" type="PackedScene" id=44]
 
 [sub_resource type="CubeMesh" id=30]
 
@@ -130,6 +131,9 @@ albedo_texture = ExtResource( 33 )
 
 [sub_resource type="BoxShape" id=37]
 extents = Vector3( 10, 10, 35.2449 )
+
+[sub_resource type="BoxShape" id=71]
+extents = Vector3( 10, 10, 10 )
 
 [sub_resource type="PlaneMesh" id=56]
 size = Vector2( 20, 20 )
@@ -624,7 +628,6 @@ previous = NodePath("")
 next = NodePath("")
 
 [node name="Sprite3D" type="Sprite3D" parent="Handbook"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0 )
 pixel_size = 0.006
 shaded = true
 double_sided = false
@@ -674,12 +677,12 @@ isKillZone = true
 shape = SubResource( 37 )
 
 [node name="ScanTrigger" type="Area" parent="Triggers"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 25.5288, -5.72044, 6.92104 )
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 25.5288, -5.72044, -22.8146 )
 script = ExtResource( 20 )
 
 [node name="CollisionShape" type="CollisionShape" parent="Triggers/ScanTrigger"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1.74654, 0 )
-shape = SubResource( 37 )
+shape = SubResource( 71 )
 
 [node name="MeshInstance" type="MeshInstance" parent="Triggers/ScanTrigger"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -4.90611, 0.145279 )
@@ -888,6 +891,9 @@ material/0 = SubResource( 64 )
 transform = Transform( -0.999759, -0.0219341, 0, 0.0219341, -0.999759, 0, 0, 0, 1, 18.4805, -7.08144, 13.8606 )
 mesh = SubResource( 63 )
 material/0 = SubResource( 64 )
+
+[node name="GeigerCounter" parent="." instance=ExtResource( 44 )]
+transform = Transform( 0.17166, 0, 0.985156, 0, 1, 0, -0.985156, 0, 0.17166, 5.50541, -10.2901, -19.9819 )
 
 [connection signal="OnProcess" from="Triggers/ProcessTrigger" to="AudioPoints/ProcessAudio" method="OnEvent"]
 [connection signal="Pressed" from="SpawnButton" to="Spawner" method="OnSpawnButton"]

@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/Indoor_DynamiteSeq.ogg-67a04858cdcbf70798751e9fd2856199.oggstr"
+
+[deps]
+
+source_file="res://Assets/Sounds/Indoor_DynamiteSeq.ogg"
+dest_files=[ "res://.import/Indoor_DynamiteSeq.ogg-67a04858cdcbf70798751e9fd2856199.oggstr" ]
+
+[params]
+
+loop=false
+loop_offset=0

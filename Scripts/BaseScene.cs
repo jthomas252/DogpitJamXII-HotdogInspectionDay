@@ -10,7 +10,7 @@ public class BaseScene : Spatial
 	private const int PLAYER_QUOTA = 8;
 	private const int PLAYER_QUOTA_PER_LEVEL = 2;
 	private const int PLAYER_CITATION_THRESHOLD = 3;
-	private const float PLAYER_LEVEL_LENGTH = 30f; 
+	private const float PLAYER_LEVEL_LENGTH = 180f; 
 	
 	private int _playerMistake;
 	private int _playerScore;
@@ -165,12 +165,24 @@ public class BaseScene : Spatial
 		if (_playerTimer > 0)
 		{
 			_playerTimer -= delta;
-			_timer.Text = _playerTimer.ToString("0");
+			_timer.Text = GetTimerText();
 			if (_playerTimer < 0)
 			{
 				OnLevelEnd();
 			}
 		}
+	}
+
+	private string GetTimerText()
+	{
+		if (_playerTimer > 60f)
+		{
+			int minutes = Mathf.FloorToInt(_playerTimer / 60);
+			int seconds = Mathf.FloorToInt(_playerTimer % 60);
+			return minutes + ":" + (seconds > 9 ? seconds.ToString() : "0" + seconds.ToString());
+		}
+
+		return _playerTimer.ToString("0");
 	}
 
 	// Pause the game from progressing while the menu is active

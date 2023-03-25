@@ -16,16 +16,16 @@ public class Hotdog : GrabbableObject
     private readonly float BURN_TEMPERATURE = 20f;
     
     // Radiation stats
-    private readonly float RADIATION_SCALE = 5f;
+    private readonly float RADIATION_SCALE = 15f;
     
     private readonly float MOLD_DENY_LEVEL = 0.5f;
     private readonly float BURN_DENY_LEVEL = 0.5f;
+    private readonly float RAD_DENY_LEVEL = 3.5f; 
 
     private readonly float MOLD_SHADER_MULT = 1.8f;
     private readonly float BURN_SHADER_MULT = 2.2f; 
 
     // Child objects
-    private MeshInstance _decal;
     private Spatial _ice;
     private Label3D _serialNumberLabel;
     private ShaderMaterial _material;
@@ -59,7 +59,7 @@ public class Hotdog : GrabbableObject
         _temperature = GD.Randf() > FROZEN_CHANCE ? FROZEN_TEMPERATURE : NORMAL_TEMPERATURE;
         _moldLevel = GD.Randf() % (1f - _qualityLevel);
         _burntLevel = 0f;
-        _radioactivity = _challenge == HotdogChallenge.RADIOACTIVITY ? GD.Randf() * RADIATION_SCALE : 0f;
+        _radioactivity = _challenge == HotdogChallenge.RADIOACTIVITY ? GD.Randf() * RADIATION_SCALE : 10f;
 
         // Update the shader now that we have basic info 
         UpdateShader();
@@ -68,7 +68,6 @@ public class Hotdog : GrabbableObject
         _serialNumberLabel = GetNode<Label3D>("SerialNumber");
         _ice = GetNode<Spatial>("IceMesh");
         _ice.Visible = _temperature < NORMAL_TEMPERATURE;
-        _decal = GetNode<MeshInstance>("Decal");
         
         // Determine which challenge to use, check which are available and fall back if needed
         _challenge = HotdogChallenge.SERIAL_NUMBER;
@@ -101,7 +100,12 @@ public class Hotdog : GrabbableObject
 
         return output.ToUpper();
     }
-    
+
+    public override float GetRadiation()
+    {
+        return _radioactivity; 
+    }
+
     public string GetInvalidReason()
     {
         return _invalidReason;
@@ -125,7 +129,14 @@ public class Hotdog : GrabbableObject
         {
             _invalidReason = "HOTDOG TOO MOLDY";
             return false;
-        } 
+        }
+
+        if (_radioactivity > RAD_DENY_LEVEL)
+        {
+            _invalidReason = "HOTDOG TOO RADIOACTIVE";
+            return false; 
+        }
+        
         return _isValid;
     }
 
