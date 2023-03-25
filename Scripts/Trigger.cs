@@ -18,9 +18,8 @@ public class Trigger : Area
         if (node is RigidBody rigidBody)
         {
             GD.Print($"Hit at {rigidBody.LinearVelocity}");
+            if (isKillZone) rigidBody.QueueFree();
         }
-        
-        if (isKillZone && node is GrabbableObject) node.QueueFree();
     }
 
     public virtual void OnChildExited(Node node)

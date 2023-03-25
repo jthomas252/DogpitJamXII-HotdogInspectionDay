@@ -1,4 +1,4 @@
-[gd_scene load_steps=31 format=2]
+[gd_scene load_steps=30 format=2]
 
 [ext_resource path="res://Assets/Models/rat/Material.material" type="Material" id=1]
 [ext_resource path="res://Assets/Models/rat/Material_001.material" type="Material" id=2]
@@ -1489,10 +1489,7 @@ tracks/26/keys = PoolRealArray( 0, 1, -1.78814e-07, 7.15256e-07, -2.44007e-07, -
 
 [sub_resource type="CapsuleShape" id=12]
 radius = 1.498
-height = 5.975
-
-[sub_resource type="BoxShape" id=17]
-extents = Vector3( 2, 1, 4 )
+height = 4.731
 
 [sub_resource type="SphereShape" id=14]
 radius = 90.0
@@ -1503,12 +1500,16 @@ radius = 90.0
 albedo_color = Color( 0.0313726, 0.847059, 0.180392, 1 )
 
 [sub_resource type="CubeMesh" id=20]
+size = Vector3( 2, 6, 2 )
 
 [node name="Rat" type="RigidBody"]
 collision_layer = 3
 collision_mask = 3
 mass = 10.0
+contacts_reported = 1
 can_sleep = false
+axis_lock_angular_x = true
+axis_lock_angular_z = true
 script = ExtResource( 3 )
 soundRatAlert = [ ExtResource( 4 ), ExtResource( 11 ), ExtResource( 12 ), ExtResource( 13 ) ]
 soundRatSqueak = [ ExtResource( 5 ), ExtResource( 6 ), ExtResource( 8 ), ExtResource( 7 ), ExtResource( 9 ), ExtResource( 10 ) ]
@@ -1754,12 +1755,8 @@ anims/standing_idle = SubResource( 10 )
 anims/walk = SubResource( 11 )
 
 [node name="CollisionShape" type="CollisionShape" parent="."]
-transform = Transform( 1, 0, 0, 0, 0.999813, 0.0193599, 0, -0.0193599, 0.999813, 0, 3.07553, 0.324289 )
+transform = Transform( 1, 0, 0, 0, 0.999996, -0.00293954, 0, 0.00293954, 0.999996, 0, 1.89111, -0.797788 )
 shape = SubResource( 12 )
-
-[node name="CollisionShape2" type="CollisionShape" parent="."]
-transform = Transform( 0.784804, 0, 0, 0, 1, 0, 0, 0, 0.790093, 0, 1.19891, 0 )
-shape = SubResource( 17 )
 
 [node name="SearchArea" type="Area" parent="."]
 
@@ -1768,10 +1765,14 @@ shape = SubResource( 14 )
 
 [node name="Debug" type="MeshInstance" parent="."]
 transform = Transform( 3, 0, 0, 0, 3, 0, 0, 0, 3, 0, 0, 0 )
+visible = false
 mesh = SubResource( 18 )
 material/0 = SubResource( 19 )
 
 [node name="HoldPoint" type="MeshInstance" parent="."]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 4.19125, 5.14984 )
+transform = Transform( -4.37114e-08, -1, 0, 0.964511, -4.21601e-08, 0.264041, -0.264041, 1.15416e-08, 0.964511, 0, 3.81297, 4.43574 )
 visible = false
 mesh = SubResource( 20 )
+
+[node name="Sound" type="AudioStreamPlayer3D" parent="."]
+unit_db = 10.0

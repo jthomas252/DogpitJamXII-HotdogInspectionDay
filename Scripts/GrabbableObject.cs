@@ -67,6 +67,11 @@ public class GrabbableObject : RigidBody
         targetDirection = GlobalTranslation.DirectionTo(targetPosition);
     }
 
+    public void  UpdateTargetRotation(Vector3 newRotation, float delta)
+    {
+        // TODO
+    }
+
     public void ForcePosition(Vector3 newPosition, Vector3 newRotation)
     {
         GlobalTranslation = newPosition;

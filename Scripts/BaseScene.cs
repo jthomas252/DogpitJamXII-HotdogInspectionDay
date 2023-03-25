@@ -140,6 +140,11 @@ public class BaseScene : Spatial
 		return _instance.documentNoises[GD.Randi() % _instance.documentNoises.Length];
 	}
 
+	public static bool IsGameActive()
+	{
+		return _instance._playerTimer > 0f; 
+	}
+
 	public override void _Ready()
 	{
 		// Set initial seed 

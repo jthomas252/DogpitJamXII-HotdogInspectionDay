@@ -25,6 +25,8 @@
 - Test and make builds for Mac
 
 # Misc
+- Fix problems with rat moonwalking
+
 - Fix issue where inspected objects have arbitrary Y position differences
 	- Noticeable on poster vs. handbook
 	- Ideally set these to write to a sprite in the inspect area 
@@ -125,14 +127,6 @@
 	- Only need one with the main rulebook page
 
 - Add credits poster
-
-# Rat
-- Add rat noises
-	- Alert when it spawns
-	- Squeaks when it moves
-
-- Fix problems when a rat escapes being held and cursor not being reset
-	- Make sure DropObject is called from Cursor
 
 # Tools
 - Add geiger counter

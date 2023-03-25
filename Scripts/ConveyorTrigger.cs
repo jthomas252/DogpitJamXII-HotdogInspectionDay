@@ -3,7 +3,7 @@ using Godot.Collections;
 
 public class ConveyorTrigger : Trigger
 {
-    private readonly float MOVEMENT_SCALE = 16.5f;
+    private readonly float MOVEMENT_SCALE = 35f;
     private Vector3 _direction;
 
     public override void _Ready()

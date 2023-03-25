@@ -6,17 +6,22 @@ public class Rat : GrabbableObject
 {
     private const float ANIMATION_SPEED_MOVE = 4f;
     private const float ANIMATION_SPEED_GRABBED = 10f;
-    
+
     private const float ESCAPE_GRAB_TIME_MIN = 1.5f;
     private const float ESCAPE_GRAB_TIME_MAX = 4f;
-    
-    private const float WAIT_TIME_MIN = 1.5f;
-    private const float WAIT_TIME_MAX = 4f; 
-    
-    private const float MOVEMENT_SPEED_SCALE = 20f;
 
-    private const float CHANCE_MOVE_RANDOM = 0.5f;
-    private const float CHANCE_WAIT = 0.5f; 
+    private const float WAIT_TIME_MIN = 0.2f;
+    private const float WAIT_TIME_MAX = 1.75f;
+
+    private const float MOVEMENT_SPEED_SCALE = 32f;
+
+    private const float CHANCE_GRAB_HOTDOG = 0.8f;
+    private const float CHANCE_MOVE_RANDOM = 0.25f;
+
+    private const float NOISE_CHANCE = 0.001f;
+    private const float ALERT_DELAY = 3f;
+    private const float MAX_PURSUIT_TIME = 10f;
+    private const float STUN_TIME = 2.5f; 
     
     private static List<Spatial> movementPointList;
 
@@ -31,11 +36,26 @@ public class Rat : GrabbableObject
 
     private float _escapeTime;
     private float _waitTime;
-    private Spatial _escapePoint; 
+    private float _alertTime;
+    private float _pursuitTime;
+    private float _stunTime; 
+    
+    private Spatial _escapePoint;
     private Spatial _originPoint;
-    private Spatial _holdPoint; 
-    private Spatial _debug; 
+    private Spatial _holdPoint;
+    private Spatial _debug;
+    private AudioStreamPlayer3D _audioPlayer;
 
+    private AudioStream GetAlertNoise()
+    {
+        return soundRatAlert[GD.Randi() % soundRatAlert.Length];
+    }
+
+    private AudioStream GetSqueakNoise()
+    {
+        return soundRatSqueak[GD.Randi() % soundRatSqueak.Length]; 
+    }
+    
     public override void _Ready()
     {
         base._Ready();
@@ -44,8 +64,9 @@ public class Rat : GrabbableObject
         _holdPoint = GetNode<Spatial>("HoldPoint");
         _escapePoint = GetTree().CurrentScene.GetNode<Spatial>("Points/RatEscapePoint");
         _originPoint = GetTree().CurrentScene.GetNode<Spatial>("Points/RatSpawnPoint");
+        _audioPlayer = GetNode<AudioStreamPlayer3D>("Sound");
         _searchArea = GetNode<Area>("SearchArea");
-        
+
         _animationPlayer = GetNode<AnimationPlayer>("RootNode/AnimationPlayer");
         _animationPlayer.GetAnimation("walk").Loop = true;
         _animationPlayer.PlaybackSpeed = ANIMATION_SPEED_MOVE;
@@ -61,17 +82,41 @@ public class Rat : GrabbableObject
 
         GD.Print("Rat: I SPAWNED");
         UpdateTarget(FindClosestMovementPoint());
+
+        _audioPlayer.Stream = GetAlertNoise();
+        _audioPlayer.Play();
     }
 
     public override void _Process(float delta)
     {
         base._Process(delta);
 
-        if (_movementTarget != null) _debug.GlobalTranslation = _movementTarget.GlobalTranslation;
+        if (_alertTime > 0f) _alertTime -= delta;
+        
+        if (_stunTime > 0f) _stunTime -= delta;
 
+        if (_pursuitTime > 0f)
+        {
+            _pursuitTime -= delta;
+            if (_pursuitTime <= 0f)
+            {
+                UpdateTarget(FindRandomMovementPoint());
+            }
+        }
+        
+        if (IsInstanceValid(_movementTarget))
+        {
+            _debug.GlobalTranslation = _movementTarget.GlobalTranslation;
+            if (GlobalTranslation.DistanceTo(_movementTarget.GlobalTranslation) > 100f)
+            {
+                GD.Print("Rat: Finding new target");
+                _movementTarget = FindRandomMovementPoint();
+            }
+        }
+        
         if (_waitTime > 0)
         {
-            _waitTime -= delta; 
+            _waitTime -= delta;
             if (_waitTime < 0)
             {
                 _animationPlayer.Play("walk");
@@ -81,33 +126,41 @@ public class Rat : GrabbableObject
                 }
                 else
                 {
-                    UpdateTarget(GD.Randf() > 0.5f ? FindClosestMovementPoint() : FindRandomMovementPoint());
+                    UpdateTarget(FindRandomMovementPoint());
                 }
             }
         }
 
-        if (_grabbedObject != null)
+        if (IsInstanceValid(_grabbedObject))
         {
             // TODO - change to the rats head
             _grabbedObject.UpdateTargetPosition(_holdPoint.GlobalTranslation);
         }
+
+        if (GD.Randf() < NOISE_CHANCE)
+        {
+            _audioPlayer.Stream = GetSqueakNoise();
+            _audioPlayer.Play();
+        }
     }
-    
+
     /**
      * Taken from https://docs.godotengine.org/en/3.5/tutorials/physics/rigid_body.html
      */
     private void LookFollow(PhysicsDirectBodyState state, Transform currentTransform, Vector3 targetPosition)
     {
-        var upDir = new Vector3(0, 1, 0);
-        var curDir = currentTransform.basis.Xform(new Vector3(0, 0, 1));
-        var targetDir = (targetPosition - currentTransform.origin).Normalized();
-        var rotationAngle = Mathf.Acos(curDir.x) - Mathf.Acos(targetDir.x);
-        state.SetAngularVelocity(upDir * (rotationAngle / state.GetStep()));
+        Vector3 upDir = Vector3.Up;
+        Vector3 curDir = currentTransform.basis.Xform(Vector3.Forward);
+        Vector3 targetDir = targetPosition.DirectionTo(currentTransform.origin);
+        float rotationAngle = Mathf.Acos(curDir.x) - Mathf.Acos(targetDir.x);
+        float rotationVelocity = rotationAngle / state.GetStep();
+        
+        state.SetAngularVelocity(upDir * rotationVelocity);
     }
 
     public override void _IntegrateForces(PhysicsDirectBodyState state)
     {
-        if (_movementTarget != null && !isGrabbed)
+        if (IsInstanceValid(_movementTarget) && !isGrabbed && IsOnGround() && _stunTime <= 0f)
         {
             LookFollow(state, GlobalTransform, _movementTarget.GlobalTransform.origin);
             SetAxisVelocity(GlobalTranslation.DirectionTo(_movementTarget.GlobalTranslation) * MOVEMENT_SPEED_SCALE);
@@ -117,70 +170,75 @@ public class Rat : GrabbableObject
     public override void _PhysicsProcess(float delta)
     {
         base._PhysicsProcess(delta);
-        
-        if (!isGrabbed)
+
+        if (IsInstanceValid(_grabbedObject))
         {
-            // AngularVelocity = Vector3.Zero;
+            _grabbedObject.ForcePosition(_holdPoint.GlobalTranslation, _holdPoint.GlobalRotation);
+        }
+        
+        if (!isGrabbed && IsOnGround() && IsInstanceValid(_movementTarget) && _stunTime <= 0f)
+        {
             LinearVelocity = Vector3.Zero;
-            
-            if (_movementTarget != null)
+
+            // Pick a new target, or sit and wait
+            if (GlobalTranslation.DistanceTo(_movementTarget.GlobalTranslation) < 8f)
             {
-                // Pick a new target, or sit and wait
-                if (GlobalTranslation.DistanceTo(_movementTarget.GlobalTranslation) < 8f)
+                // Return to the origin if this was the escape point. Skip other logic. 
+                if (_movementTarget == _escapePoint)
                 {
-                    // Return to the origin if this was the escape point. Skip other logic. 
-                    if (_movementTarget == _escapePoint)
+                    _movementTarget = _originPoint;
+                    return;
+                }
+
+                // Attempt to pick it up
+                if (_movementTarget is GrabbableObject grabbableObject)
+                {
+                    Cursor.ForceReleaseObject();
+
+                    GD.Print("Rat: HOTDOG TIME");
+                    _animationPlayer.Play("walk");
+                    grabbableObject.Grab(true);
+                    _grabbedObject = grabbableObject;
+                    _grabbedObject.ForcePosition(_holdPoint.GlobalTranslation, _holdPoint.GlobalRotation);
+                    Escape();
+                }
+                else
+                {
+                    if (GD.Randf() < CHANCE_GRAB_HOTDOG)
                     {
-                        _movementTarget = _originPoint;
-                        return;
-                    }
-                    
-                    // Attempt to pick it up
-                    if (_movementTarget is GrabbableObject grabbableObject)
-                    {
-                        GD.Print("Rat: HOTDOG TIME");
-                        _animationPlayer.Play("walk");
-                        grabbableObject.Grab(true);
-                        _grabbedObject = grabbableObject;
-                        _grabbedObject.ForcePosition(_holdPoint.GlobalTranslation, GlobalRotation);
-                        Escape();
-                    }
-                    else
-                    {
-                        // Logic is weird since chance is inverted 
-                        if (GD.Randf() > CHANCE_MOVE_RANDOM)
+                        if (IsGrabbing())
                         {
-                            if (IsGrabbing())
-                            {
-                                Escape();
-                            }
-                            else
-                            {
-                                UpdateTarget(FindNearestObject());
-                            }
-                        }
-                        else if (GD.Randf() > CHANCE_WAIT)
-                        {
-                            GD.Print("Rat: I MOVE RANDOMLY");
-                            _animationPlayer.Play("walk");
-                            UpdateTarget(FindRandomMovementPoint());
+                            Escape();
                         }
                         else
                         {
-                            _animationPlayer.Play("sit");
-                            _movementTarget = null;
-                            _waitTime = Mathf.Lerp(WAIT_TIME_MIN, WAIT_TIME_MAX, GD.Randf());
+                            UpdateTarget(FindNearestObject());
                         }
+                    }
+                    else if (GD.Randf() < CHANCE_MOVE_RANDOM)
+                    {
+                        GD.Print("Rat: I MOVE RANDOMLY");
+                        _animationPlayer.Play("walk");
+                        UpdateTarget(FindRandomMovementPoint());
+                    }
+                    else
+                    {
+                        _animationPlayer.Play("sit");
+                        _movementTarget = null;
+                        _waitTime = Mathf.Lerp(WAIT_TIME_MIN, WAIT_TIME_MAX, GD.Randf());
                     }
                 }
             }
-        }        
-        else if (!BaseScene.Inspecting())
+        }
+
+        // Struggle to break free
+        if (isGrabbed && !BaseScene.Inspecting())
         {
             // Struggle to release itself, if not in inspector mode
             _escapeTime -= delta;
             if (_escapeTime < 0f)
             {
+                GD.Print("BREAKOUT!");
                 Drop();
                 Cursor.ForceReleaseObject();
             }
@@ -192,17 +250,27 @@ public class Rat : GrabbableObject
         base.Grab();
         _animationPlayer.PlaybackSpeed = ANIMATION_SPEED_GRABBED;
         _escapeTime = Mathf.Lerp(ESCAPE_GRAB_TIME_MIN, ESCAPE_GRAB_TIME_MAX, GD.Randf());
+
+        if (IsInstanceValid(_grabbedObject))
+        {
+            _grabbedObject.Drop();
+            _grabbedObject = null; 
+        }
+        
+        _audioPlayer.Stream = GetSqueakNoise();
+        _audioPlayer.Play();        
     }
 
     public override void Drop()
     {
         base.Drop();
-        _animationPlayer.PlaybackSpeed = ANIMATION_SPEED_MOVE; 
+        _stunTime = STUN_TIME; 
+        _animationPlayer.PlaybackSpeed = ANIMATION_SPEED_MOVE;
     }
 
     public bool IsGrabbing()
     {
-        return _grabbedObject != null; 
+        return _grabbedObject != null;
     }
 
     /**
@@ -210,7 +278,7 @@ public class Rat : GrabbableObject
      */
     public void Despawn()
     {
-        if (_grabbedObject != null) _grabbedObject.QueueFree();
+        if (IsInstanceValid(_grabbedObject)) _grabbedObject.QueueFree();
         QueueFree();
     }
 
@@ -218,6 +286,20 @@ public class Rat : GrabbableObject
     {
         // LookAt(-newTarget.GlobalTranslation, Vector3.Up);
         _movementTarget = newTarget;
+        _pursuitTime = MAX_PURSUIT_TIME; 
+    }
+
+    // Raycast and see if it's on the ground
+    private bool IsOnGround()
+    {
+        PhysicsDirectSpaceState spaceState = GetWorld().DirectSpaceState;
+        Dictionary hits = spaceState.IntersectRay(
+            GlobalTranslation,
+            GlobalTranslation + (Vector3.Down * 8f),
+            null,
+            1
+        );
+        return hits.Count > 0;
     }
 
     /**
@@ -225,10 +307,10 @@ public class Rat : GrabbableObject
      */
     public void Alert()
     {
-        GD.Print("Rat: RUN AWAY!!!");
-        _waitTime = 0f;
-        if (_grabbedObject != null)
+        if (!IsGrabbing() && _alertTime <= 0f)
         {
+            _waitTime = 0f;
+            _alertTime = ALERT_DELAY; 
             UpdateTarget(FindRandomMovementPoint());
         }
     }
@@ -238,13 +320,13 @@ public class Rat : GrabbableObject
         GD.Print("Rat: TIME TO ESCAPE");
         // Seek the origin point
         UpdateTarget(_escapePoint);
-        _waitTime = 0; 
+        _waitTime = 0;
     }
 
     private Spatial FindClosestMovementPoint()
     {
-        Spatial sendBack = null; 
-        float nearestDist = 0f; 
+        Spatial sendBack = null;
+        float nearestDist = 0f;
         foreach (Spatial point in movementPointList)
         {
             if (point == _movementTarget) continue;
@@ -252,10 +334,11 @@ public class Rat : GrabbableObject
             float dist = GlobalTranslation.DistanceTo(point.GlobalTranslation);
             if (nearestDist == 0f || dist < nearestDist)
             {
-                nearestDist = dist; 
+                nearestDist = dist;
                 sendBack = point;
-            } 
+            }
         }
+
         return sendBack;
     }
 
@@ -273,10 +356,10 @@ public class Rat : GrabbableObject
         {
             if (body is Hotdog dog)
             {
-                return dog; 
+                return dog;
             }
         }
-        
+
         // If we can't find a hotdog then go to a random target instead.
         return FindRandomMovementPoint();
     }

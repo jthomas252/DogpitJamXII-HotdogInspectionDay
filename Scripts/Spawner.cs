@@ -2,9 +2,9 @@ using Godot;
 
 public class Spawner : Spatial
 {
-    [Export] 
-    public PackedScene hotdog;
-
+    [Export] public PackedScene hotdog;
+    [Export] public PackedScene[] randomObject; 
+    
     private Vector3 _spawnPoint; 
 
     // Re-usable list of hotdogs we have spawned in the scene already

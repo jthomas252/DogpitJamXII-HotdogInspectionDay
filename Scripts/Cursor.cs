@@ -33,6 +33,7 @@ public class Cursor : Sprite3D
     private Node hoverObject;
     private Spatial grabbedObject;
     private Vector3 objectHoldPoint;
+    private Vector3 objectHoldRotation; 
     private Array ignoreObjects;
     private PhysicsDirectSpaceState spaceState;
 
@@ -53,6 +54,7 @@ public class Cursor : Sprite3D
         // Find relevant world objects
         inspectPoint = GetTree().CurrentScene.GetNode<Spatial>("Points/InspectPoint");
         objectHoldPoint = Vector3.Zero;
+        objectHoldRotation = Vector3.Zero; 
         spaceState = GetWorld().DirectSpaceState;
         camera = GetViewport().GetCamera();
         _tooltip = GetNode<Label3D>("Tooltip");
@@ -91,7 +93,7 @@ public class Cursor : Sprite3D
     private void DropObject()
     {
         // Holding onto an object
-        if (IsGrabbing() && Input.IsMouseButtonPressed((int)ButtonList.Right))
+        if (IsGrabbing())
         {
             if (grabbedObject is GrabbableObject grabbableObject) grabbableObject.Drop();
             if (grabbedObject is ViewableObject viewableObject) viewableObject.Drop();
@@ -204,7 +206,7 @@ public class Cursor : Sprite3D
             else if (hoverObject is Rat rat)
             {
                 ChangeCursorState(CursorState.HandGrab);
-                ChangeTooltip("Rat Bastard!");
+                ChangeTooltip("Rat!");
                 rat.Alert();
             }            
             else if (hoverObject is GrabbableObject && !IsGrabbing())
@@ -215,6 +217,7 @@ public class Cursor : Sprite3D
             else if (hoverObject is SnapTrigger snapTrigger)
             {
                 objectHoldPoint = snapTrigger.GetSnapPoint();
+                objectHoldRotation = snapTrigger.GetSnapRotation();
                 ClearTooltip();
             }
             else if (hoverObject is Trigger trigger)
@@ -229,7 +232,7 @@ public class Cursor : Sprite3D
         }
     }
 
-    private void UpdateGrabbedObjectPosition()
+    private void UpdateGrabbedObjectPosition(float delta)
     {
         if (grabbedObject is GrabbableObject grabbableObject)
         {
@@ -242,7 +245,8 @@ public class Cursor : Sprite3D
             {
                 ChangeCursorState(CursorState.HandClosed);
                 grabbableObject.UpdateTargetPosition(objectHoldPoint);
-            }
+                grabbableObject.UpdateTargetRotation(objectHoldRotation, delta);
+            }   
         }
     }
 
@@ -259,7 +263,7 @@ public class Cursor : Sprite3D
         CheckForInteractiveObjects(pos, normal);
         
         // Update the position of the grabbed object
-        if (IsGrabbing()) UpdateGrabbedObjectPosition();
+        if (IsGrabbing()) UpdateGrabbedObjectPosition(delta);
     }
 
     public bool IsGrabbing()
