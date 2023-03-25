@@ -1,4 +1,4 @@
-[gd_scene load_steps=83 format=2]
+[gd_scene load_steps=85 format=2]
 
 [ext_resource path="res://Scripts/BaseScene.cs" type="Script" id=1]
 [ext_resource path="res://Prefab/Cursor.tscn" type="PackedScene" id=2]
@@ -44,6 +44,8 @@
 [ext_resource path="res://Scripts/RatTrigger.cs" type="Script" id=42]
 [ext_resource path="res://Prefab/Rat.tscn" type="PackedScene" id=43]
 [ext_resource path="res://Prefab/GeigerCounter.tscn" type="PackedScene" id=44]
+[ext_resource path="res://Scripts/Vent.cs" type="Script" id=45]
+[ext_resource path="res://Prefab/Vent.tscn" type="PackedScene" id=46]
 
 [sub_resource type="CubeMesh" id=30]
 
@@ -894,6 +896,10 @@ material/0 = SubResource( 64 )
 
 [node name="GeigerCounter" parent="." instance=ExtResource( 44 )]
 transform = Transform( 0.17166, 0, 0.985156, 0, 1, 0, -0.985156, 0, 0.17166, 5.50541, -10.2901, -19.9819 )
+
+[node name="vent" parent="." instance=ExtResource( 46 )]
+transform = Transform( 1.5, 0, 0, 0, 1.5, 0, 0, 0, 2, -55.8996, -11.3558, 4.46407 )
+script = ExtResource( 45 )
 
 [connection signal="OnProcess" from="Triggers/ProcessTrigger" to="AudioPoints/ProcessAudio" method="OnEvent"]
 [connection signal="Pressed" from="SpawnButton" to="Spawner" method="OnSpawnButton"]
