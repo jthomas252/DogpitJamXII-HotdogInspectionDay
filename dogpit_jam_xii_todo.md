@@ -1,9 +1,6 @@
 # Models To Do (Priority is top to bottom)
 - Geiger counter
 
-- Uranium Rod
-	- Green cylinder, just add some materials / glow to it
-
 - Environment models
 	- Optional, we can use the environment currently in Godot instead
     - Should include some basic enviromental details in the distance to give a sense of depth
@@ -130,19 +127,9 @@
 - Add credits poster
 
 # Rat
-- Fix rat rotation on movement
-	- Cant apply rotation at same time as ApplyAxisVelocity
-
 - Add rat noises
 	- Alert when it spawns
 	- Squeaks when it moves
-
-- Have rat move back to spawn point
-	- Currently is setting it to go back, but it doesn't follow that
-
-- Despawn rat & hotdog 
-	- Add logic to the RatTrigger object
-	- Despawn the rat if it has a hotdog 
 
 - Fix problems when a rat escapes being held and cursor not being reset
 	- Make sure DropObject is called from Cursor

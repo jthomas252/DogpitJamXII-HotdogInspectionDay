@@ -16,10 +16,16 @@ public class GrabbableObject : RigidBody
     private Vector3 targetDirection;
     private Camera camera;
     private Vector2 mouseOffset;
-    private Spatial _inspectPoint; 
+    private Spatial _inspectPoint;
+
+    private uint _originalCollisionLayer;
+    private uint _originalCollisionMask; 
     
     public override void _Ready()
     {
+        _originalCollisionLayer = CollisionLayer;
+        _originalCollisionMask = CollisionMask; 
+        
         camera = GetViewport().GetCamera();
 
         if (GetTree().CurrentScene is BaseScene baseScene)
@@ -55,16 +61,28 @@ public class GrabbableObject : RigidBody
         }
     }
 
-    public virtual void Grab()
-    {
-        GD.Print($"{Name} Grabbed");
-        isGrabbed = true;
-    }
-
     public void UpdateTargetPosition(Vector3 newPosition)
     {
         targetPosition = newPosition;
         targetDirection = GlobalTranslation.DirectionTo(targetPosition);
+    }
+
+    public void ForcePosition(Vector3 newPosition, Vector3 newRotation)
+    {
+        GlobalTranslation = newPosition;
+        GlobalRotation = newRotation; 
+    }
+    
+    public virtual void Grab(bool disableCollisions = false)
+    {
+        GD.Print($"{Name} Grabbed");
+        isGrabbed = true;
+
+        if (disableCollisions)
+        {
+            CollisionMask = 0;
+            CollisionLayer = 0; 
+        }
     }
 
     public virtual void Drop()
@@ -72,6 +90,9 @@ public class GrabbableObject : RigidBody
         GD.Print($"{Name} dropped");
         isGrabbed = false;
         Sleeping = false;
+
+        CollisionMask = _originalCollisionMask;
+        CollisionLayer = _originalCollisionLayer;
     }
 
     public override void _PhysicsProcess(float delta)
