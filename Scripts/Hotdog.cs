@@ -401,7 +401,11 @@ public class Hotdog : GrabbableObject
                 MeatContent.CHICKEN,
             } 
         }
-    };   
-    
-    
+    };
+
+    private Godot.Collections.Dictionary<int, HotdogChallenge[]> _DayChallenge =
+        new Godot.Collections.Dictionary<int, HotdogChallenge[]>()
+        {
+
+        };
 }

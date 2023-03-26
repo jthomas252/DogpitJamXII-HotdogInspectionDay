@@ -1,4 +1,4 @@
-[gd_scene load_steps=89 format=2]
+[gd_scene load_steps=88 format=2]
 
 [ext_resource path="res://Scripts/BaseScene.cs" type="Script" id=1]
 [ext_resource path="res://Prefab/Cursor.tscn" type="PackedScene" id=2]
@@ -15,7 +15,6 @@
 [ext_resource path="res://Assets/Fonts/TimerFont.tres" type="DynamicFont" id=13]
 [ext_resource path="res://Scripts/Trigger.cs" type="Script" id=14]
 [ext_resource path="res://Assets/Models/trashcan/trashcan.obj" type="ArrayMesh" id=15]
-[ext_resource path="res://Prefab/Hotdog.tscn" type="PackedScene" id=16]
 [ext_resource path="res://Scripts/SnapTrigger.cs" type="Script" id=17]
 [ext_resource path="res://Prefab/ComputerPrefab.tscn" type="PackedScene" id=18]
 [ext_resource path="res://Assets/Materials/trashcan.tres" type="Material" id=19]
@@ -642,9 +641,6 @@ modulate = Color( 0.290196, 0.290196, 0.290196, 1 )
 text = "00:00"
 font = ExtResource( 13 )
 horizontal_alignment = 2
-
-[node name="TestDog" parent="." instance=ExtResource( 16 )]
-transform = Transform( 1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, -20.7874, -2.73842, 10.3916 )
 
 [node name="Handbook" type="KinematicBody" parent="."]
 physics_interpolation_mode = 1
