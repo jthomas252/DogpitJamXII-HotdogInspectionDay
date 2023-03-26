@@ -49,7 +49,7 @@ public class Hotdog : GrabbableObject
     public override void _Ready()
     {
         base._Ready();
-
+        
         // Set up the shader material 
         MeshInstance mesh = GetNode<MeshInstance>("HotdogMesh");
         Material material = mesh.GetSurfaceMaterial(0);

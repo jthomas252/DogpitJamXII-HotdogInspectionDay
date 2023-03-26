@@ -19,7 +19,9 @@ public class GeigerCounter : GrabbableObject
     private Area _detectionArea; 
     private Spatial _needle;
     private AudioStreamPlayer3D _audioPlayer;
-    private float _clickTime; 
+    private float _clickTime;
+
+    private Transform _originalTransform;
     
     public override void _Ready()
     {
@@ -29,6 +31,14 @@ public class GeigerCounter : GrabbableObject
         _needle = GetNode<Spatial>("Needle");
         _audioPlayer = GetNode<AudioStreamPlayer3D>("Sound");
         _clickTime = 0f;
+
+        _originalTransform = Transform;
+    }
+
+    // Just reset the original position on the desk instead of despawning
+    public override void Despawn()
+    {
+        Transform = _originalTransform;
     }
 
     public override void _Process(float delta)

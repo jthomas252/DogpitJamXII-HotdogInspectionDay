@@ -35,6 +35,7 @@ public class GrabbableObject : RigidBody
             baseScene.Connect("Inspection", this, nameof(OnInspection));
             baseScene.Connect("Grabbed", this, nameof(InspectionReset));
             baseScene.Connect("Normal", this, nameof(InspectionReset));
+            baseScene.Connect("LevelReset", this, nameof(Despawn));
         }
         else
         {
@@ -42,6 +43,14 @@ public class GrabbableObject : RigidBody
         }
         
         _inspectPoint = GetTree().CurrentScene.GetNode<Spatial>("Points/InspectPointDocument");
+    }
+
+    /**
+     * Erase self when the level ends
+     */
+    public virtual void Despawn()
+    {
+        QueueFree();
     }
 
     public virtual float GetRadiation()

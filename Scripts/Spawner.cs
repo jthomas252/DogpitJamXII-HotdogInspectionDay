@@ -2,6 +2,8 @@ using Godot;
 
 public class Spawner : Spatial
 {
+    private static Spawner _instance; 
+    
     private const float SPAWN_DELAY = 3.5f;
     private const float BETWEEN_OBJECT_DELAY = 0.5f;
     private const float RANDOM_OBJECT_CHANCE = 0.5f;
@@ -29,6 +31,8 @@ public class Spawner : Spatial
 
     public override void _Ready()
     {
+        _instance = this; 
+        
         _spawnLight = GetNode<OmniLight>(activeLight);
         _spawnPoint = GetTree().CurrentScene.GetNode<Spatial>("Points/SpawnPoint").GlobalTranslation;
         _audioPlayer = GetNode<AudioStreamPlayer3D>("Sound");
@@ -113,5 +117,10 @@ public class Spawner : Spatial
         GD.Print($"Object named {obj.Name} spawned at ${_spawnPoint.ToString()}");
         obj.GlobalTranslation = _spawnPoint;
         obj.GlobalRotation = new Vector3(GD.Randf(), GD.Randf(), GD.Randf());        
+    }
+
+    public static void Spawn(PackedScene scene)
+    {
+        _instance.SpawnObject(scene);
     }
 }

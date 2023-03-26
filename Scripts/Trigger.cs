@@ -23,6 +23,12 @@ public class Trigger : Area
             GD.Print($"Hit at {rigidBody.LinearVelocity}");
             if (isKillZone)
             {
+                if (node is Hotdog dog && dog.IsValid())
+                {
+                    ComputerScreen.FlashError("VALID HOTDOG TRASHED");
+                    BaseScene.DecrementScore();
+                }
+                
                 EmitSignal(nameof(OnTrigger));
                 rigidBody.QueueFree();
             }

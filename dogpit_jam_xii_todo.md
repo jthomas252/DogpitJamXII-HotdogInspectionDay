@@ -1,19 +1,6 @@
 # Misc
 - Make builds and submit to Itch.io
 
-- Make geiger counter louder
-
-- Make conveyor anim/trigger only active when the game is
-
-# Level Iteration
-- Show screen between levels telling the player how they did
-	- Let them know if they fulfilled quota
-	- Number of citations issued 
-
-- Reset hotdogs on screen, item states, and spawner count
-	- Remove the remaining hotdogs on the scene
-	- Use the LevelEnd / LevelStart signals on BaseScene for this 
-
 # Nice to have
 - Make the vent break open 
 	- Change script to work off a signal / trigger
@@ -35,5 +22,4 @@
 	- Would benefit from fixing rat rotation first 
 
 - Make an ending segment
-	- Newspaper article detailing how the factory was shut down
 	- Have the facility be run down or full of rats

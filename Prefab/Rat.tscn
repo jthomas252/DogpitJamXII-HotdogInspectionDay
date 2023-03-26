@@ -1511,6 +1511,7 @@ can_sleep = false
 axis_lock_angular_x = true
 axis_lock_angular_z = true
 script = ExtResource( 3 )
+radiation = 1.0
 soundRatAlert = [ ExtResource( 4 ), ExtResource( 11 ), ExtResource( 12 ), ExtResource( 13 ) ]
 soundRatSqueak = [ ExtResource( 5 ), ExtResource( 6 ), ExtResource( 8 ), ExtResource( 7 ), ExtResource( 9 ), ExtResource( 10 ) ]
 

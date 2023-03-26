@@ -276,10 +276,16 @@ public class Rat : GrabbableObject
         return _grabbedObject != null;
     }
 
+    public bool HasValidDog()
+    {
+        if (_grabbedObject is Hotdog dog && dog.IsValid()) return true;
+        return false; 
+    }
+
     /**
      * Despawn self and object
      */
-    public void Despawn()
+    public override void Despawn()
     {
         _audioPlayer.Stream = GetAlertNoise();
         _audioPlayer.Play();     

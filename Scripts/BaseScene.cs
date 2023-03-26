@@ -4,6 +4,20 @@ using System.Collections.Generic;
 
 public class BaseScene : Spatial
 {
+	private readonly string[] inspectorRanks = new string[]
+	{
+		"Hotdog Inspection Intern",
+		"Junior Hotdog Inspector",
+		"Associate Hotdog Inspector",
+		"Expert Hotdog Inspector",
+		"Master Hotdog Inspector",
+		"Grandmaster Hotdog Inspector",
+		"Hotdog King",
+		"Hotdog God",
+		"Chosen One",
+		"Impossible",
+	};
+	
 	[Export] public PackedScene citationObject; 
 	
 	// Music
@@ -14,14 +28,18 @@ public class BaseScene : Spatial
 	[Export] public AudioStream hotdogNoise;
 	[Export] public AudioStream[] documentNoises;
 	
-	private const int PLAYER_QUOTA = 8;
-	private const int PLAYER_QUOTA_PER_LEVEL = 2;
+	private const int PLAYER_QUOTA = 0;
+	private const int PLAYER_QUOTA_PER_LEVEL = 1;
+	private const int PLAYER_QUOTA_EXCEED = 3; 
 	private const int PLAYER_CITATION_THRESHOLD = 3;
-	private const float PLAYER_LEVEL_LENGTH = 180f; 
-	
+	private const float PLAYER_LEVEL_LENGTH = 10f;
+	private const int ALLOWED_MISTAKES_FOR_DEMOTION = 3; 
+
+	private int _playerRank; // Inspector rank 
 	private int _playerMistake;
 	private int _playerCitations; 
 	private int _playerScore;
+	private int _ratLoss; 
 	private int _playerLevel; 
 	private int _playerQuota;
 	private float _playerTimer;
@@ -46,6 +64,9 @@ public class BaseScene : Spatial
 
 	[Signal]
 	public delegate void LevelStart();
+
+	[Signal]
+	public delegate void LevelReset();
 
 	public enum PlayerState
 	{
@@ -117,9 +138,16 @@ public class BaseScene : Spatial
 		_instance._playerMistake++;
 		if (_instance._playerMistake > 0 && _instance._playerMistake % PLAYER_CITATION_THRESHOLD == 0)
 		{
-			_instance._playerCitations++; 
+			_instance._playerCitations++;
+			if (_instance._playerCitations > 3) GameOver("Too many citations");
 		}
 		UpdateScoreDisplay();
+	}
+
+	public static void IterateRatLoss()
+	{
+		_instance._ratLoss++;
+		DecrementScore();
 	}
 
 	public static void UpdateScoreDisplay()
@@ -134,7 +162,8 @@ public class BaseScene : Spatial
 
 		_instance._playerCitations = 0;
 		_instance._playerMistake = 0;
-		_instance._playerScore = 0; 
+		_instance._playerScore = 0;
+		_instance._ratLoss = 0;
 		
 		_instance._playerQuota = PLAYER_QUOTA + _instance._playerLevel * PLAYER_QUOTA_PER_LEVEL;
 		_instance._playerTimer = PLAYER_LEVEL_LENGTH; 
@@ -152,6 +181,38 @@ public class BaseScene : Spatial
 		// Show the start screen, pass the relevant data.
 		_instance.EmitEvent("LevelEnd");
 
+		string dayText = $"DAY {_instance._playerLevel} SURVIVED";
+		string statText = "HERE'S HOW YOU DID\n";
+
+		if (_instance._playerScore > (_instance._playerQuota + PLAYER_QUOTA_EXCEED))
+		{
+			statText += "EXCEEDED YOUR QUOTA!\n";
+			_instance._playerRank++; 
+		} else if (_instance._playerScore > _instance._playerQuota)
+		{
+			statText += "MET YOUR QUOTA\n";
+		}
+		else
+		{
+			statText += "FAILED TO MEET YOUR QUOTA\n";
+			_instance._playerRank--; 
+		}
+
+		statText += $"LOST {_instance._ratLoss} HOTDOGS TO RATS\n";
+		statText += $"ISSUED {_instance._playerCitations} CITATIONS\n";
+		
+		// Promote the player if they've earned it
+		_instance._playerRank += _instance._playerMistake < ALLOWED_MISTAKES_FOR_DEMOTION ? 1 : -1;
+		
+		// Ensure we don't go out of bounds with inspector ranks
+		_instance._playerRank = _instance._playerRank < 0 ? 0 : _instance._playerRank;
+		
+		statText += $"\nYOUR NEW POSITION:";
+
+		// Show the stat screen and set the text
+		Fader.FadeOut("show_stat_menu");
+		BetweenLevelScreen.SetText(dayText, statText, _instance.inspectorRanks[_instance._playerRank], "Proceed");
+		
 		// Deactivate relevant objects
 		_instance._timer.Visible = false; 
 		Computer.DeactiveScreen();
@@ -178,6 +239,18 @@ public class BaseScene : Spatial
 	public static bool IsGameActive()
 	{
 		return _instance._playerTimer > 0f; 
+	}
+
+	/**
+	 * Trigger a game over 
+	 */
+	public static void GameOver(string reason)
+	{
+		// Make the player retry the current level
+		_instance._playerLevel--;
+		
+		Fader.FadeOut("show_stat_menu");
+		BetweenLevelScreen.SetText("YOU FAILED", reason, "Try Again", "");
 	}
 
 	public override void _Ready()
@@ -214,6 +287,7 @@ public class BaseScene : Spatial
 				Input.MouseMode = Input.MouseModeEnum.Visible; 
 				_musicPlayer.Stream = titleTheme;
 				_musicPlayer.Play(); 
+				EmitSignal(nameof(LevelReset));
 				break;
 		}
 	}

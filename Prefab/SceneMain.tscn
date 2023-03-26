@@ -1,4 +1,4 @@
-[gd_scene load_steps=103 format=2]
+[gd_scene load_steps=108 format=2]
 
 [ext_resource path="res://Scripts/BaseScene.cs" type="Script" id=1]
 [ext_resource path="res://Prefab/Cursor.tscn" type="PackedScene" id=2]
@@ -61,7 +61,8 @@
 [ext_resource path="res://Prefab/Finger.tscn" type="PackedScene" id=59]
 [ext_resource path="res://Prefab/UraniumRod.tscn" type="PackedScene" id=60]
 [ext_resource path="res://Prefab/Dynamite.tscn" type="PackedScene" id=61]
-[ext_resource path="res://Prefab/Notice.tscn" type="PackedScene" id=62]
+[ext_resource path="res://Scripts/BetweenLevelScreen.cs" type="Script" id=62]
+[ext_resource path="res://Prefab/Notice.tscn" type="PackedScene" id=63]
 
 [sub_resource type="DynamicFontData" id=1]
 antialiased = false
@@ -70,6 +71,21 @@ font_path = "res://Assets/Fonts/Ac437_Phoenix_BIOS.ttf"
 [sub_resource type="DynamicFont" id=73]
 size = 24
 font_data = SubResource( 1 )
+
+[sub_resource type="DynamicFontData" id=74]
+font_path = "res://Assets/Fonts/stencil-block.ttf"
+
+[sub_resource type="DynamicFont" id=75]
+size = 32
+font_data = SubResource( 74 )
+
+[sub_resource type="DynamicFont" id=76]
+size = 18
+font_data = SubResource( 74 )
+
+[sub_resource type="DynamicFont" id=77]
+size = 32
+font_data = SubResource( 74 )
 
 [sub_resource type="CubeMesh" id=30]
 
@@ -189,6 +205,7 @@ extents = Vector3( 3, 4.25, 0.1 )
 
 [node name="SceneRoot" type="Spatial"]
 script = ExtResource( 1 )
+citationObject = ExtResource( 63 )
 titleTheme = ExtResource( 49 )
 gameTheme = ExtResource( 50 )
 hotdogNoise = ExtResource( 27 )
@@ -310,11 +327,93 @@ uppercase = true
 visible = false
 anchor_right = 1.0
 anchor_bottom = 1.0
+script = ExtResource( 62 )
 
 [node name="ColorRect" type="ColorRect" parent="Interface/BetweenLevel"]
 anchor_right = 1.0
 anchor_bottom = 1.0
 color = Color( 0, 0, 0, 1 )
+
+[node name="DayText" type="Label" parent="Interface/BetweenLevel"]
+anchor_left = 0.5
+anchor_right = 0.5
+margin_left = -217.0
+margin_top = 88.0
+margin_right = 217.0
+margin_bottom = 153.0
+custom_fonts/font = SubResource( 75 )
+text = "DAY X SURVIVED"
+align = 1
+valign = 1
+
+[node name="QuotaText" type="Label" parent="Interface/BetweenLevel"]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -400.0
+margin_top = -156.5
+margin_right = 400.0
+margin_bottom = -3.5
+custom_fonts/font = SubResource( 76 )
+text = "Met Quota
+Line
+0 CITATIONS ISSUED
+0 LOST TO RATS
+
+NEW RANK:"
+align = 1
+valign = 1
+
+[node name="RankText" type="Label" parent="Interface/BetweenLevel"]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -639.0
+margin_top = 31.5
+margin_right = 641.0
+margin_bottom = 184.5
+custom_fonts/font = SubResource( 77 )
+text = "GRANDMASTER HOTDOG INSPECTOR"
+align = 1
+valign = 1
+
+[node name="AdvanceButton" type="Button" parent="Interface/BetweenLevel"]
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+margin_left = -200.0
+margin_top = -164.0
+margin_right = 200.0
+margin_bottom = -64.0
+focus_mode = 0
+theme = ExtResource( 3 )
+custom_fonts/font = SubResource( 73 )
+enabled_focus_mode = 0
+text = "Proceed"
+icon_align = 1
+
+[node name="ColorRect2" type="ColorRect" parent="Interface/BetweenLevel"]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -400.0
+margin_top = -213.0
+margin_right = 400.0
+margin_bottom = -208.0
+
+[node name="ColorRect3" type="ColorRect" parent="Interface/BetweenLevel"]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -400.0
+margin_top = 123.0
+margin_right = 400.0
+margin_bottom = 128.0
 
 [node name="Fader" type="ColorRect" parent="Interface"]
 anchor_right = 1.0
@@ -323,6 +422,14 @@ mouse_filter = 2
 input_pass_on_modal_close_click = false
 color = Color( 0, 0, 0, 0 )
 script = ExtResource( 56 )
+
+[node name="Blackout" type="ColorRect" parent="Interface"]
+visible = false
+anchor_right = 1.0
+anchor_bottom = 1.0
+mouse_filter = 2
+input_pass_on_modal_close_click = false
+color = Color( 0, 0, 0, 1 )
 
 [node name="Camera" type="Camera" parent="."]
 transform = Transform( 0.999969, 0.0078539, 5.61134e-09, -0.00733194, 0.933512, 0.35847, 0.00281539, -0.358459, 0.933541, 0, 24.8409, 48.4861 )
@@ -1070,13 +1177,11 @@ volume_db = -20.0
 [node name="Sound" type="AudioStreamPlayer" parent="."]
 volume_db = -15.0
 
-[node name="Notice" parent="." instance=ExtResource( 62 )]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -14.465, -10.2052, 15.6724 )
-collision_layer = 3
-collision_mask = 3
-
 [connection signal="pressed" from="Interface/StartScreen/Button" to="Interface/StartScreen" method="OnStartButton"]
+[connection signal="pressed" from="Interface/BetweenLevel/AdvanceButton" to="Interface/StartScreen" method="OnStartButton"]
+[connection signal="FadeApex" from="Interface/Fader" to="." method="OnFadeApex"]
 [connection signal="FadeApex" from="Interface/Fader" to="Interface/StartScreen" method="Hide"]
+[connection signal="FadeApex" from="Interface/Fader" to="Interface/BetweenLevel" method="OnFadeApex"]
 [connection signal="OnTrigger" from="Triggers/KillTrigger" to="AudioPoints/TrashAudio" method="OnEvent"]
 [connection signal="OnProcess" from="Triggers/ProcessTrigger" to="AudioPoints/ProcessAudio" method="OnEvent"]
 [connection signal="Pressed" from="SpawnButton" to="Spawner" method="OnSpawnButton"]
