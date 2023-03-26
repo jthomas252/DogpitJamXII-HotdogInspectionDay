@@ -6,6 +6,8 @@
 	- Pipes, wall objects, etc. 
 
 # Misc
+- Make builds and submit to Itch.io
+
 - Have a "Start Shift" button, maybe on the spawner button arm
 	- Trigger the spot lights to flash
 	- Conveyor animation starts
@@ -29,7 +31,6 @@
 
 - Show screen between levels telling the player how they did
 	- Let them know if they fulfilled quota
-	- Fulfilled secret item
 	- Number of citations issued 
 
 - Reset hotdogs on screen, item states, and spawner count
@@ -52,7 +53,7 @@
 - Make the start screen look nice
 
 - Citations
-	- Maybe spawn an object for this? 
+	- Just track in BaseScene as an additional score
 
 - Dynamite
 	- If it explodes causes a game over
@@ -71,11 +72,6 @@
 - Add rotation to the snap points
 	- Lerp into the appropriate position 
 	- Would benefit from fixing rat rotation first 
-
-- Toggle the light on the spawner button
-
-- Improve the next/prev buttons 
-	- Should probably just be generic arrows 
 
 - Make an ending segment
 	- Newspaper article detailing how the factory was shut down
