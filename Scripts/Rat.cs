@@ -150,7 +150,7 @@ public class Rat : GrabbableObject
     private void LookFollow(PhysicsDirectBodyState state, Transform currentTransform, Vector3 targetPosition)
     {
         Vector3 upDir = Vector3.Up;
-        Vector3 curDir = currentTransform.basis.Xform(Vector3.Forward);
+        Vector3 curDir = currentTransform.basis.Xform(new Vector3(0,0,-1));
         Vector3 targetDir = targetPosition.DirectionTo(currentTransform.origin);
         float rotationAngle = Mathf.Acos(curDir.x) - Mathf.Acos(targetDir.x);
         float rotationVelocity = rotationAngle / state.GetStep();
@@ -193,9 +193,7 @@ public class Rat : GrabbableObject
                 // Attempt to pick it up
                 if (_movementTarget is GrabbableObject grabbableObject)
                 {
-                    Cursor.ForceReleaseObject();
-
-                    GD.Print("Rat: HOTDOG TIME");
+                    Cursor.ForceReleaseObject(grabbableObject);
                     _animationPlayer.Play("walk");
                     grabbableObject.Grab(true);
                     _grabbedObject = grabbableObject;
@@ -238,9 +236,9 @@ public class Rat : GrabbableObject
             _escapeTime -= delta;
             if (_escapeTime < 0f)
             {
-                GD.Print("BREAKOUT!");
                 Drop();
-                Cursor.ForceReleaseObject();
+                _stunTime = 0f;
+                Cursor.ForceReleaseObject(this);
             }
         }
     }
@@ -261,6 +259,11 @@ public class Rat : GrabbableObject
         _audioPlayer.Play();        
     }
 
+    public void Stun(float time)
+    {
+        _stunTime = time; 
+    }
+
     public override void Drop()
     {
         base.Drop();
@@ -278,6 +281,9 @@ public class Rat : GrabbableObject
      */
     public void Despawn()
     {
+        _audioPlayer.Stream = GetAlertNoise();
+        _audioPlayer.Play();     
+        
         if (IsInstanceValid(_grabbedObject)) _grabbedObject.QueueFree();
         QueueFree();
     }

@@ -32,6 +32,7 @@ can_sleep = false
 linear_damp = 0.0
 angular_damp = 0.0
 script = ExtResource( 2 )
+radiation = 5.0
 
 [node name="banana" type="MeshInstance" parent="."]
 transform = Transform( 0.75, 0, 0, 0, 0.75, 0, 0, 0, 0.75, 0, -10.8871, 2.23517e-07 )

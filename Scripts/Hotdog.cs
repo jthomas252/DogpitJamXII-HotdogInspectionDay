@@ -4,6 +4,8 @@ using System.Collections.Generic;
 
 public class Hotdog : GrabbableObject
 {
+    [Export] public AudioStream[] hotdogNoises; 
+    
     private readonly float SHADER_THRESHOLD_MIN = 0.01f; // Prevent rendering issues with the shader
     private readonly float CHANCE_VALID = 0.6f;
     
@@ -23,12 +25,13 @@ public class Hotdog : GrabbableObject
     private readonly float RAD_DENY_LEVEL = 3.5f; 
 
     private readonly float MOLD_SHADER_MULT = 1.8f;
-    private readonly float BURN_SHADER_MULT = 2.2f; 
+    private readonly float BURN_SHADER_MULT = 2.2f;
 
     // Child objects
     private Spatial _ice;
     private Label3D _serialNumberLabel;
     private ShaderMaterial _material;
+    private AudioStreamPlayer3D _audioPlayer; 
     
     // Internal components
     private HotdogChallenge _challenge;
@@ -65,6 +68,7 @@ public class Hotdog : GrabbableObject
         UpdateShader();
 
         // Get all child objects that we'll need
+        _audioPlayer = GetNode<AudioStreamPlayer3D>("Sound");
         _serialNumberLabel = GetNode<Label3D>("SerialNumber");
         _ice = GetNode<Spatial>("IceMesh");
         _ice.Visible = _temperature < NORMAL_TEMPERATURE;
@@ -82,6 +86,20 @@ public class Hotdog : GrabbableObject
         _invalidReason = GetInvalidReasonFromData();
         
         _meats = GetMeatsFromData();
+
+        Connect("body_entered", this, nameof(OnCollision));
+    }
+
+    public void OnCollision(Node node)
+    {
+        float velocity = Vector3.Zero.DistanceTo(LinearVelocity);
+        _audioPlayer.Stream = GetHotdogNoise();
+        _audioPlayer.Play();
+    }
+
+    private AudioStream GetHotdogNoise()
+    {
+        return hotdogNoises[GD.Randi() % hotdogNoises.Length];
     }
 
     public string GetInfo()

@@ -1,9 +1,11 @@
-[gd_scene load_steps=7 format=2]
+[gd_scene load_steps=9 format=2]
 
 [ext_resource path="res://Assets/Models/spawner_tube/hose.material" type="Material" id=1]
 [ext_resource path="res://Assets/Models/spawner_tube/snout.material" type="Material" id=2]
 [ext_resource path="res://Scripts/Spawner.cs" type="Script" id=3]
 [ext_resource path="res://Prefab/Hotdog.tscn" type="PackedScene" id=4]
+[ext_resource path="res://Assets/Sounds/HotdogSlap_Hard_5.ogg" type="AudioStream" id=5]
+[ext_resource path="res://Assets/Sounds/SpawnerWarning_1.ogg" type="AudioStream" id=6]
 
 [sub_resource type="ArrayMesh" id=1]
 blend_shape_mode = 0
@@ -39,6 +41,8 @@ extents = Vector3( 1, 50, 10 )
 
 [node name="Spawner" type="StaticBody"]
 script = ExtResource( 3 )
+outOfHotdogNoise = ExtResource( 5 )
+spawnNoise = ExtResource( 6 )
 hotdog = ExtResource( 4 )
 
 [node name="spawner_tube" type="MeshInstance" parent="."]
@@ -78,3 +82,6 @@ shape = SubResource( 2 )
 [node name="CollisionShape8" type="CollisionShape" parent="."]
 transform = Transform( -0.789435, 0, 0.613834, 0, 1, 0, -0.613834, 0, -0.789435, -4.92618, 87.9603, 14.4664 )
 shape = SubResource( 2 )
+
+[node name="Sound" type="AudioStreamPlayer3D" parent="."]
+unit_db = 35.0

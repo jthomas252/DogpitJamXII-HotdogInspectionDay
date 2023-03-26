@@ -70,8 +70,6 @@ public class GeigerCounter : GrabbableObject
     private AudioStream GetClick(float radLevel)
     {
         int index = Mathf.FloorToInt((Mathf.Clamp(radLevel, MIN_RADIATION, MAX_RADIATION) / MAX_RADIATION) * (geigerClicks.Length - 1));
-        
-        GD.Print(index);
         return geigerClicks[index];
     }
 }

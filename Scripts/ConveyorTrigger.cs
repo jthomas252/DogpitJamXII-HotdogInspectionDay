@@ -24,6 +24,11 @@ public class ConveyorTrigger : Trigger
             {
                 rigidBody.SetAxisVelocity(rigidBody.GlobalTranslation.DirectionTo(_direction) * MOVEMENT_SCALE);
             }
+
+            if (body is Rat rat)
+            {
+                rat.Stun(10f);
+            }
         }
     }
 }

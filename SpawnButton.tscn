@@ -5,7 +5,7 @@
 [ext_resource path="res://Scripts/WorldButton.cs" type="Script" id=3]
 [ext_resource path="res://Prefab/RoundMetalButtonDecorator.tscn" type="PackedScene" id=4]
 [ext_resource path="res://Assets/Models/buttons/TransmissiveRed.material" type="Material" id=5]
-[ext_resource path="res://Assets/Sounds/Geiger_Click_8.ogg" type="AudioStream" id=6]
+[ext_resource path="res://Assets/Sounds/SpawnButton_1.ogg" type="AudioStream" id=6]
 
 [sub_resource type="ArrayMesh" id=1]
 blend_shape_mode = 0
@@ -70,7 +70,6 @@ transform = Transform( 0, 1, 0, -1, 0, 0, 0, 0, 1, 0, 0, 0 )
 [node name="round_metal_decorator" parent="RootNode" instance=ExtResource( 4 )]
 
 [node name="OmniLight" type="OmniLight" parent="RootNode"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0 )
 light_energy = 8.0
 omni_range = 1.339
 
@@ -88,7 +87,7 @@ shape = SubResource( 58 )
 
 [node name="Sound" type="AudioStreamPlayer3D" parent="."]
 stream = ExtResource( 6 )
-unit_db = 8.807
+unit_db = 35.0
 
 [node name="spawner_pendant" parent="." instance=ExtResource( 1 )]
 transform = Transform( -2.98023e-08, 0, -1, 0, 1, 0, 1, 0, -2.98023e-08, 37.3985, -25.647, -5.1082 )

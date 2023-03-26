@@ -2,6 +2,9 @@ using Godot;
 
 public class Trigger : Area
 {
+    [Signal]
+    public delegate void OnTrigger(); 
+    
     [Export] public bool isKillZone = false; 
     [Export] public string tooltipText = "";
 
@@ -18,7 +21,11 @@ public class Trigger : Area
         if (node is RigidBody rigidBody)
         {
             GD.Print($"Hit at {rigidBody.LinearVelocity}");
-            if (isKillZone) rigidBody.QueueFree();
+            if (isKillZone)
+            {
+                EmitSignal(nameof(OnTrigger));
+                rigidBody.QueueFree();
+            }
         }
     }
 

@@ -15,13 +15,6 @@
 	- Non-interactives to leave on the desk, places for the rat to scurry
 	- Pipes, wall objects, etc. 
 
-# Builds
-- Test and make builds for Web
-
-- Test and make builds for Windows
-
-- Test and make builds for Mac
-
 # Instruction Pages
 - Create basic instruction page explaining gameplay loop
 
@@ -46,6 +39,11 @@
 
 - Add credits poster
 
+# Feedback
+- Simplify serial numbers
+	- Should always be a repeating number puzzle?
+	- Simplify down to 7 digits instead of 9
+
 # Misc
 - Have a "Start Shift" button, maybe on the spawner button arm
 	- Trigger the spot lights to flash
@@ -53,32 +51,18 @@
 	- Computer turns on
 	- Gives the player a chance to read the manual or examine notices
 
-- End and reset the level when the timer hits zero
-
 # Sound setup
-- Play title theme on the start screen
-
-- Play in-game music 
-
 - Play title theme on the between-days pop-up
-
-- Add sound FX to the Hotdog to play on collisions 
-	- Use an array of the different SFX
-	- Modulate volume based on the impacts velocity 
 
 # Interface
 - Make the start screen start the game
 	- Try to do a fadeout or something
 	- Trigger the initial day text 
 
-- Add between level screen 
-    - Have text here to tell the player how they did
-	- Play music here
-
-- Spawner noise when out of hotdogs 
-
 # Level Iteration
 - Unlock new mechanics based on level progression
+	- Ice spawns at Level 2+
+	- Rat spawns at Level 2+
 
 - Show screen between levels telling the player how they did
 	- Let them know if they fulfilled quota
@@ -89,6 +73,7 @@
 	- Remove the remaining hotdogs on the scene
 	- Set the spawner back up to a full count
 	- Reset the game timer
+	- Use the LevelEnd / LevelStart signals on BaseScene for this 
 
 # Hotdog Generation
 - Set up meats randomizer in Hotdog creation
@@ -103,14 +88,31 @@
 - Add multiple spawns to the spawner, delayed slightly 
 
 # Nice to have
+- Make the start screen look nice
+
+- CRT Shader
+	- Find one online and apply to Viewport
+	- godotshaders.com
+
+- Citations
+	- Maybe spawn an object for this? 
+
+- Dynamite
+	- If it explodes causes a game over
+
 - Fix problems with rat moonwalking
+	- Could have a child object that can run LookAt and copy the rotation from it
+	- Change to use some from of DirectionTo() and SetAngularVelocity()? 
 
 - Overlapping sounds for the geiger counter
+	- Would have to create audio stream and replay it 
 
 - Apply radiation from the rod to nearby hotdogs	
+	- An area is already present on it, attach function in _Process
 
 - Add rotation to the snap points
 	- Lerp into the appropriate position 
+	- Would benefit from fixing rat rotation first 
 
 - Toggle the light on the spawner button
 
@@ -128,8 +130,4 @@
 	- Newspaper article detailing how the factory was shut down
 	- Have the facility be run down or full of rats
 
-- Kill floor for stuff that falls off the desk
-
-- Fix issue where inspected objects have arbitrary Y position differences
-	- Noticeable on poster vs. handbook
-	- Ideally set these to write to a sprite in the inspect area 
+- Swap hotdog model for bone based one

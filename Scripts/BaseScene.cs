@@ -4,6 +4,11 @@ using System.Collections.Generic;
 
 public class BaseScene : Spatial
 {
+	// Music
+	[Export] public AudioStream titleTheme;
+	[Export] public AudioStream gameTheme; 
+	
+	// Audio library
 	[Export] public AudioStream hotdogNoise;
 	[Export] public AudioStream[] documentNoises;
 	
@@ -19,6 +24,7 @@ public class BaseScene : Spatial
 	private float _playerTimer;
 
 	private AudioStreamPlayer2D _soundPlayer;
+	private AudioStreamPlayer2D _musicPlayer; 
 	
 	private Label3D _timer; 
 	
@@ -30,7 +36,13 @@ public class BaseScene : Spatial
 	
 	[Signal]
 	public delegate void Normal();
-	
+
+	[Signal]
+	public delegate void LevelEnd();
+
+	[Signal]
+	public delegate void LevelStart();
+
 	public enum PlayerState
 	{
 		Normal,
@@ -155,7 +167,12 @@ public class BaseScene : Spatial
 		// Input.MouseMode = Input.MouseModeEnum.Hidden;
 
 		_timer = GetNode<Label3D>("Environment/Timer/Main");
+		
 		_soundPlayer = GetNode<AudioStreamPlayer2D>("Sound");
+		_musicPlayer = GetNode<AudioStreamPlayer2D>("Music");
+
+		_musicPlayer.Stream = titleTheme;
+		_musicPlayer.Play(); 
 		
 		StartNextLevel();
 	}

@@ -12,7 +12,7 @@ public class HeatTrigger:Trigger
         var bodies = GetOverlappingBodies();
         foreach (var body in bodies)
         {
-            if (body is RigidBody rigidBody && rigidBody.GetParent() is Hotdog hotdog)
+            if (body is Hotdog hotdog)
             {
                 hotdog.ApplyHeat((HEAT_AMOUNT + extraHeat) * delta);
             }

@@ -319,8 +319,11 @@ public class Cursor : Sprite3D
         _instance.grabbedObject = newGrab;
     }
 
-    public static void ForceReleaseObject()
+    public static void ForceReleaseObject(Spatial obj)
     {
-        _instance.DropObject();
+        if (obj == _instance.grabbedObject)
+        {
+            _instance.DropObject();
+        }
     }
 }

@@ -1775,4 +1775,4 @@ visible = false
 mesh = SubResource( 20 )
 
 [node name="Sound" type="AudioStreamPlayer3D" parent="."]
-unit_db = 10.0
+unit_db = 35.0

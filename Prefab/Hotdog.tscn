@@ -1,12 +1,18 @@
-[gd_scene load_steps=12 format=2]
+[gd_scene load_steps=18 format=2]
 
 [ext_resource path="res://Scripts/Hotdog.cs" type="Script" id=1]
+[ext_resource path="res://Assets/Sounds/HotdogSlap_Medium_5.ogg" type="AudioStream" id=2]
 [ext_resource path="res://Assets/Fonts/StencilFont.tres" type="DynamicFont" id=3]
 [ext_resource path="res://Assets/Materials/Hotdog.material" type="Material" id=4]
 [ext_resource path="res://HotdogShaderMaterial.tres" type="Material" id=5]
 [ext_resource path="res://Assets/Textures/tile_ice.jpeg" type="Texture" id=6]
 [ext_resource path="res://Assets/Textures/tile_ice_Normal.png" type="Texture" id=7]
 [ext_resource path="res://Assets/Textures/tile_ice_Roughness.png" type="Texture" id=8]
+[ext_resource path="res://Assets/Sounds/HotdogSlap_Medium_4.ogg" type="AudioStream" id=9]
+[ext_resource path="res://Assets/Sounds/HotdogSlap_Medium_3.ogg" type="AudioStream" id=10]
+[ext_resource path="res://Assets/Sounds/HotdogSlap_Medium_2.ogg" type="AudioStream" id=11]
+[ext_resource path="res://Assets/Sounds/HotdogSlap_Medium_6.ogg" type="AudioStream" id=12]
+[ext_resource path="res://Assets/Sounds/HotdogSlap_Medium_1.ogg" type="AudioStream" id=13]
 
 [sub_resource type="ArrayMesh" id=2]
 resource_name = "hotdog_fixed_Cube001"
@@ -56,7 +62,10 @@ height = 11.272
 [node name="Hotdog" type="RigidBody"]
 collision_layer = 3
 collision_mask = 3
+contacts_reported = 1
+contact_monitor = true
 script = ExtResource( 1 )
+hotdogNoises = [ ExtResource( 13 ), ExtResource( 11 ), ExtResource( 10 ), ExtResource( 9 ), ExtResource( 2 ), ExtResource( 12 ) ]
 
 [node name="HotdogMesh" type="MeshInstance" parent="."]
 mesh = SubResource( 2 )
@@ -84,3 +93,7 @@ modulate = Color( 0.0862745, 0.0666667, 0.0588235, 1 )
 text = "42069"
 font = ExtResource( 3 )
 horizontal_alignment = 2
+
+[node name="Sound" type="AudioStreamPlayer3D" parent="."]
+unit_db = 30.0
+max_db = 6.0

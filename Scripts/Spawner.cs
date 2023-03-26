@@ -2,10 +2,14 @@ using Godot;
 
 public class Spawner : Spatial
 {
+    [Export] public AudioStream outOfHotdogNoise;
+    [Export] public AudioStream spawnNoise; 
+    
     [Export] public PackedScene hotdog;
     [Export] public PackedScene[] randomObject; 
     
-    private Vector3 _spawnPoint; 
+    private Vector3 _spawnPoint;
+    private AudioStreamPlayer3D _audioPlayer; 
 
     // Re-usable list of hotdogs we have spawned in the scene already
     private int _spawnsAvailable = 0;
@@ -14,12 +18,16 @@ public class Spawner : Spatial
     {
         _spawnsAvailable = 10;
         _spawnPoint = GetTree().CurrentScene.GetNode<Spatial>("Points/SpawnPoint").GlobalTranslation;
+        _audioPlayer = GetNode<AudioStreamPlayer3D>("Sound");
     }
 
     public void OnSpawnButton()
     {
         if (_spawnsAvailable > 0)
         {
+            _audioPlayer.Stream = spawnNoise;
+            _audioPlayer.Play();
+            
             // Randomly choose one type of hotdog from a random roll, then drop it out the spawner
             Hotdog dog = (Hotdog)hotdog.Instance();
             GetTree().CurrentScene.AddChild(dog);
@@ -30,8 +38,8 @@ public class Spawner : Spatial
         }
         else
         {
-            GD.Print("No more hotdogs!");
-            ComputerScreen.PlayErrorSound();
+            _audioPlayer.Stream = outOfHotdogNoise;
+            _audioPlayer.Play();
         }
     }
 
