@@ -18,6 +18,7 @@ public class BaseScene : Spatial
 	private const float PLAYER_LEVEL_LENGTH = 180f; 
 	
 	private int _playerMistake;
+	private int _playerCitations; 
 	private int _playerScore;
 	private int _playerLevel; 
 	private int _playerQuota;
@@ -114,8 +115,7 @@ public class BaseScene : Spatial
 		_instance._playerMistake++;
 		if (_instance._playerMistake > 0 && _instance._playerMistake % PLAYER_CITATION_THRESHOLD == 0)
 		{
-			// Replace this with a citation object
-			_instance.GetNode<Spawner>("Spawner").SpawnGenericObject(new PackedScene());
+			_instance._playerCitations++; 
 		}
 		UpdateScoreDisplay();
 	}
@@ -127,20 +127,20 @@ public class BaseScene : Spatial
 	
 	public static void StartNextLevel()
 	{
-		// Clear any hotdogs still in the scene
-		// Call the spawner and reset the spawn count / timers
-		// Spawn any unique packed scenes 
-		// Set the rat spawn timer to function 
+		_instance.EmitEvent("LevelStart");
 		_instance._playerLevel++; 
+		
+		
+		
 		_instance._playerQuota = PLAYER_QUOTA + _instance._playerLevel * PLAYER_QUOTA_PER_LEVEL;
 		_instance._playerTimer = PLAYER_LEVEL_LENGTH; 
 	}
 
 	public static void OnLevelEnd()
 	{
-		// Show the between levels score display
-		// Tell the player how they did
-		// Start the next level 
+		// Show the start screen, pass the relevant data.
+		
+		_instance.EmitEvent("LevelEnd");
 	}
 
 	// Play a generic sound at the world position

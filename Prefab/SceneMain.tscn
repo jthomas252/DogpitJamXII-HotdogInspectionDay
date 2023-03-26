@@ -1,4 +1,4 @@
-[gd_scene load_steps=94 format=2]
+[gd_scene load_steps=96 format=2]
 
 [ext_resource path="res://Scripts/BaseScene.cs" type="Script" id=1]
 [ext_resource path="res://Prefab/Cursor.tscn" type="PackedScene" id=2]
@@ -55,6 +55,8 @@
 [ext_resource path="res://Assets/Textures/handbook/Handbook-3.png" type="Texture" id=53]
 [ext_resource path="res://Assets/Textures/handbook/Handbook-4.png" type="Texture" id=54]
 [ext_resource path="res://Assets/Textures/handbook/credits.png" type="Texture" id=55]
+[ext_resource path="res://Scripts/Fader.cs" type="Script" id=56]
+[ext_resource path="res://Scripts/StartScreen.cs" type="Script" id=57]
 
 [sub_resource type="CubeMesh" id=30]
 
@@ -212,10 +214,10 @@ enabled_focus_mode = 0
 text = "Next"
 
 [node name="StartScreen" type="ColorRect" parent="Interface"]
-visible = false
 anchor_right = 1.0
 anchor_bottom = 1.0
-color = Color( 0.901961, 0.756863, 0.686275, 1 )
+color = Color( 0.552941, 0.34902, 0.25098, 1 )
+script = ExtResource( 57 )
 
 [node name="TextureRect2" type="TextureRect" parent="Interface/StartScreen"]
 modulate = Color( 1, 1, 1, 0.584314 )
@@ -279,6 +281,24 @@ custom_fonts/font = ExtResource( 48 )
 align = 1
 valign = 2
 uppercase = true
+
+[node name="BetweenLevel" type="Control" parent="Interface"]
+visible = false
+anchor_right = 1.0
+anchor_bottom = 1.0
+
+[node name="ColorRect" type="ColorRect" parent="Interface/BetweenLevel"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+color = Color( 0, 0, 0, 1 )
+
+[node name="Fader" type="ColorRect" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+mouse_filter = 2
+input_pass_on_modal_close_click = false
+color = Color( 0, 0, 0, 0 )
+script = ExtResource( 56 )
 
 [node name="Camera" type="Camera" parent="."]
 transform = Transform( 0.999969, 0.0078539, 5.61134e-09, -0.00733194, 0.933512, 0.35847, 0.00281539, -0.358459, 0.933541, 0, 24.8409, 48.4861 )
@@ -1009,7 +1029,10 @@ script = ExtResource( 51 )
 volume_db = -20.0
 
 [node name="Sound" type="AudioStreamPlayer" parent="."]
+volume_db = -10.0
 
+[connection signal="pressed" from="Interface/StartScreen/Button" to="Interface/StartScreen" method="OnStartButton"]
+[connection signal="FadeApex" from="Fader" to="Interface/StartScreen" method="Hide"]
 [connection signal="OnTrigger" from="Triggers/KillTrigger" to="AudioPoints/TrashAudio" method="OnEvent"]
 [connection signal="OnProcess" from="Triggers/ProcessTrigger" to="AudioPoints/ProcessAudio" method="OnEvent"]
 [connection signal="Pressed" from="SpawnButton" to="Spawner" method="OnSpawnButton"]

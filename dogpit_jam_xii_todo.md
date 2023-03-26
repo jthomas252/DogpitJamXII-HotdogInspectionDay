@@ -1,10 +1,3 @@
-# Models To Do (Priority is top to bottom)
-- Arbitrary models (non-hotdogs)
-    - Human finger
-    - Bone
-	- Non-interactives to leave on the desk, places for the rat to scurry
-	- Pipes, wall objects, etc. 
-
 # Misc
 - Make builds and submit to Itch.io
 
@@ -18,11 +11,6 @@
 
 # Sound setup
 - Play title theme on the between-days pop-up
-
-# Interface
-- Make the start screen start the game
-	- Try to do a fadeout or something
-	- Trigger the initial day text 
 
 # Level Iteration
 - Set rat spawns to change on Level 2+
@@ -51,9 +39,6 @@
 	- Figure out a sound to play 
 
 - Make the start screen look nice
-
-- Citations
-	- Just track in BaseScene as an additional score
 
 - Dynamite
 	- If it explodes causes a game over
