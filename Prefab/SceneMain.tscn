@@ -1,4 +1,4 @@
-[gd_scene load_steps=98 format=2]
+[gd_scene load_steps=102 format=2]
 
 [ext_resource path="res://Scripts/BaseScene.cs" type="Script" id=1]
 [ext_resource path="res://Prefab/Cursor.tscn" type="PackedScene" id=2]
@@ -57,6 +57,10 @@
 [ext_resource path="res://Assets/Textures/handbook/credits.png" type="Texture" id=55]
 [ext_resource path="res://Scripts/Fader.cs" type="Script" id=56]
 [ext_resource path="res://Scripts/StartScreen.cs" type="Script" id=57]
+[ext_resource path="res://Prefab/Banana.tscn" type="PackedScene" id=58]
+[ext_resource path="res://Prefab/Finger.tscn" type="PackedScene" id=59]
+[ext_resource path="res://Prefab/UraniumRod.tscn" type="PackedScene" id=60]
+[ext_resource path="res://Prefab/Dynamite.tscn" type="PackedScene" id=61]
 
 [sub_resource type="DynamicFontData" id=1]
 antialiased = false
@@ -222,7 +226,6 @@ enabled_focus_mode = 0
 text = "Next"
 
 [node name="StartScreen" type="ColorRect" parent="Interface"]
-visible = false
 anchor_right = 1.0
 anchor_bottom = 1.0
 color = Color( 0, 0, 0, 1 )
@@ -665,6 +668,16 @@ material/0 = SubResource( 62 )
 
 [node name="Main" type="Label3D" parent="Environment/Timer"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 4.99724, 42.9389, -45.0495 )
+visible = false
+pixel_size = 0.08
+modulate = Color( 1, 0, 0, 1 )
+text = "11:11"
+font = ExtResource( 13 )
+horizontal_alignment = 2
+
+[node name="Main2" type="Label3D" parent="Environment/Timer"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 4.99724, 42.9389, -45.0495 )
+visible = false
 pixel_size = 0.08
 modulate = Color( 1, 0, 0, 1 )
 text = "11:11"
@@ -689,6 +702,9 @@ script = ExtResource( 51 )
 
 [node name="Spawner" parent="." instance=ExtResource( 23 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -37.4838, -15.8078, -44.4093 )
+activeLight = NodePath("../SpawnButton/RootNode/OmniLight")
+randomObject = [ ExtResource( 58 ), ExtResource( 59 ) ]
+randomObjectDanger = [ ExtResource( 58 ), ExtResource( 59 ), ExtResource( 61 ), ExtResource( 43 ), ExtResource( 60 ) ]
 
 [node name="MeshInstance" type="MeshInstance" parent="Spawner"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 5.27065, 20.8206 )
@@ -1058,3 +1074,5 @@ volume_db = -15.0
 [connection signal="OnTrigger" from="Triggers/KillTrigger" to="AudioPoints/TrashAudio" method="OnEvent"]
 [connection signal="OnProcess" from="Triggers/ProcessTrigger" to="AudioPoints/ProcessAudio" method="OnEvent"]
 [connection signal="Pressed" from="SpawnButton" to="Spawner" method="OnSpawnButton"]
+
+[editable path="SpawnButton"]

@@ -26,11 +26,11 @@ transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -4.1285, 0, 0 )
 shape = SubResource( 1 )
 
 [node name="CollisionShape2" type="CollisionShape" parent="Collider" index="1"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -4.1285, 2.36784, -6.51608 )
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -4.1285, 19.5707, -6.51608 )
 shape = SubResource( 4 )
 
 [node name="CollisionShape3" type="CollisionShape" parent="Collider" index="2"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -4.1285, 2.36784, 6.45583 )
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -4.1285, -1.45731, 6.45583 )
 shape = SubResource( 4 )
 
 [node name="MovementTrigger" type="Area" parent="." index="2"]

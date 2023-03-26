@@ -1,34 +1,14 @@
 # Misc
 - Make builds and submit to Itch.io
 
-- Have a "Start Shift" button, maybe on the spawner button arm
-	- Trigger the spot lights to flash
-	- Conveyor animation starts
-	- Computer turns on
-	- Gives the player a chance to read the manual or examine notices
-
-- Spawn random objects 
-
 # Level Iteration
-- Set rat spawns to change on Level 2+
-
-- Set spawner contents to change on Level 2+ 
-
 - Show screen between levels telling the player how they did
 	- Let them know if they fulfilled quota
 	- Number of citations issued 
 
 - Reset hotdogs on screen, item states, and spawner count
 	- Remove the remaining hotdogs on the scene
-	- Set the spawner back up to a full count
-	- Reset the game timer
 	- Use the LevelEnd / LevelStart signals on BaseScene for this 
-
-# Tools
-- Add a delay to the spawner button
-	- Should allow for a few spawns before a wait time 
-
-- Add multiple spawns to the spawner, delayed slightly 
 
 # Nice to have
 - Make the vent break open 

@@ -1,4 +1,5 @@
 using Godot;
+using Godot.Collections;
 
 public class ScanTrigger : Trigger
 {
@@ -33,10 +34,19 @@ public class ScanTrigger : Trigger
     public override void OnChildExited(Node node)
     {
         base.OnChildExited(node);
-        
-        if (node is GrabbableObject grabbableObject && grabbableObject.GetParent() is Hotdog dog)
+
+        // Check if any hotdogs are remaining, if not then output the default text.
+        Array bodies = GetOverlappingBodies();
+
+        foreach (var body in bodies)
         {
-            ComputerScreen.UpdateBodyText("AWAITING HOTDOG...");
-        }         
+            if (body is Hotdog dog)
+            {
+                ComputerScreen.UpdateBodyText(dog.GetInfo());
+                return; 
+            }
+        }
+
+        ComputerScreen.UpdateBodyText("AWAITING HOTDOG...");
     }
 }

@@ -2,54 +2,113 @@ using Godot;
 
 public class Spawner : Spatial
 {
-    [Export] public AudioStream outOfHotdogNoise;
-    [Export] public AudioStream spawnNoise; 
+    private const float SPAWN_DELAY = 3.5f;
+    private const float BETWEEN_OBJECT_DELAY = 0.5f;
+    private const float RANDOM_OBJECT_CHANCE = 0.5f;
+
+    private const int MIN_OBJECTS = 2;
+    private const int MAX_OBJECTS = 5;
+
+    private const int RANDOM_OBJECT_LEVEL_MIN = 1;
+    private const int RANDOM_OBJECT_DANGER_LEVEL_MIN = 2;  
+    
+    [Export] public AudioStream spawnNoise;
+    [Export] public NodePath activeLight;
     
     [Export] public PackedScene hotdog;
-    [Export] public PackedScene[] randomObject; 
-    
+    [Export] public PackedScene[] randomObject;
+    [Export] public PackedScene[] randomObjectDanger; 
+        
     private Vector3 _spawnPoint;
-    private AudioStreamPlayer3D _audioPlayer; 
+    private AudioStreamPlayer3D _audioPlayer;
 
-    // Re-usable list of hotdogs we have spawned in the scene already
-    private int _spawnsAvailable = 0;
-    
+    private OmniLight _spawnLight;
+    private float _spawnTime;
+    private float _objectDelay;
+    private int _queuedObjects; 
+
     public override void _Ready()
     {
-        _spawnsAvailable = 10;
+        _spawnLight = GetNode<OmniLight>(activeLight);
         _spawnPoint = GetTree().CurrentScene.GetNode<Spatial>("Points/SpawnPoint").GlobalTranslation;
         _audioPlayer = GetNode<AudioStreamPlayer3D>("Sound");
+        _spawnTime = 0f; 
     }
 
     public void OnSpawnButton()
     {
-        if (_spawnsAvailable > 0)
+        if (_spawnTime <= 0f)
         {
+            // Start the level from here. 
+            if (!BaseScene.IsGameActive())
+            {
+                BaseScene.StartNextLevel();
+            }
+
             _audioPlayer.Stream = spawnNoise;
             _audioPlayer.Play();
+
+            // Queue a random number of objects
+            _objectDelay = 0f;
+            _queuedObjects = MIN_OBJECTS + (Mathf.Abs( (int)GD.Randi()) % (MAX_OBJECTS - MIN_OBJECTS));
+
+            // Deactivate the light until ready again.
+            _spawnLight.Visible = false;
+            _spawnTime = SPAWN_DELAY; 
+        }
+    }
+
+    public override void _Process(float delta)
+    {
+        base._Process(delta);
+        if (_spawnTime > 0f)
+        {
+            _spawnTime -= delta;
+            if (_spawnTime <= 0f)
+            {
+                _spawnLight.Visible = true; 
+            }
+        }
+
+        if (_queuedObjects > 0 && _objectDelay <= 0f)
+        {
+            GD.Print($"{(GD.Randf() > RANDOM_OBJECT_CHANCE).ToString()}");
             
-            // Randomly choose one type of hotdog from a random roll, then drop it out the spawner
-            Hotdog dog = (Hotdog)hotdog.Instance();
-            GetTree().CurrentScene.AddChild(dog);
-            GD.Print($"Hotdog spawned at ${_spawnPoint.ToString()}");
-            dog.GlobalTranslation = _spawnPoint;
-            dog.GlobalRotation = new Vector3(GD.Randf(), GD.Randf(), GD.Randf());
-            --_spawnsAvailable;
+            if (GD.Randf() > RANDOM_OBJECT_CHANCE || BaseScene.GetLevel() < RANDOM_OBJECT_LEVEL_MIN)
+            {
+                // Spawn hotdog
+                SpawnObject(hotdog);
+            }
+            else
+            {
+                // Get random object
+                SpawnObject(GetRandomObject());
+            }
+            _objectDelay = BETWEEN_OBJECT_DELAY;
+            _queuedObjects--; 
         }
         else
         {
-            _audioPlayer.Stream = outOfHotdogNoise;
-            _audioPlayer.Play();
+            _objectDelay -= delta; 
         }
+    }
+
+    private PackedScene GetRandomObject()
+    {
+        if (BaseScene.GetLevel() >= RANDOM_OBJECT_DANGER_LEVEL_MIN)
+        {
+            return randomObjectDanger[GD.Randi() % randomObjectDanger.Length];
+        }
+        return randomObject[GD.Randi() % randomObject.Length];
     }
 
     /**
      * Use for spawning any non-hotdog objects
      * Assumes that there's at least a Spatial on them
      */
-    public void SpawnGenericObject(PackedScene scene)
+    public void SpawnObject(PackedScene scene)
     {
-        Spatial obj = (Spatial)hotdog.Instance();
+        Spatial obj = (Spatial)scene.Instance();
         GetTree().CurrentScene.AddChild(obj);
         GD.Print($"Object named {obj.Name} spawned at ${_spawnPoint.ToString()}");
         obj.GlobalTranslation = _spawnPoint;

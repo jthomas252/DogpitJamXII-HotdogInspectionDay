@@ -4,6 +4,8 @@ using System.Collections.Generic;
 
 public class BaseScene : Spatial
 {
+	[Export] public PackedScene citationObject; 
+	
 	// Music
 	[Export] public AudioStream titleTheme;
 	[Export] public AudioStream gameTheme; 
@@ -28,7 +30,7 @@ public class BaseScene : Spatial
 	private AudioStreamPlayer _musicPlayer; 
 	
 	private Label3D _timer;
-	private Label _controlText; 
+	private Label _controlText;
 	
 	[Signal]
 	public delegate void Inspection();
@@ -130,15 +132,29 @@ public class BaseScene : Spatial
 		_instance.EmitEvent("LevelStart");
 		_instance._playerLevel++;
 
+		_instance._playerCitations = 0;
+		_instance._playerMistake = 0;
+		_instance._playerScore = 0; 
+		
 		_instance._playerQuota = PLAYER_QUOTA + _instance._playerLevel * PLAYER_QUOTA_PER_LEVEL;
 		_instance._playerTimer = PLAYER_LEVEL_LENGTH; 
+		
+		// Activate relevant objects
+		_instance._timer.Visible = true; 
+		
+		// Start the score display 
+		UpdateScoreDisplay();
+		Computer.ActivateScreen();
 	}
 
 	public static void OnLevelEnd()
 	{
 		// Show the start screen, pass the relevant data.
-		
 		_instance.EmitEvent("LevelEnd");
+
+		// Deactivate relevant objects
+		_instance._timer.Visible = false; 
+		Computer.DeactiveScreen();
 	}
 
 	// Play a generic sound at the world position
@@ -189,11 +205,13 @@ public class BaseScene : Spatial
 		{
 			case "hide_stat_menu":
 			case "hide_start_menu":
+				Input.MouseMode = Input.MouseModeEnum.Hidden;
 				_musicPlayer.Stream = gameTheme;
 				_musicPlayer.Play();
 				break; 
 			
 			case "show_stat_menu":
+				Input.MouseMode = Input.MouseModeEnum.Visible; 
 				_musicPlayer.Stream = titleTheme;
 				_musicPlayer.Play(); 
 				break;
