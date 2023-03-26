@@ -173,12 +173,6 @@ gameTheme = ExtResource( 50 )
 hotdogNoise = ExtResource( 27 )
 documentNoises = [ ExtResource( 34 ), ExtResource( 35 ), ExtResource( 37 ), ExtResource( 36 ) ]
 
-[node name="Sound" type="AudioStreamPlayer2D" parent="."]
-volume_db = 10.0
-
-[node name="Music" type="AudioStreamPlayer2D" parent="."]
-volume_db = 1.0
-
 [node name="Interface" type="Control" parent="."]
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -927,6 +921,11 @@ transform = Transform( 0.17166, 0, 0.985156, 0, 1, 0, -0.985156, 0, 0.17166, 5.5
 [node name="vent" parent="." instance=ExtResource( 46 )]
 transform = Transform( 1.5, 0, 0, 0, 1.5, 0, 0, 0, 2, -55.8996, -11.3558, 4.46407 )
 script = ExtResource( 45 )
+
+[node name="Music" type="AudioStreamPlayer" parent="."]
+volume_db = -20.0
+
+[node name="Sound" type="AudioStreamPlayer" parent="."]
 
 [connection signal="OnTrigger" from="Triggers/KillTrigger" to="AudioPoints/TrashAudio" method="OnEvent"]
 [connection signal="OnProcess" from="Triggers/ProcessTrigger" to="AudioPoints/ProcessAudio" method="OnEvent"]

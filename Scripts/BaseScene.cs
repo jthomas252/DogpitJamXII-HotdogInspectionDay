@@ -23,8 +23,8 @@ public class BaseScene : Spatial
 	private int _playerQuota;
 	private float _playerTimer;
 
-	private AudioStreamPlayer2D _soundPlayer;
-	private AudioStreamPlayer2D _musicPlayer; 
+	private AudioStreamPlayer _soundPlayer;
+	private AudioStreamPlayer _musicPlayer; 
 	
 	private Label3D _timer; 
 	
@@ -168,8 +168,8 @@ public class BaseScene : Spatial
 
 		_timer = GetNode<Label3D>("Environment/Timer/Main");
 		
-		_soundPlayer = GetNode<AudioStreamPlayer2D>("Sound");
-		_musicPlayer = GetNode<AudioStreamPlayer2D>("Music");
+		_soundPlayer = GetNode<AudioStreamPlayer>("Sound");
+		_musicPlayer = GetNode<AudioStreamPlayer>("Music");
 
 		_musicPlayer.Stream = titleTheme;
 		_musicPlayer.Play(); 
