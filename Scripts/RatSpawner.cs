@@ -1,22 +1,48 @@
 using Godot;
+using Godot.Collections;
 
 public class RatSpawner : Spatial
 {
     [Export] public PackedScene ratPrefab;
-    
-    private readonly float RAT_SPAWN_TIME_MIN = 25f;
-    private readonly float RAT_SPAWN_TIME_MAX = 75f;
+
+    struct SpawnRate
+    {
+        public float minTime { get; }
+        public float maxTime { get; }
+        public bool canSpawn { get; }
+
+        public SpawnRate(bool allow, float _min, float _max)
+        {
+            canSpawn = allow;
+            minTime = _min;
+            maxTime = _max; 
+        }
+    }
+
+    private SpawnRate[] _spawnRates;
 
     private float _spawnTime;
     private Spatial _spawnPoint; 
     
     public override void _Ready()
     {
-        SetSpawnTime();
+        _spawnRates = new SpawnRate[]
+        {
+            new SpawnRate(false, 0f, 0f),
+            new SpawnRate(false, 0f, 0f),
+            new SpawnRate(true, 45f, 100f),
+            new SpawnRate(true, 35f, 90f),
+            new SpawnRate(true, 25f, 60f),
+            new SpawnRate(true, 1f, 5f),
+        };
+
+        GetTree().CurrentScene.Connect("LevelStart", this, nameof(OnLevelStart));
         _spawnPoint = GetTree().CurrentScene.GetNode<Spatial>("Points/RatSpawnPoint");
-        
-        // Force an early spawn 
-        _spawnTime = 1f; 
+    }
+
+    public void OnLevelStart()
+    {
+        SetSpawnTime();
     }
 
     public override void _Process(float delta)
@@ -42,6 +68,6 @@ public class RatSpawner : Spatial
 
     private void SetSpawnTime()
     {
-        _spawnTime = Mathf.Lerp(RAT_SPAWN_TIME_MIN, RAT_SPAWN_TIME_MAX, GD.Randf());
+        _spawnTime = Mathf.Lerp(_spawnRates[BaseScene.GetLevel()].minTime, _spawnRates[BaseScene.GetLevel()].maxTime, GD.Randf());
     }
 }

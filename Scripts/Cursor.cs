@@ -64,7 +64,7 @@ public class Cursor : Sprite3D
 
     private void AttemptInteraction()
     {
-        if (hoverObject != null)
+        if (hoverObject != null && !IsGrabbing())
         {
             ClearTooltip();
             
@@ -101,7 +101,7 @@ public class Cursor : Sprite3D
     private void DropObject()
     {
         // Holding onto an object
-        if (IsGrabbing())
+        if (IsInstanceValid(grabbedObject) && IsGrabbing())
         {
             if (grabbedObject is GrabbableObject grabbableObject) grabbableObject.Drop();
             if (grabbedObject is ViewableObject viewableObject) viewableObject.Drop();
@@ -243,7 +243,7 @@ public class Cursor : Sprite3D
 
     private void UpdateGrabbedObjectPosition(float delta)
     {
-        if (grabbedObject is GrabbableObject grabbableObject)
+        if (IsInstanceValid(grabbedObject) && grabbedObject is GrabbableObject grabbableObject)
         {
             if (BaseScene.Inspecting())
             {
@@ -328,8 +328,14 @@ public class Cursor : Sprite3D
         _instance.grabbedObject = newGrab;
     }
 
-    public static void ForceReleaseObject(Spatial obj)
+    public static void ForceReleaseObject(Spatial obj, bool ignoreMatch = false)
     {
+        if (ignoreMatch)
+        {
+            _instance.DropObject();
+            return;
+        }
+        
         if (IsInstanceValid(_instance.grabbedObject) && obj == _instance.grabbedObject)
         {
             _instance.DropObject();

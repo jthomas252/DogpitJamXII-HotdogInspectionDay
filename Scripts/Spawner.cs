@@ -4,23 +4,32 @@ public class Spawner : Spatial
 {
     private static Spawner _instance; 
     
-    private const float SPAWN_DELAY = 3.5f;
-    private const float BETWEEN_OBJECT_DELAY = 0.5f;
-    private const float RANDOM_OBJECT_CHANCE = 0.5f;
+    private const float SPAWN_DELAY = 2.5f;
+    private const float BETWEEN_OBJECT_DELAY = 0.33f;
 
     private const int MIN_OBJECTS = 2;
     private const int MAX_OBJECTS = 5;
 
-    private const int RANDOM_OBJECT_LEVEL_MIN = 1;
-    private const int RANDOM_OBJECT_DANGER_LEVEL_MIN = 2;  
+    private const int RANDOM_OBJECT_LEVEL_MIN = 2;
+    private const int RANDOM_OBJECT_DANGER_LEVEL_MIN = 3;  
     
     [Export] public AudioStream spawnNoise;
     [Export] public NodePath activeLight;
     
     [Export] public PackedScene hotdog;
     [Export] public PackedScene[] randomObject;
-    [Export] public PackedScene[] randomObjectDanger; 
-        
+    [Export] public PackedScene[] randomObjectDanger;
+
+    private float[] randomObjectChances = new float[]
+    {
+        0f,
+        0f,
+        0.1f,
+        0.15f,
+        0.20f,
+        0.45f,
+    };
+    
     private Vector3 _spawnPoint;
     private AudioStreamPlayer3D _audioPlayer;
 
@@ -76,9 +85,7 @@ public class Spawner : Spatial
 
         if (_queuedObjects > 0 && _objectDelay <= 0f)
         {
-            GD.Print($"{(GD.Randf() > RANDOM_OBJECT_CHANCE).ToString()}");
-            
-            if (GD.Randf() > RANDOM_OBJECT_CHANCE || BaseScene.GetLevel() < RANDOM_OBJECT_LEVEL_MIN)
+            if (GD.Randf() > randomObjectChances[BaseScene.GetLevel()] || BaseScene.GetLevel() < RANDOM_OBJECT_LEVEL_MIN)
             {
                 // Spawn hotdog
                 SpawnObject(hotdog);

@@ -1,8 +1,28 @@
-[gd_scene load_steps=8 format=2]
+[gd_scene load_steps=12 format=2]
 
-[ext_resource path="res://Scripts/GrabbableObject.cs" type="Script" id=1]
+[ext_resource path="res://Scripts/Dynamite.cs" type="Script" id=1]
 [ext_resource path="res://Assets/Models/dynamite/DynamiteFuse.material" type="Material" id=2]
 [ext_resource path="res://Assets/Models/dynamite/DynamiteBody.material" type="Material" id=3]
+[ext_resource path="res://Assets/Sounds/DynamiteLoop.ogg" type="AudioStream" id=4]
+[ext_resource path="res://Assets/Sounds/Indoor_DynamiteSeq.ogg" type="AudioStream" id=5]
+
+[sub_resource type="Animation" id=3]
+resource_name = "burn_fuse"
+length = 0.958333
+tracks/0/type = "transform"
+tracks/0/path = NodePath("Skeleton:BoneStick")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = PoolRealArray( 0, 1, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 0.0416667, 1, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 0.0833333, 1, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 0.125, 1, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 0.166667, 1, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 0.208333, 1, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 0.25, 1, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 0.291667, 1, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 0.333333, 1, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 0.375, 1, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 0.416667, 1, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 0.458333, 1, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 0.5, 1, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 0.541667, 1, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 0.583333, 1, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 0.625, 1, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 0.666667, 1, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 0.708333, 1, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 0.75, 1, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 0.791667, 1, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 0.833333, 1, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 0.875, 1, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 0.916667, 1, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1 )
+tracks/1/type = "transform"
+tracks/1/path = NodePath("Skeleton:BoneFuse")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = PoolRealArray( 0, 1, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 0.0416667, 1, 0, 0, 0, 0, 0, 0, 1, 1, 0.957142, 1, 0.0833333, 1, 0, 0, 0, 0, 0, 0, 1, 1, 0.914285, 1, 0.125, 1, 0, 0, 0, 0, 0, 0, 1, 1, 0.871427, 1, 0.166667, 1, 0, 0, 0, 0, 0, 0, 1, 1, 0.828569, 1, 0.208333, 1, 0, 0, 0, 0, 0, 0, 1, 1, 0.785712, 1, 0.25, 1, 0, 0, 0, 0, 0, 0, 1, 1, 0.742854, 1, 0.291667, 1, 0, 0, 0, 0, 0, 0, 1, 1, 0.699997, 1, 0.333333, 1, 0, 0, 0, 0, 0, 0, 1, 1, 0.657139, 1, 0.375, 1, 0, 0, 0, 0, 0, 0, 1, 1, 0.614281, 1, 0.416667, 1, 0, 0, 0, 0, 0, 0, 1, 1, 0.571424, 1, 0.458333, 1, 0, 0, 0, 0, 0, 0, 1, 1, 0.528566, 1, 0.5, 1, 0, 0, 0, 0, 0, 0, 1, 1, 0.485709, 1, 0.541667, 1, 0, 0, 0, 0, 0, 0, 1, 1, 0.442851, 1, 0.583333, 1, 0, 0, 0, 0, 0, 0, 1, 1, 0.399993, 1, 0.625, 1, 0, 0, 0, 0, 0, 0, 1, 1, 0.357136, 1, 0.666667, 1, 0, 0, 0, 0, 0, 0, 1, 1, 0.314278, 1, 0.708333, 1, 0, 0, 0, 0, 0, 0, 1, 1, 0.27142, 1, 0.75, 1, 0, 0, 0, 0, 0, 0, 1, 1, 0.228563, 1, 0.791667, 1, 0, 0, 0, 0, 0, 0, 1, 1, 0.185705, 1, 0.833333, 1, 0, 0, 0, 0, 0, 0, 1, 1, 0.142848, 1, 0.875, 1, 0, 0, 0, 0, 0, 0, 1, 1, 0.09999, 1, 0.916667, 1, 0, 0, 0, 0, 0, 0, 1, 1, 0.057132, 1 )
 
 [sub_resource type="ArrayMesh" id=1]
 blend_shape_mode = 0
@@ -42,34 +62,32 @@ bind/1/name = "BoneFuse"
 bind/1/bone = -1
 bind/1/pose = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -6.07324, 0 )
 
-[sub_resource type="Animation" id=3]
-resource_name = "burn_fuse"
-length = 0.958333
-tracks/0/type = "transform"
-tracks/0/path = NodePath("Skeleton:BoneStick")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/keys = PoolRealArray( 0, 1, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 0.0416667, 1, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 0.0833333, 1, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 0.125, 1, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 0.166667, 1, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 0.208333, 1, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 0.25, 1, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 0.291667, 1, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 0.333333, 1, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 0.375, 1, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 0.416667, 1, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 0.458333, 1, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 0.5, 1, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 0.541667, 1, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 0.583333, 1, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 0.625, 1, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 0.666667, 1, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 0.708333, 1, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 0.75, 1, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 0.791667, 1, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 0.833333, 1, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 0.875, 1, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 0.916667, 1, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1 )
-tracks/1/type = "transform"
-tracks/1/path = NodePath("Skeleton:BoneFuse")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/keys = PoolRealArray( 0, 1, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 0.0416667, 1, 0, 0, 0, 0, 0, 0, 1, 1, 0.957142, 1, 0.0833333, 1, 0, 0, 0, 0, 0, 0, 1, 1, 0.914285, 1, 0.125, 1, 0, 0, 0, 0, 0, 0, 1, 1, 0.871427, 1, 0.166667, 1, 0, 0, 0, 0, 0, 0, 1, 1, 0.828569, 1, 0.208333, 1, 0, 0, 0, 0, 0, 0, 1, 1, 0.785712, 1, 0.25, 1, 0, 0, 0, 0, 0, 0, 1, 1, 0.742854, 1, 0.291667, 1, 0, 0, 0, 0, 0, 0, 1, 1, 0.699997, 1, 0.333333, 1, 0, 0, 0, 0, 0, 0, 1, 1, 0.657139, 1, 0.375, 1, 0, 0, 0, 0, 0, 0, 1, 1, 0.614281, 1, 0.416667, 1, 0, 0, 0, 0, 0, 0, 1, 1, 0.571424, 1, 0.458333, 1, 0, 0, 0, 0, 0, 0, 1, 1, 0.528566, 1, 0.5, 1, 0, 0, 0, 0, 0, 0, 1, 1, 0.485709, 1, 0.541667, 1, 0, 0, 0, 0, 0, 0, 1, 1, 0.442851, 1, 0.583333, 1, 0, 0, 0, 0, 0, 0, 1, 1, 0.399993, 1, 0.625, 1, 0, 0, 0, 0, 0, 0, 1, 1, 0.357136, 1, 0.666667, 1, 0, 0, 0, 0, 0, 0, 1, 1, 0.314278, 1, 0.708333, 1, 0, 0, 0, 0, 0, 0, 1, 1, 0.27142, 1, 0.75, 1, 0, 0, 0, 0, 0, 0, 1, 1, 0.228563, 1, 0.791667, 1, 0, 0, 0, 0, 0, 0, 1, 1, 0.185705, 1, 0.833333, 1, 0, 0, 0, 0, 0, 0, 1, 1, 0.142848, 1, 0.875, 1, 0, 0, 0, 0, 0, 0, 1, 1, 0.09999, 1, 0.916667, 1, 0, 0, 0, 0, 0, 0, 1, 1, 0.057132, 1 )
-
 [sub_resource type="CylinderShape" id=4]
 height = 13.193
 radius = 1.498
+
+[sub_resource type="SpatialMaterial" id=5]
+flags_transparent = true
+flags_unshaded = true
+albedo_color = Color( 1, 0.921569, 0.690196, 1 )
+
+[sub_resource type="CubeMesh" id=6]
+material = SubResource( 5 )
+size = Vector3( 0.05, 0.3, 0.05 )
 
 [node name="Dynamite" type="RigidBody"]
 collision_layer = 3
 collision_mask = 3
 script = ExtResource( 1 )
+explosionNoise = ExtResource( 5 )
 
-[node name="Skeleton" type="Skeleton" parent="."]
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+root_node = NodePath("../RootNode")
+anims/burn_fuse = SubResource( 3 )
+
+[node name="RootNode" type="Spatial" parent="."]
+
+[node name="Skeleton" type="Skeleton" parent="RootNode"]
 bones/0/name = "BoneStick"
 bones/0/parent = -1
 bones/0/rest = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -6.24202, 0 )
@@ -81,22 +99,30 @@ bones/1/rest = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 6.07324, 0 )
 bones/1/enabled = true
 bones/1/bound_children = [  ]
 
-[node name="Cylinder" type="MeshInstance" parent="."]
+[node name="Cylinder" type="MeshInstance" parent="RootNode"]
 mesh = SubResource( 1 )
 skin = SubResource( 2 )
 skeleton = NodePath("../Skeleton")
 
-[node name="BoneStick" type="Spatial" parent="."]
+[node name="BoneStick" type="Spatial" parent="RootNode"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -6.24202, 0 )
 
-[node name="BoneFuse" type="Spatial" parent="."]
+[node name="BoneFuse" type="Spatial" parent="RootNode"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 6.07324, 0 )
-
-[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
-root_node = NodePath("../RootNode")
-anims/burn_fuse = SubResource( 3 )
-
-[node name="RootNode" type="Spatial" parent="."]
 
 [node name="CollisionShape" type="CollisionShape" parent="."]
 shape = SubResource( 4 )
+
+[node name="Sound" type="AudioStreamPlayer3D" parent="."]
+stream = ExtResource( 4 )
+unit_db = 40.0
+autoplay = true
+
+[node name="CPUParticles" type="CPUParticles" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 11.8322, 0 )
+mesh = SubResource( 6 )
+emission_shape = 2
+emission_box_extents = Vector3( 1, 1, 1 )
+spread = 90.0
+gravity = Vector3( 0, -3.4, 0 )
+initial_velocity = 5.0

@@ -7,10 +7,10 @@ public class Hotdog : GrabbableObject
     [Export] public AudioStream[] hotdogNoises;
 
     private readonly float SHADER_THRESHOLD_MIN = 0.01f; // Prevent rendering issues with the shader
-    private readonly float CHANCE_VALID = 0.6f;
+    private readonly float CHANCE_VALID = 0.65f;
 
     // Frozen stats
-    private readonly float FROZEN_CHANCE = 0.9f;
+    private readonly float FROZEN_CHANCE = 0.83f;
     private readonly float ICE_MAX_SCALE = 1.3f;
     private readonly float ICE_MIN_SCALE = 0.95f;
     private readonly float FROZEN_TEMPERATURE = 0f;
@@ -22,7 +22,7 @@ public class Hotdog : GrabbableObject
 
     private readonly float MOLD_DENY_LEVEL = 0.5f;
     private readonly float BURN_DENY_LEVEL = 0.5f;
-    private readonly float RAD_DENY_LEVEL = 3.5f;
+    private readonly float RAD_DENY_LEVEL = 5f;
 
     private readonly float MOLD_SHADER_MULT = 1.8f;
     private readonly float BURN_SHADER_MULT = 2.2f;
@@ -61,8 +61,8 @@ public class Hotdog : GrabbableObject
 
         // Set relevant stats
         _qualityLevel = GD.Randf();
-        _isValid = _qualityLevel >= CHANCE_VALID;
-        _temperature = GD.Randf() > FROZEN_CHANCE && BaseScene.GetLevel() >= 2
+        _isValid = _qualityLevel < CHANCE_VALID;
+        _temperature = GD.Randf() < FROZEN_CHANCE && BaseScene.GetLevel() > 1
             ? FROZEN_TEMPERATURE
             : NORMAL_TEMPERATURE;
         _moldLevel = _challenge == HotdogChallenge.VISUAL_INSPECTION ? GD.Randf() % (1f - _qualityLevel) : 0f;
@@ -82,11 +82,13 @@ public class Hotdog : GrabbableObject
         _brand = GetBrand();
 
         // Generate other relevant stats
-        _serialNumber = GetSerialNumberFromData();
-        _serialNumberLabel.Text = _serialNumber;
+        if (_challenge == HotdogChallenge.SERIAL_NUMBER)
+        {
+            _serialNumber = GetSerialNumberFromData();
+            _serialNumberLabel.Text = _serialNumber;
+        }
 
         _invalidReason = GetInvalidReasonFromData();
-
         _meats = GetMeatsFromData();
 
         Connect("body_entered", this, nameof(OnCollision));
@@ -106,7 +108,7 @@ public class Hotdog : GrabbableObject
 
     private HotdogChallenge GetChallenge()
     {
-        HotdogChallenge[] challenges = BaseScene.GetLevel() >= 2
+        HotdogChallenge[] challenges = BaseScene.GetLevel() <= 2
             ? new HotdogChallenge[]
             {
                 HotdogChallenge.SERIAL_NUMBER,
@@ -126,12 +128,16 @@ public class Hotdog : GrabbableObject
 
     public string GetInfo()
     {
-        string output =
-            $"BRAND   {_brand.ToString()}\n" +
-            $"SERIAL  {_serialNumber}\n" +
-            "\n### MEAT CONTENTS #############################\n";
+        string output = $"BRAND   {_brand.ToString()}\n";
+
+        // Only show serials if we're in that challenge
+        if (_challenge == HotdogChallenge.SERIAL_NUMBER)
+        {
+            output += _brand == HotdogBrand.MARTHA_VEGAN ? "SERIAL  READ_ERROR" : $"SERIAL  {_serialNumber}\n";
+        }
 
         // Iterate through meats and add to output
+        output += "\nMEAT CONTENT:\n";
         foreach (string meat in _meats)
         {
             output += $"{meat}\n";
@@ -247,7 +253,6 @@ public class Hotdog : GrabbableObject
         {
             return _validSerialNumber[_brand][GD.Randi() % _validSerialNumber[_brand].Length];
         }
-
         return _invalidSerialNumber[_brand][GD.Randi() % _invalidSerialNumber[_brand].Length];
     }
 
@@ -297,6 +302,17 @@ public class Hotdog : GrabbableObject
         MARTHA_VEGAN,
         WHOLESOME_CHRISTIAN,
         CHERNOBYTES,
+        FALLOUT_FRANK,
+        THOUSAND_MILE_ISLE,
+        ATOMIX,
+        JONNY_BOYS,
+        DOOBS,
+        MASSIVE_VALUE,
+        FUD_CORP,
+        BIXI_RECYCLED,
+        FS_RULE,
+        PITDOGS,
+        CLASSY,
         GENERIC
     }
 
@@ -308,7 +324,10 @@ public class Hotdog : GrabbableObject
                 { 
                 "PORK", "BEEF", "CHICKEN", "SOY", "DUCK", "GOOSE", "ONION", "GARLIC", "CHEESE", 
                 "CRAB", "FISH", "WALRUS", "OCTOPUS", "YAK", "ALLIGATOR", "SNAKE", "ELEPHANT",
-                "LAMB", "GOAT", "BOAR", "GIRAFFE", "HIPPO", "LOBSTER"
+                "LAMB", "GOAT", "BOAR", "GIRAFFE", "HIPPO", "LOBSTER", "MOOSE", "ELK", "DEER",
+                "RABBIT", "FOX", "TIGER", "LION", "WOLF", "KANGAROO", "KOALA", "ARMADILLO", 
+                "COW", "BULL", "PIG", "OYSTER", "STARFISH", "CRAWFISH", "SALMON", "BACON",
+                "BEAVER", "SQUIRREL", "MOUSE", "HAMSTER", "CAPYBARA", 
                 }
         },
         {
@@ -316,8 +335,9 @@ public class Hotdog : GrabbableObject
             "questionable", new string[]
             {
                 "RAT", "BABA", "WASP", "BUMBLEBEE", "PIGEON", "OPOSSUM", "RACCOON", "HORSE", "PARROT", "DONKEY",
-                "\"BEEF\"", "BEANS", "CORN", "KORN", "MILK", "CHILI", "PANDA", "GRIZZLY_BEAR", "HOTDOG?", "MONKEY",
-                "SPIDERS"
+                "BEANS", "CORN", "KORN", "MILK", "CHILI", "PANDA", "GRIZZLY_BEAR", "HOTDOG?", "MONKEY",
+                "SPIDERS", "ANTS", "EELS", "TOFU", "FAT", "SUNFLOWER", "PEPPERS", "TOMATO", "SQUASH", "PEAR", "APPLE",
+                "ORANGE", "LEMON", "LIME", "POTATO", "SWEET_POTATO", "YAM", "EGGPLANT", "EGG", "SPROUTS",
             }
         },        
         {
@@ -326,8 +346,9 @@ public class Hotdog : GrabbableObject
             {
                 "GARBAGE", "ANUSES", "ROACHES", "TEETH", "HAIR", "ROCKS", "HOPES_DREAMS", "HUMAN",
                 "ASBESTOS", "ALIEN", "GREASE", "FEAR", "POOP", "URANIUM", "UNKNOWN", "FEAR", "ANGER", "LOVE",
-                "WRATH", "ENVY", "ANTS", "SASQUATCH", "YETI", "LANGOLIERS", "MATH", "QUATERNIONS", "WOOD",
-                "POISON", "EYEBALLS", "BRAINS", "CRAYONS"
+                "WRATH", "ENVY", "SASQUATCH", "YETI", "LANGOLIERS", "MATH", "QUATERNIONS", "WOOD",
+                "POISON", "EYEBALLS", "BRAINS", "CRAYONS", "OIL", "TOXIC_WASTE", "JET_FUEL", "LITHIUM",
+                "CYANIDE", "TNT", "GLASS", "NAILS", "RUST", "FIRE", "\"BEEF\"", "CLOWN", "MICROCHIPS",
             }
         }
     };
@@ -347,28 +368,28 @@ public class Hotdog : GrabbableObject
             {
                 HotdogChallenge.VISUAL_INSPECTION, new HotdogBrand[]
                 {
-                    HotdogBrand.O_LEARY_GOLDEN,
-                    HotdogBrand.BIG_BILL_CHEESE,
-                    HotdogBrand.MARTHA_VEGAN,
-                    HotdogBrand.WHOLESOME_CHRISTIAN,
+                    HotdogBrand.BIXI_RECYCLED,
+                    HotdogBrand.FS_RULE,
+                    HotdogBrand.PITDOGS,
+                    HotdogBrand.CLASSY,
                 }
             },     
             {
                 HotdogChallenge.MEAT_CONTENT, new HotdogBrand[]
                 {
-                    HotdogBrand.O_LEARY_GOLDEN,
-                    HotdogBrand.BIG_BILL_CHEESE,
-                    HotdogBrand.MARTHA_VEGAN,
-                    HotdogBrand.WHOLESOME_CHRISTIAN,
+                    HotdogBrand.JONNY_BOYS,
+                    HotdogBrand.DOOBS,
+                    HotdogBrand.MASSIVE_VALUE,
+                    HotdogBrand.FUD_CORP,
                 }
             },              
             {
                 HotdogChallenge.RADIOACTIVITY, new HotdogBrand[]
                 {
-                    HotdogBrand.O_LEARY_GOLDEN,
-                    HotdogBrand.BIG_BILL_CHEESE,
-                    HotdogBrand.MARTHA_VEGAN,
-                    HotdogBrand.WHOLESOME_CHRISTIAN,
+                    HotdogBrand.CHERNOBYTES,
+                    HotdogBrand.FALLOUT_FRANK,
+                    HotdogBrand.THOUSAND_MILE_ISLE,
+                    HotdogBrand.ATOMIX
                 }
             },            
         };

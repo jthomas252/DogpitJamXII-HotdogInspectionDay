@@ -48,4 +48,12 @@ public class Fader : ColorRect
         _instance._time = 0f;
         _instance._callbackName = callback; 
     }
+
+    public static void Blackout(string callback)
+    {
+        _instance._active = true;
+        _instance._direction = true;
+        _instance._time = FADE_TIME; 
+        _instance._callbackName = callback;
+    }
 }

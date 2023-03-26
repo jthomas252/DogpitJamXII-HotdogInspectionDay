@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/DynamiteLoop.ogg-3832464dc02df9d1b43da7ef891dbc9e.oggstr"
+
+[deps]
+
+source_file="res://Assets/Sounds/DynamiteLoop.ogg"
+dest_files=[ "res://.import/DynamiteLoop.ogg-3832464dc02df9d1b43da7ef891dbc9e.oggstr" ]
+
+[params]
+
+loop=true
+loop_offset=0

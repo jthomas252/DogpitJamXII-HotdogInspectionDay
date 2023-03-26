@@ -29,10 +29,10 @@ public class BaseScene : Spatial
 	[Export] public AudioStream[] documentNoises;
 	
 	private const int PLAYER_QUOTA = 0;
-	private const int PLAYER_QUOTA_PER_LEVEL = 1;
+	private const int PLAYER_QUOTA_PER_LEVEL = 0;
 	private const int PLAYER_QUOTA_EXCEED = 3; 
 	private const int PLAYER_CITATION_THRESHOLD = 3;
-	private const float PLAYER_LEVEL_LENGTH = 10f;
+	private const float PLAYER_LEVEL_LENGTH = 210f;
 	private const int ALLOWED_MISTAKES_FOR_DEMOTION = 3; 
 
 	private int _playerRank; // Inspector rank 
@@ -139,7 +139,7 @@ public class BaseScene : Spatial
 		if (_instance._playerMistake > 0 && _instance._playerMistake % PLAYER_CITATION_THRESHOLD == 0)
 		{
 			_instance._playerCitations++;
-			if (_instance._playerCitations > 3) GameOver("Too many citations");
+			if (_instance._playerCitations > 3) GameOver("Too many citations!");
 		}
 		UpdateScoreDisplay();
 	}
@@ -178,44 +178,65 @@ public class BaseScene : Spatial
 
 	public static void OnLevelEnd()
 	{
+		// Past level 5 just trigger the ending.
+		if (_instance._playerLevel >= 5)
+		{
+			Fader.FadeOut("show_end");
+			return; 
+		}
+		
 		// Show the start screen, pass the relevant data.
 		_instance.EmitEvent("LevelEnd");
 
 		string dayText = $"DAY {_instance._playerLevel} SURVIVED";
 		string statText = "HERE'S HOW YOU DID\n";
+		string buttonText = "Proceed";
 
 		if (_instance._playerScore > (_instance._playerQuota + PLAYER_QUOTA_EXCEED))
 		{
-			statText += "EXCEEDED YOUR QUOTA!\n";
+			statText += "EXCEEDED YOUR QUOTA!\n\n";
 			_instance._playerRank++; 
-		} else if (_instance._playerScore > _instance._playerQuota)
+		} else if (_instance._playerScore >= _instance._playerQuota)
 		{
-			statText += "MET YOUR QUOTA\n";
+			statText += "MET YOUR QUOTA\n\n";
 		}
 		else
 		{
-			statText += "FAILED TO MEET YOUR QUOTA\n";
-			_instance._playerRank--; 
+			// Don't let the player proceed without at least meeting quota.
+			statText += "FAILED TO MEET YOUR QUOTA\n\n";
+			dayText = "YOU GOT FIRED";
+			buttonText = "Retry";
+			_instance._playerRank--;
+			_instance._playerLevel--;
 		}
-
-		statText += $"LOST {_instance._ratLoss} HOTDOGS TO RATS\n";
-		statText += $"ISSUED {_instance._playerCitations} CITATIONS\n";
 		
+		statText += _instance._ratLoss > 0 ? $"{_instance._ratLoss} HOTDOGS LOST TO RATS\n" : "NO HOTDOGS LOST TO RATS\n";
+		statText += _instance._playerCitations > 0 ? $"{_instance._playerCitations} CITATIONS ISSUED\n" : "NO CITATIONS ISSUED\n";		
+
 		// Promote the player if they've earned it
 		_instance._playerRank += _instance._playerMistake < ALLOWED_MISTAKES_FOR_DEMOTION ? 1 : -1;
-		
 		// Ensure we don't go out of bounds with inspector ranks
 		_instance._playerRank = _instance._playerRank < 0 ? 0 : _instance._playerRank;
-		
-		statText += $"\nYOUR NEW POSITION:";
+
+		if (_instance._playerScore >= _instance._playerQuota)
+		{
+			statText += $"\nYOUR NEW POSITION:";
+			BetweenLevelScreen.SetText(dayText, statText, _instance.inspectorRanks[_instance._playerRank], buttonText);
+		}
+		else
+		{
+			BetweenLevelScreen.SetText(dayText, statText, "TRY AGAIN?", buttonText);			
+		}
 
 		// Show the stat screen and set the text
 		Fader.FadeOut("show_stat_menu");
-		BetweenLevelScreen.SetText(dayText, statText, _instance.inspectorRanks[_instance._playerRank], "Proceed");
 		
 		// Deactivate relevant objects
 		_instance._timer.Visible = false; 
 		Computer.DeactiveScreen();
+		
+		// Force the cursor to clean up any objects that will be erased.
+		Cursor.ForceReleaseObject(null, true);
 	}
 
 	// Play a generic sound at the world position
@@ -244,13 +265,17 @@ public class BaseScene : Spatial
 	/**
 	 * Trigger a game over 
 	 */
-	public static void GameOver(string reason)
+	public static void GameOver(string reason, bool useFade = true)
 	{
 		// Make the player retry the current level
 		_instance._playerLevel--;
 		
-		Fader.FadeOut("show_stat_menu");
-		BetweenLevelScreen.SetText("YOU FAILED", reason, "Try Again", "");
+		if (useFade) Fader.FadeOut("show_stat_menu");
+		
+		BetweenLevelScreen.SetText("YOU FAILED", reason, "", "Try Again");
+		
+		// Force the cursor to clean up any object references. 
+		Cursor.ForceReleaseObject(null, true);
 	}
 
 	public override void _Ready()
@@ -283,6 +308,7 @@ public class BaseScene : Spatial
 				_musicPlayer.Play();
 				break; 
 			
+			case "show_end":
 			case "show_stat_menu":
 				Input.MouseMode = Input.MouseModeEnum.Visible; 
 				_musicPlayer.Stream = titleTheme;
@@ -315,13 +341,6 @@ public class BaseScene : Spatial
 		}
 
 		return _playerTimer.ToString("0");
-	}
-
-	// Pause the game from progressing while the menu is active
-	public void OnBeginButton()
-	{
-		GetTree().Paused = true; 
-		GD.Print("Received an input from the menu button.");
 	}
 
 	/**
