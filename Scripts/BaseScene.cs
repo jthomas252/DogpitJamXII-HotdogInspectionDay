@@ -97,6 +97,11 @@ public class BaseScene : Spatial
 		UpdateScoreDisplay();
 	}
 
+	public static int GetLevel()
+	{
+		return _instance._playerLevel; 
+	}
+
 	/**
 	 * Only issue citations right now
 	 */

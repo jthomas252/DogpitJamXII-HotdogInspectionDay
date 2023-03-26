@@ -4,25 +4,25 @@ using System.Collections.Generic;
 
 public class Hotdog : GrabbableObject
 {
-    [Export] public AudioStream[] hotdogNoises; 
-    
+    [Export] public AudioStream[] hotdogNoises;
+
     private readonly float SHADER_THRESHOLD_MIN = 0.01f; // Prevent rendering issues with the shader
     private readonly float CHANCE_VALID = 0.6f;
-    
+
     // Frozen stats
     private readonly float FROZEN_CHANCE = 0.9f;
-    private readonly float ICE_MAX_SCALE = 1.3f; 
+    private readonly float ICE_MAX_SCALE = 1.3f;
     private readonly float ICE_MIN_SCALE = 0.95f;
     private readonly float FROZEN_TEMPERATURE = 0f;
-    private readonly float NORMAL_TEMPERATURE = 10f; 
+    private readonly float NORMAL_TEMPERATURE = 10f;
     private readonly float BURN_TEMPERATURE = 20f;
-    
+
     // Radiation stats
     private readonly float RADIATION_SCALE = 15f;
-    
+
     private readonly float MOLD_DENY_LEVEL = 0.5f;
     private readonly float BURN_DENY_LEVEL = 0.5f;
-    private readonly float RAD_DENY_LEVEL = 3.5f; 
+    private readonly float RAD_DENY_LEVEL = 3.5f;
 
     private readonly float MOLD_SHADER_MULT = 1.8f;
     private readonly float BURN_SHADER_MULT = 2.2f;
@@ -31,12 +31,12 @@ public class Hotdog : GrabbableObject
     private Spatial _ice;
     private Label3D _serialNumberLabel;
     private ShaderMaterial _material;
-    private AudioStreamPlayer3D _audioPlayer; 
-    
+    private AudioStreamPlayer3D _audioPlayer;
+
     // Internal components
     private HotdogChallenge _challenge;
     private HotdogBrand _brand;
-    private List<MeatContent> _meats;
+    private List<string> _meats;
     private string _serialNumber;
     private bool _isValid;
     private float _qualityLevel;
@@ -49,19 +49,24 @@ public class Hotdog : GrabbableObject
     public override void _Ready()
     {
         base._Ready();
-        
+
         // Set up the shader material 
         MeshInstance mesh = GetNode<MeshInstance>("HotdogMesh");
         Material material = mesh.GetSurfaceMaterial(0);
         _material = material as ShaderMaterial;
         _material.ResourceLocalToScene = true;
 
+        // Determine which challenge to use, check which are available and fall back if needed
+        _challenge = GetChallenge();
+
         // Set relevant stats
         _qualityLevel = GD.Randf();
         _isValid = _qualityLevel >= CHANCE_VALID;
-        _temperature = GD.Randf() > FROZEN_CHANCE ? FROZEN_TEMPERATURE : NORMAL_TEMPERATURE;
-        _moldLevel = GD.Randf() % (1f - _qualityLevel);
-        _burntLevel = 0f;
+        _temperature = GD.Randf() > FROZEN_CHANCE && BaseScene.GetLevel() >= 2
+            ? FROZEN_TEMPERATURE
+            : NORMAL_TEMPERATURE;
+        _moldLevel = _challenge == HotdogChallenge.VISUAL_INSPECTION ? GD.Randf() % (1f - _qualityLevel) : 0f;
+        _burntLevel = _challenge == HotdogChallenge.VISUAL_INSPECTION ? GD.Randf() % (1f - _qualityLevel) : 0f;
         _radioactivity = _challenge == HotdogChallenge.RADIOACTIVITY ? GD.Randf() * RADIATION_SCALE : 0f;
 
         // Update the shader now that we have basic info 
@@ -72,19 +77,16 @@ public class Hotdog : GrabbableObject
         _serialNumberLabel = GetNode<Label3D>("SerialNumber");
         _ice = GetNode<Spatial>("IceMesh");
         _ice.Visible = _temperature < NORMAL_TEMPERATURE;
-        
-        // Determine which challenge to use, check which are available and fall back if needed
-        _challenge = HotdogChallenge.SERIAL_NUMBER;
 
         // Get the brand to use
         _brand = GetBrand();
-        
+
         // Generate other relevant stats
         _serialNumber = GetSerialNumberFromData();
         _serialNumberLabel.Text = _serialNumber;
 
         _invalidReason = GetInvalidReasonFromData();
-        
+
         _meats = GetMeatsFromData();
 
         Connect("body_entered", this, nameof(OnCollision));
@@ -102,17 +104,37 @@ public class Hotdog : GrabbableObject
         return hotdogNoises[GD.Randi() % hotdogNoises.Length];
     }
 
+    private HotdogChallenge GetChallenge()
+    {
+        HotdogChallenge[] challenges = BaseScene.GetLevel() >= 2
+            ? new HotdogChallenge[]
+            {
+                HotdogChallenge.SERIAL_NUMBER,
+                HotdogChallenge.VISUAL_INSPECTION,
+                HotdogChallenge.MEAT_CONTENT
+            }
+            : new HotdogChallenge[]
+            {
+                HotdogChallenge.SERIAL_NUMBER,
+                HotdogChallenge.VISUAL_INSPECTION,
+                HotdogChallenge.MEAT_CONTENT,
+                HotdogChallenge.RADIOACTIVITY
+            };
+
+        return challenges[GD.Randi() % challenges.Length];
+    }
+
     public string GetInfo()
     {
         string output =
             $"BRAND   {_brand.ToString()}\n" +
             $"SERIAL  {_serialNumber}\n" +
             "\n### MEAT CONTENTS #############################\n";
-        
+
         // Iterate through meats and add to output
-        foreach (MeatContent meat in _meats)
+        foreach (string meat in _meats)
         {
-            output += $"{meat.ToString()}\n";
+            output += $"{meat}\n";
         }
 
         return output.ToUpper();
@@ -120,14 +142,14 @@ public class Hotdog : GrabbableObject
 
     public override float GetRadiation()
     {
-        return _radioactivity; 
+        return _radioactivity;
     }
 
     public string GetInvalidReason()
     {
         return _invalidReason;
     }
-    
+
     public bool IsValid()
     {
         if (IsFrozen())
@@ -135,7 +157,7 @@ public class Hotdog : GrabbableObject
             _invalidReason = "HOTDOG TOO FROZEN";
             return false;
         }
-        
+
         if (_burntLevel > BURN_DENY_LEVEL)
         {
             _invalidReason = "HOTDOG TOO BURNT";
@@ -151,52 +173,72 @@ public class Hotdog : GrabbableObject
         if (_radioactivity > RAD_DENY_LEVEL)
         {
             _invalidReason = "HOTDOG TOO RADIOACTIVE";
-            return false; 
+            return false;
         }
-        
+
         return _isValid;
     }
 
     public bool IsFrozen()
     {
-        return _temperature < NORMAL_TEMPERATURE; 
+        return _temperature < NORMAL_TEMPERATURE;
     }
 
     public bool IsBurnt()
     {
-        return _burntLevel >= BURN_DENY_LEVEL; 
+        return _burntLevel >= BURN_DENY_LEVEL;
     }
 
     public void ApplyHeat(float amount)
     {
         _temperature += amount;
         _ice.Visible = _temperature < NORMAL_TEMPERATURE;
-        
+
         if (_temperature < NORMAL_TEMPERATURE) // Scale ice
         {
-            _ice.Scale = Vector3.One * Mathf.Lerp(ICE_MIN_SCALE, ICE_MAX_SCALE, 1f - (_temperature / NORMAL_TEMPERATURE));
-        } else if (_temperature > BURN_TEMPERATURE) // Apply burns
+            _ice.Scale = Vector3.One *
+                         Mathf.Lerp(ICE_MIN_SCALE, ICE_MAX_SCALE, 1f - (_temperature / NORMAL_TEMPERATURE));
+        }
+        else if (_temperature > BURN_TEMPERATURE) // Apply burns
         {
             _burntLevel = Mathf.Lerp(0f, 1f, (_temperature - BURN_TEMPERATURE) / BURN_TEMPERATURE);
         }
+
         UpdateShader();
     }
 
     private void UpdateShader()
     {
-        _material.SetShaderParam("threshold", (_burntLevel > _moldLevel ? _burntLevel : _moldLevel) + SHADER_THRESHOLD_MIN);
+        _material.SetShaderParam("threshold",
+            (_burntLevel > _moldLevel ? _burntLevel : _moldLevel) + SHADER_THRESHOLD_MIN);
         _material.SetShaderParam("burnt", _burntLevel);
-        _material.SetShaderParam("mold", _moldLevel);        
+        _material.SetShaderParam("mold", _moldLevel);
     }
 
     private HotdogBrand GetBrand()
     {
-        return _challengeBrands[HotdogChallenge.SERIAL_NUMBER][GD.Randi() % _challengeBrands[HotdogChallenge.SERIAL_NUMBER].Length];
+        return _challengeBrands[_challenge][GD.Randi() % _challengeBrands[_challenge].Length];
     }
 
     private string GetInvalidReasonFromData()
     {
-        return "INVALID SERIAL NUMBER";
+        switch (_challenge)
+        {
+            case HotdogChallenge.SERIAL_NUMBER:
+                return "INVALID SERIAL NUMBER";
+            
+            case HotdogChallenge.MEAT_CONTENT:
+                return "UNACCEPTABLE MEATS";
+            
+            case HotdogChallenge.RADIOACTIVITY:
+                return "TOO RADIOACTIVE";
+            
+            case HotdogChallenge.VISUAL_INSPECTION:
+                return "FAILED VISUAL INSPECTION"; 
+            
+            default:
+                return "FUCK YOU"; 
+        }
     }
 
     private string GetSerialNumberFromData()
@@ -210,17 +252,29 @@ public class Hotdog : GrabbableObject
     }
 
     // Using the brands and provided lists 
-    private List<MeatContent> GetMeatsFromData()
+    private List<string> GetMeatsFromData()
     {
-        List<MeatContent> meat = new List<MeatContent>();
+        List<string> contents = new List<string>();
+        string[] order = new string[] {"good", "questionable", "questionable", "bad"}; // Default for invalid
         
-        // Generate the meats to use
-        for (int i = 0; i < 4; ++i)
+        // Do specific brand or challenge meats here
+
+        // Determine good vs. bad to use 
+        if (_isValid)
         {
-            
+            order = new string[] { "good", "good", "questionable", "good" };
+        } else if (_challenge == HotdogChallenge.MEAT_CONTENT)
+        {
+            order = new string[] { "bad", "questionable", "bad", "questionable" };
         }
         
-        return meat; 
+        // Generate the meats to use
+        for (int i = contents.Count; i < 4; ++i)
+        {
+            contents.Add(MeatContent[order[i]][GD.Randi() % MeatContent[order[i]].Length]);
+        }
+
+        return contents;
     }
 
     // ------------
@@ -231,8 +285,7 @@ public class Hotdog : GrabbableObject
         SERIAL_NUMBER,
         MEAT_CONTENT,
         RADIOACTIVITY,
-        VISUAL_INSPECTION,
-        NOT_HOTDOG
+        VISUAL_INSPECTION
     }
 
     public enum HotdogBrand
@@ -241,53 +294,38 @@ public class Hotdog : GrabbableObject
         BIG_BILL_CHEESE,
         MARTHA_VEGAN,
         WHOLESOME_CHRISTIAN,
+        CHERNOBYTES,
         GENERIC
     }
 
-    public enum MeatContent
+    public Dictionary<string, string[]> MeatContent = new Dictionary<string, string[]>()
     {
-        // GOOD
-        PORK,
-        BEEF,
-        CHICKEN,
-        DONKEY,
-        SOY,
-        DUCK,
-        GOOSE,
-        ONION,
-        GARLIC,
-        CHEESE,
+        {
+            // GOOD
+            "good", new string[]
+                { 
+                "PORK", "BEEF", "CHICKEN", "SOY", "DUCK", "GOOSE", "ONION", "GARLIC", "CHEESE", 
+                "CRAB", "FISH",
+                }
+        },
+        {
+            // QUESTIONABLE
+            "questionable", new string[]
+            {
+                "RAT", "BABA", "WASP", "BUMBLEBEE", "PIGEON", "OPOSSUM", "RACCOON", "HORSE", "PARROT", "DONKEY",
+                "\"BEEF\"",
+            }
+        },        
+        {
+            // BAD
+            "bad", new string[]
+            {
+                "GARBAGE", "ANUS", "ROACH", "TEETH", "HAIR", "ROCK", "HOPES_DREAMS", "HUMAN",
+                "ASBESTOS", "ALIEN", "GREASE", "FEAR", "POOP", "URANIUM", "UNKNOWN"
+            }
+        }
+    };
 
-        // OKAY
-        RAT,
-        WASP,
-        BUMBLEBEE,
-        PARROT,
-        PIGEON,
-        HORSE,
-        OPOSSUM,
-        CRAB,
-        FISH,
-
-        // BAD
-        GARBAGE,
-        ANUS,
-        ROACH,
-        TEETH,
-        HAIR,
-        GOLD,
-        ROCK,        
-        HOPES_DREAMS,
-        HUMAN,
-        MOLD,
-        ASBESTOS,
-        ALIEN,
-        GREASE,
-        FEAR,
-        POOP,
-        URANIUM,
-        UNKNOWN
-    }
 
     private Dictionary<HotdogChallenge, HotdogBrand[]> _challengeBrands = new Dictionary<HotdogChallenge, HotdogBrand[]>()
         {
@@ -299,7 +337,34 @@ public class Hotdog : GrabbableObject
                     HotdogBrand.MARTHA_VEGAN,
                     HotdogBrand.WHOLESOME_CHRISTIAN,
                 }
-            }
+            },
+            {
+                HotdogChallenge.VISUAL_INSPECTION, new HotdogBrand[]
+                {
+                    HotdogBrand.O_LEARY_GOLDEN,
+                    HotdogBrand.BIG_BILL_CHEESE,
+                    HotdogBrand.MARTHA_VEGAN,
+                    HotdogBrand.WHOLESOME_CHRISTIAN,
+                }
+            },     
+            {
+                HotdogChallenge.MEAT_CONTENT, new HotdogBrand[]
+                {
+                    HotdogBrand.O_LEARY_GOLDEN,
+                    HotdogBrand.BIG_BILL_CHEESE,
+                    HotdogBrand.MARTHA_VEGAN,
+                    HotdogBrand.WHOLESOME_CHRISTIAN,
+                }
+            },              
+            {
+                HotdogChallenge.RADIOACTIVITY, new HotdogBrand[]
+                {
+                    HotdogBrand.O_LEARY_GOLDEN,
+                    HotdogBrand.BIG_BILL_CHEESE,
+                    HotdogBrand.MARTHA_VEGAN,
+                    HotdogBrand.WHOLESOME_CHRISTIAN,
+                }
+            },            
         };
 
     private Dictionary<HotdogBrand, string[]> _validSerialNumber = new Dictionary<HotdogBrand, string[]>()
@@ -391,21 +456,4 @@ public class Hotdog : GrabbableObject
             }
         }
     };
-
-    private Dictionary<HotdogBrand, MeatContent[]> _Meats = new Dictionary<HotdogBrand, MeatContent[]>()
-    {
-        { HotdogBrand.GENERIC, new MeatContent[]
-            {
-                MeatContent.PORK,
-                MeatContent.BEEF,
-                MeatContent.CHICKEN,
-            } 
-        }
-    };
-
-    private Godot.Collections.Dictionary<int, HotdogChallenge[]> _DayChallenge =
-        new Godot.Collections.Dictionary<int, HotdogChallenge[]>()
-        {
-
-        };
 }

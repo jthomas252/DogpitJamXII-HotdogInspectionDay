@@ -47,6 +47,11 @@
 - Play title theme on the between-days pop-up
 
 # Interface
+- Change the control text based on context
+	- Change when grabbing
+	- Change when inspecting
+	- Dismiss when normal 
+
 - Make the start screen start the game
 	- Try to do a fadeout or something
 	- Trigger the initial day text 
@@ -67,12 +72,6 @@
 	- Reset the game timer
 	- Use the LevelEnd / LevelStart signals on BaseScene for this 
 
-# Hotdog Generation
-- Set up meats randomizer in Hotdog creation
-	- Use random selection for non-trigger ones
-	- Have list of good, okay, and bad ingredients
-	- Representation of the quality score to determine failure / success
-
 # Tools
 - Add a delay to the spawner button
 	- Should allow for a few spawns before a wait time 
@@ -80,6 +79,8 @@
 - Add multiple spawns to the spawner, delayed slightly 
 
 # Nice to have
+- Add more shit to the meat randomizer
+
 - Make the vent break open 
 	- Change script to work off a signal / trigger
 	- Figure out a sound to play 
