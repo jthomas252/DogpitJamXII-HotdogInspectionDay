@@ -1,4 +1,4 @@
-[gd_scene load_steps=112 format=2]
+[gd_scene load_steps=114 format=2]
 
 [ext_resource path="res://Scripts/BaseScene.cs" type="Script" id=1]
 [ext_resource path="res://Prefab/Cursor.tscn" type="PackedScene" id=2]
@@ -66,6 +66,7 @@
 [ext_resource path="res://Scripts/ActionTrigger.cs" type="Script" id=64]
 [ext_resource path="res://Assets/Textures/article.png" type="Texture" id=65]
 [ext_resource path="res://Scripts/EndScreen.cs" type="Script" id=66]
+[ext_resource path="res://Scripts/HelperText.cs" type="Script" id=67]
 
 [sub_resource type="DynamicFontData" id=1]
 antialiased = false
@@ -208,6 +209,10 @@ extents = Vector3( 10, 10, 30 )
 
 [sub_resource type="BoxShape" id=45]
 extents = Vector3( 3, 4.25, 0.1 )
+
+[sub_resource type="DynamicFont" id=80]
+outline_size = 1
+font_data = SubResource( 1 )
 
 [node name="SceneRoot" type="Spatial"]
 script = ExtResource( 1 )
@@ -1192,6 +1197,26 @@ volume_db = -20.0
 
 [node name="Sound" type="AudioStreamPlayer" parent="."]
 volume_db = -15.0
+
+[node name="Help1" type="Label3D" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -37.0564, 29.0896, 0 )
+pixel_size = 0.1
+billboard = 1
+text = "PRESS THIS TO START 
+
+SHIFT WHEN READY"
+font = SubResource( 80 )
+script = ExtResource( 67 )
+
+[node name="Help2" type="Label3D" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 8.03701, -2.8531, 11.6254 )
+pixel_size = 0.1
+billboard = 1
+text = "YOU PROBABLY WANT TO
+
+READ THIS FIRST."
+font = SubResource( 80 )
+script = ExtResource( 67 )
 
 [connection signal="pressed" from="Interface/StartScreen/Button" to="Interface/StartScreen" method="OnStartButton"]
 [connection signal="pressed" from="Interface/BetweenLevel/AdvanceButton" to="Interface/StartScreen" method="OnStartButton"]

@@ -10,3 +10,6 @@
 	- An area is already present on it, attach function in _Process
 
 - Add Geiger loop
+
+- Bugs to fix
+	

@@ -32,7 +32,7 @@ public class BaseScene : Spatial
 	private const int PLAYER_QUOTA_PER_LEVEL = 0;
 	private const int PLAYER_QUOTA_EXCEED = 3; 
 	private const int PLAYER_CITATION_THRESHOLD = 3;
-	private const float PLAYER_LEVEL_LENGTH = 210f;
+	private const float PLAYER_LEVEL_LENGTH = 180f;
 	private const int ALLOWED_MISTAKES_FOR_DEMOTION = 3; 
 
 	private int _playerRank; // Inspector rank 
@@ -43,6 +43,7 @@ public class BaseScene : Spatial
 	private int _playerLevel; 
 	private int _playerQuota;
 	private float _playerTimer;
+	private bool _debugMode; 
 
 	private AudioStreamPlayer _soundPlayer;
 	private AudioStreamPlayer _musicPlayer; 
@@ -111,6 +112,11 @@ public class BaseScene : Spatial
 		}
 	}
 
+	public static bool GetDebugMode()
+	{
+		return _instance._debugMode; 
+	}
+
 	public static PlayerState GetPlayerState()
 	{
 		return _currentState;
@@ -139,7 +145,8 @@ public class BaseScene : Spatial
 		if (_instance._playerMistake > 0 && _instance._playerMistake % PLAYER_CITATION_THRESHOLD == 0)
 		{
 			_instance._playerCitations++;
-			if (_instance._playerCitations > 3) GameOver("Too many citations!");
+			Spawner.Spawn(_instance.citationObject);
+			if (_instance._playerCitations >= 3) GameOver("Too many citations!");
 		}
 		UpdateScoreDisplay();
 	}
@@ -154,11 +161,21 @@ public class BaseScene : Spatial
 	{
 		ComputerScreen.UpdateBodyBottomText($"QUOTA {_instance._playerScore} OF {_instance._playerQuota}");
 	}
+
+	public static void IncrementLevel()
+	{
+		_instance._playerLevel++; 
+	}
+
+	public static void DecrementLevel()
+	{
+		_instance._playerLevel += _instance._playerLevel > 0 ? -1 : 0; 
+	}
 	
 	public static void StartNextLevel()
 	{
 		_instance.EmitEvent("LevelStart");
-		_instance._playerLevel++;
+		IncrementLevel();
 
 		_instance._playerCitations = 0;
 		_instance._playerMistake = 0;
@@ -207,7 +224,7 @@ public class BaseScene : Spatial
 			dayText = "YOU GOT FIRED";
 			buttonText = "Retry";
 			_instance._playerRank--;
-			_instance._playerLevel--;
+			DecrementLevel();
 		}
 		
 		statText += _instance._ratLoss > 0 ? $"{_instance._ratLoss} HOTDOGS LOST TO RATS\n" : "NO HOTDOGS LOST TO RATS\n";
@@ -268,14 +285,19 @@ public class BaseScene : Spatial
 	public static void GameOver(string reason, bool useFade = true)
 	{
 		// Make the player retry the current level
-		_instance._playerLevel--;
+		DecrementLevel();
 		
 		if (useFade) Fader.FadeOut("show_stat_menu");
 		
 		BetweenLevelScreen.SetText("YOU FAILED", reason, "", "Try Again");
 		
-		// Force the cursor to clean up any object references. 
-		Cursor.ForceReleaseObject(null, true);
+		// Deactivate relevant objects
+		_instance._playerTimer = 0f; 
+		_instance._timer.Visible = false; 
+		Computer.DeactiveScreen();
+		
+		// Force the cursor to clean up any objects that will be erased.
+		Cursor.ForceReleaseObject(null, true);		
 	}
 
 	public override void _Ready()
@@ -331,6 +353,22 @@ public class BaseScene : Spatial
 		}
 	}
 
+	public override void _Input(InputEvent @event)
+	{
+		if (@event is InputEventKey eventKey)
+		{
+			if (eventKey.IsPressed())
+			{
+				switch (eventKey.Scancode)
+				{
+					case (int)KeyList.F1:
+						_debugMode = !_debugMode;
+						break; 
+				}
+			}
+		}
+	}
+	
 	private string GetTimerText()
 	{
 		if (_playerTimer > 60f)
