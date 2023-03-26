@@ -78,6 +78,7 @@ public class Cursor : Sprite3D
                 viewableObject.Inspect();
                 grabbedObject = viewableObject;
                 ChangeCursorState(CursorState.HandOpen);
+                BaseScene.ChangePlayerState(BaseScene.PlayerState.Inspecting);
             }
 
             if (hoverObject is GrabbableObject grabbableObject)
@@ -86,6 +87,7 @@ public class Cursor : Sprite3D
                 ignoreObjects = new Array() { grabbedObject };
                 grabbableObject.Grab();
                 ChangeCursorState(CursorState.HandClosed);
+                BaseScene.ChangePlayerState(BaseScene.PlayerState.Grabbing);
             }
         }
     }
@@ -100,6 +102,7 @@ public class Cursor : Sprite3D
 
             // Drop the grabbed object, release the reference
             ChangeCursorState(CursorState.HandOpen);
+            BaseScene.ChangePlayerState(BaseScene.PlayerState.Normal);
             grabbedObject = null;
             ignoreObjects = null;
         }
@@ -120,7 +123,7 @@ public class Cursor : Sprite3D
 
                     case (int)ButtonList.Right:
                         // Don't allow dropping the hotdog if it's currently in inspection mode, but cancel out instead
-                        if (BaseScene.GetPlayerState() != BaseScene.PlayerState.Inspecting)
+                        if (!BaseScene.Inspecting())
                         {
                             DropObject();
                         }

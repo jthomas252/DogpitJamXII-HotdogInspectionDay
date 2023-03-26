@@ -26,7 +26,8 @@ public class BaseScene : Spatial
 	private AudioStreamPlayer _soundPlayer;
 	private AudioStreamPlayer _musicPlayer; 
 	
-	private Label3D _timer; 
+	private Label3D _timer;
+	private Label _controlText; 
 	
 	[Signal]
 	public delegate void Inspection();
@@ -70,15 +71,18 @@ public class BaseScene : Spatial
 		{
 			case PlayerState.Inspecting:
 				_instance.EmitEvent("Inspection");
+				_instance._controlText.Text = "[Right Click] Dismiss\n[WASD] Rotate";				
 				break; 
 			
 			case PlayerState.Grabbing:
 				_instance.EmitEvent("Grabbed");
+				_instance._controlText.Text = "[Right Click] Drop\n[Q] Inspect";
 				break;
 			
 			default:
 			case PlayerState.Normal:
 				_instance.EmitEvent("Normal");
+				_instance._controlText.Text = "";
 				break;
 		}
 	}
@@ -172,6 +176,7 @@ public class BaseScene : Spatial
 		// Input.MouseMode = Input.MouseModeEnum.Hidden;
 
 		_timer = GetNode<Label3D>("Environment/Timer/Main");
+		_controlText = GetNode<Label>("Interface/ControlText");
 		
 		_soundPlayer = GetNode<AudioStreamPlayer>("Sound");
 		_musicPlayer = GetNode<AudioStreamPlayer>("Music");

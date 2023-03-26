@@ -2,8 +2,8 @@
 
 importer="texture"
 type="StreamTexture"
-path.s3tc="res://.import/handbook_serial_numbers.png-0a0631e4fe2f10bbbf7c46e9d43553fe.s3tc.stex"
-path.etc="res://.import/handbook_serial_numbers.png-0a0631e4fe2f10bbbf7c46e9d43553fe.etc.stex"
+path.s3tc="res://.import/Handbook-5.png-29445218a43ef1a1a6ff730aa144e593.s3tc.stex"
+path.etc="res://.import/Handbook-5.png-29445218a43ef1a1a6ff730aa144e593.etc.stex"
 metadata={
 "imported_formats": [ "s3tc", "etc" ],
 "vram_texture": true
@@ -11,8 +11,8 @@ metadata={
 
 [deps]
 
-source_file="res://Assets/Textures/handbook/handbook_serial_numbers.png"
-dest_files=[ "res://.import/handbook_serial_numbers.png-0a0631e4fe2f10bbbf7c46e9d43553fe.s3tc.stex", "res://.import/handbook_serial_numbers.png-0a0631e4fe2f10bbbf7c46e9d43553fe.etc.stex" ]
+source_file="res://Assets/Textures/handbook/Handbook-5.png"
+dest_files=[ "res://.import/Handbook-5.png-29445218a43ef1a1a6ff730aa144e593.s3tc.stex", "res://.import/Handbook-5.png-29445218a43ef1a1a6ff730aa144e593.etc.stex" ]
 
 [params]
 

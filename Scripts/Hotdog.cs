@@ -255,14 +255,16 @@ public class Hotdog : GrabbableObject
     private List<string> GetMeatsFromData()
     {
         List<string> contents = new List<string>();
-        string[] order = new string[] {"good", "questionable", "questionable", "bad"}; // Default for invalid
+        string[] order = new string[] {"good", "questionable", "bad", "bad"}; // Default for invalid
         
         // Do specific brand or challenge meats here
 
         // Determine good vs. bad to use 
         if (_isValid)
         {
-            order = new string[] { "good", "good", "questionable", "good" };
+            order = _challenge == HotdogChallenge.MEAT_CONTENT ? 
+                new string[] { "good", "good", "questionable", "questionable" } :
+                new string[] { "good", "good", "good", "questionable" };
         } else if (_challenge == HotdogChallenge.MEAT_CONTENT)
         {
             order = new string[] { "bad", "questionable", "bad", "questionable" };
@@ -305,7 +307,8 @@ public class Hotdog : GrabbableObject
             "good", new string[]
                 { 
                 "PORK", "BEEF", "CHICKEN", "SOY", "DUCK", "GOOSE", "ONION", "GARLIC", "CHEESE", 
-                "CRAB", "FISH",
+                "CRAB", "FISH", "WALRUS", "OCTOPUS", "YAK", "ALLIGATOR", "SNAKE", "ELEPHANT",
+                "LAMB", "GOAT", "BOAR", "GIRAFFE", "HIPPO", "LOBSTER"
                 }
         },
         {
@@ -313,15 +316,18 @@ public class Hotdog : GrabbableObject
             "questionable", new string[]
             {
                 "RAT", "BABA", "WASP", "BUMBLEBEE", "PIGEON", "OPOSSUM", "RACCOON", "HORSE", "PARROT", "DONKEY",
-                "\"BEEF\"",
+                "\"BEEF\"", "BEANS", "CORN", "KORN", "MILK", "CHILI", "PANDA", "GRIZZLY_BEAR", "HOTDOG?", "MONKEY",
+                "SPIDERS"
             }
         },        
         {
             // BAD
             "bad", new string[]
             {
-                "GARBAGE", "ANUS", "ROACH", "TEETH", "HAIR", "ROCK", "HOPES_DREAMS", "HUMAN",
-                "ASBESTOS", "ALIEN", "GREASE", "FEAR", "POOP", "URANIUM", "UNKNOWN"
+                "GARBAGE", "ANUSES", "ROACHES", "TEETH", "HAIR", "ROCKS", "HOPES_DREAMS", "HUMAN",
+                "ASBESTOS", "ALIEN", "GREASE", "FEAR", "POOP", "URANIUM", "UNKNOWN", "FEAR", "ANGER", "LOVE",
+                "WRATH", "ENVY", "ANTS", "SASQUATCH", "YETI", "LANGOLIERS", "MATH", "QUATERNIONS", "WOOD",
+                "POISON", "EYEBALLS", "BRAINS", "CRAYONS"
             }
         }
     };

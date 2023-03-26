@@ -1,9 +1,9 @@
-[gd_scene load_steps=90 format=2]
+[gd_scene load_steps=93 format=2]
 
 [ext_resource path="res://Scripts/BaseScene.cs" type="Script" id=1]
 [ext_resource path="res://Prefab/Cursor.tscn" type="PackedScene" id=2]
 [ext_resource path="res://UI_theme.tres" type="Theme" id=3]
-[ext_resource path="res://Assets/Textures/handbook/SerialNumbers_hires.png" type="Texture" id=4]
+[ext_resource path="res://Assets/Textures/handbook/Handbook-1.png" type="Texture" id=4]
 [ext_resource path="res://Assets/Models/desk/desk.obj" type="ArrayMesh" id=5]
 [ext_resource path="res://Assets/Materials/Desk.tres" type="Material" id=6]
 [ext_resource path="res://Assets/Materials/EnvironmentWall.tres" type="Material" id=7]
@@ -21,7 +21,7 @@
 [ext_resource path="res://Assets/Materials/trashcan.tres" type="Material" id=19]
 [ext_resource path="res://Scripts/ScanTrigger.cs" type="Script" id=20]
 [ext_resource path="res://Prefab/HeatLamp.tscn" type="PackedScene" id=21]
-[ext_resource path="res://Assets/Textures/handbook/handbook_serial_numbers.png" type="Texture" id=22]
+[ext_resource path="res://Assets/Textures/handbook/Handbook-2.png" type="Texture" id=22]
 [ext_resource path="res://Prefab/spawner_tube.tscn" type="PackedScene" id=23]
 [ext_resource path="res://Assets/Textures/tile_ceilingacoustic.png" type="Texture" id=24]
 [ext_resource path="res://Scripts/ProcessTrigger.cs" type="Script" id=25]
@@ -51,6 +51,9 @@
 [ext_resource path="res://Assets/Music/hotdog_title.ogg" type="AudioStream" id=49]
 [ext_resource path="res://Assets/Music/hotdog_bgm.ogg" type="AudioStream" id=50]
 [ext_resource path="res://Scripts/Meathook.cs" type="Script" id=51]
+[ext_resource path="res://Assets/Textures/handbook/Handbook-5.png" type="Texture" id=52]
+[ext_resource path="res://Assets/Textures/handbook/Handbook-3.png" type="Texture" id=53]
+[ext_resource path="res://Assets/Textures/handbook/Handbook-4.png" type="Texture" id=54]
 
 [sub_resource type="CubeMesh" id=30]
 
@@ -261,7 +264,7 @@ margin_bottom = -40.0
 theme = ExtResource( 3 )
 text = "Begin"
 
-[node name="Label" type="Label" parent="Interface"]
+[node name="ControlText" type="Label" parent="Interface"]
 anchor_left = 0.5
 anchor_top = 1.0
 anchor_right = 0.5
@@ -272,8 +275,6 @@ margin_right = 78.0
 margin_bottom = -48.0
 rect_scale = Vector2( 1.5, 1.5 )
 custom_fonts/font = ExtResource( 48 )
-text = "CONTROL TEXT
-"
 align = 1
 valign = 2
 uppercase = true
@@ -312,13 +313,11 @@ visible = false
 billboard = 1
 shaded = true
 double_sided = false
-texture = ExtResource( 4 )
 
 [node name="SpawnPoint" type="Spatial" parent="Points"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -37.6763, 70.1364, -26.1795 )
 
 [node name="Sprite3D" type="Sprite3D" parent="Points/SpawnPoint"]
-texture = ExtResource( 22 )
 
 [node name="RatSpawnPoint" type="Spatial" parent="Points"]
 transform = Transform( 1, 0, 0, 0, 0.999959, -0.00905183, 0, 0.00905183, 0.999959, -117.798, -8.02165, 1.66396 )
@@ -646,7 +645,7 @@ collision_layer = 2
 collision_mask = 2
 script = ExtResource( 10 )
 previous = NodePath("")
-next = NodePath("")
+next = NodePath("../Handbook2")
 
 [node name="Sprite3D" type="Sprite3D" parent="Handbook"]
 shaded = true
@@ -655,6 +654,82 @@ texture = ExtResource( 4 )
 
 [node name="CollisionShape" type="CollisionShape" parent="Handbook"]
 shape = SubResource( 45 )
+
+[node name="Handbook2" type="KinematicBody" parent="."]
+physics_interpolation_mode = 1
+transform = Transform( 0.898388, 0.439202, 1.91982e-08, 0, -4.37114e-08, 1, 0.439202, -0.898388, -3.92698e-08, 7.1295, -9.42205, 13.7956 )
+collision_layer = 2
+collision_mask = 2
+script = ExtResource( 10 )
+previous = NodePath("../Handbook")
+next = NodePath("../Handbook3")
+
+[node name="Sprite3D" type="Sprite3D" parent="Handbook2"]
+transform = Transform( 1, -2.98023e-08, 0, 2.98023e-08, 1, -3.55271e-15, -1.77636e-15, 7.10543e-15, 1, 0, 0, -0.028389 )
+shaded = true
+double_sided = false
+texture = ExtResource( 22 )
+
+[node name="CollisionShape" type="CollisionShape" parent="Handbook2"]
+shape = SubResource( 45 )
+disabled = true
+
+[node name="Handbook3" type="KinematicBody" parent="."]
+physics_interpolation_mode = 1
+transform = Transform( 0.898388, 0.439202, 1.91982e-08, 0, -4.37114e-08, 1, 0.439202, -0.898388, -3.92698e-08, 7.1295, -9.42205, 13.7956 )
+collision_layer = 2
+collision_mask = 2
+script = ExtResource( 10 )
+previous = NodePath("../Handbook2")
+next = NodePath("../Handbook4")
+
+[node name="Sprite3D" type="Sprite3D" parent="Handbook3"]
+transform = Transform( 1, -2.98023e-08, 0, 2.98023e-08, 1, -3.55271e-15, -1.77636e-15, 7.10543e-15, 1, 0, 0, -0.028389 )
+shaded = true
+double_sided = false
+texture = ExtResource( 53 )
+
+[node name="CollisionShape" type="CollisionShape" parent="Handbook3"]
+shape = SubResource( 45 )
+disabled = true
+
+[node name="Handbook4" type="KinematicBody" parent="."]
+physics_interpolation_mode = 1
+transform = Transform( 0.898388, 0.439202, 1.91982e-08, 0, -4.37114e-08, 1, 0.439202, -0.898388, -3.92698e-08, 7.1295, -9.42205, 13.7956 )
+collision_layer = 2
+collision_mask = 2
+script = ExtResource( 10 )
+previous = NodePath("../Handbook3")
+next = NodePath("../Handbook5")
+
+[node name="Sprite3D" type="Sprite3D" parent="Handbook4"]
+transform = Transform( 1, -2.98023e-08, 0, 2.98023e-08, 1, -3.55271e-15, -1.77636e-15, 7.10543e-15, 1, 0, 0, -0.028389 )
+shaded = true
+double_sided = false
+texture = ExtResource( 54 )
+
+[node name="CollisionShape" type="CollisionShape" parent="Handbook4"]
+shape = SubResource( 45 )
+disabled = true
+
+[node name="Handbook5" type="KinematicBody" parent="."]
+physics_interpolation_mode = 1
+transform = Transform( 0.898388, 0.439202, 1.91982e-08, 0, -4.37114e-08, 1, 0.439202, -0.898388, -3.92698e-08, 7.1295, -9.42205, 13.7956 )
+collision_layer = 2
+collision_mask = 2
+script = ExtResource( 10 )
+previous = NodePath("../Handbook4")
+next = NodePath("")
+
+[node name="Sprite3D" type="Sprite3D" parent="Handbook5"]
+transform = Transform( 1, -2.98023e-08, 0, 2.98023e-08, 1, -3.55271e-15, -1.77636e-15, 7.10543e-15, 1, 0, 0, -0.028389 )
+shaded = true
+double_sided = false
+texture = ExtResource( 52 )
+
+[node name="CollisionShape" type="CollisionShape" parent="Handbook5"]
+shape = SubResource( 45 )
+disabled = true
 
 [node name="CreditPoster" type="KinematicBody" parent="."]
 physics_interpolation_mode = 1
@@ -668,7 +743,6 @@ next = NodePath("")
 [node name="Sprite3D" type="Sprite3D" parent="CreditPoster"]
 shaded = true
 double_sided = false
-texture = ExtResource( 4 )
 
 [node name="CollisionShape" type="CollisionShape" parent="CreditPoster"]
 shape = SubResource( 45 )
