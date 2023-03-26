@@ -88,6 +88,9 @@
 - Add multiple spawns to the spawner, delayed slightly 
 
 # Nice to have
+- Make the vent break open 
+	- Add trigger, play the break animation when a rat comes through
+
 - Make the start screen look nice
 
 - CRT Shader

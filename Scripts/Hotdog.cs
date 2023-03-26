@@ -62,7 +62,7 @@ public class Hotdog : GrabbableObject
         _temperature = GD.Randf() > FROZEN_CHANCE ? FROZEN_TEMPERATURE : NORMAL_TEMPERATURE;
         _moldLevel = GD.Randf() % (1f - _qualityLevel);
         _burntLevel = 0f;
-        _radioactivity = _challenge == HotdogChallenge.RADIOACTIVITY ? GD.Randf() * RADIATION_SCALE : 10f;
+        _radioactivity = _challenge == HotdogChallenge.RADIOACTIVITY ? GD.Randf() * RADIATION_SCALE : 0f;
 
         // Update the shader now that we have basic info 
         UpdateShader();

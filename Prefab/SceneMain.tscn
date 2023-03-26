@@ -1,8 +1,4 @@
-<<<<<<< HEAD
-[gd_scene load_steps=85 format=2]
-=======
-[gd_scene load_steps=86 format=2]
->>>>>>> c6935b1 (Audio setup)
+[gd_scene load_steps=89 format=2]
 
 [ext_resource path="res://Scripts/BaseScene.cs" type="Script" id=1]
 [ext_resource path="res://Prefab/Cursor.tscn" type="PackedScene" id=2]
@@ -48,14 +44,12 @@
 [ext_resource path="res://Scripts/RatTrigger.cs" type="Script" id=42]
 [ext_resource path="res://Prefab/Rat.tscn" type="PackedScene" id=43]
 [ext_resource path="res://Prefab/GeigerCounter.tscn" type="PackedScene" id=44]
-<<<<<<< HEAD
 [ext_resource path="res://Scripts/Vent.cs" type="Script" id=45]
 [ext_resource path="res://Prefab/Vent.tscn" type="PackedScene" id=46]
-=======
-[ext_resource path="res://Assets/Music/hotdog_bgm.ogg" type="AudioStream" id=45]
-[ext_resource path="res://Assets/Music/hotdog_title.ogg" type="AudioStream" id=46]
-[ext_resource path="res://Assets/Sounds/HotdogSlap_Hard_3.ogg" type="AudioStream" id=47]
->>>>>>> c6935b1 (Audio setup)
+[ext_resource path="res://Assets/Sounds/HotdogSlap_Hard_5.ogg" type="AudioStream" id=47]
+[ext_resource path="res://Assets/Fonts/DosFont.tres" type="DynamicFont" id=48]
+[ext_resource path="res://Assets/Music/hotdog_title.ogg" type="AudioStream" id=49]
+[ext_resource path="res://Assets/Music/hotdog_bgm.ogg" type="AudioStream" id=50]
 
 [sub_resource type="CubeMesh" id=30]
 
@@ -175,8 +169,8 @@ albedo_color = Color( 0.898039, 0.270588, 0.270588, 1 )
 
 [node name="SceneRoot" type="Spatial"]
 script = ExtResource( 1 )
-titleTheme = ExtResource( 46 )
-gameTheme = ExtResource( 45 )
+titleTheme = ExtResource( 49 )
+gameTheme = ExtResource( 50 )
 hotdogNoise = ExtResource( 27 )
 documentNoises = [ ExtResource( 34 ), ExtResource( 35 ), ExtResource( 37 ), ExtResource( 36 ) ]
 
@@ -219,6 +213,7 @@ enabled_focus_mode = 0
 text = "Next"
 
 [node name="StartScreen" type="ColorRect" parent="Interface"]
+visible = false
 anchor_right = 1.0
 anchor_bottom = 1.0
 color = Color( 0.901961, 0.756863, 0.686275, 1 )
@@ -271,6 +266,23 @@ margin_bottom = -40.0
 theme = ExtResource( 3 )
 text = "Begin"
 
+[node name="Label" type="Label" parent="Interface"]
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+margin_left = -78.0
+margin_top = -83.0
+margin_right = 78.0
+margin_bottom = -48.0
+rect_scale = Vector2( 1.5, 1.5 )
+custom_fonts/font = ExtResource( 48 )
+text = "CONTROL TEXT
+"
+align = 1
+valign = 2
+uppercase = true
+
 [node name="Camera" type="Camera" parent="."]
 transform = Transform( 0.999969, 0.0078539, 5.61134e-09, -0.00733194, 0.933512, 0.35847, 0.00281539, -0.358459, 0.933541, 0, 24.8409, 48.4861 )
 environment = ExtResource( 12 )
@@ -297,7 +309,7 @@ visible = false
 mesh = SubResource( 30 )
 
 [node name="InspectPointDocument" type="Spatial" parent="Points"]
-transform = Transform( 1, 0, 0, 0, 0.819152, 0.573577, 0, -0.573577, 0.819152, 0, 22.2402, 41.7338 )
+transform = Transform( 1, 0, 0, 0, 0.819152, 0.573577, 0, -0.573577, 0.819152, 0, 22.3452, 41.6494 )
 
 [node name="Sprite3D" type="Sprite3D" parent="Points/InspectPointDocument"]
 transform = Transform( 1, 0, 0, 0, 1, 2.98023e-08, 0, -2.98023e-08, 1, 0, 0, 0 )
@@ -631,6 +643,9 @@ text = "00:00"
 font = ExtResource( 13 )
 horizontal_alignment = 2
 
+[node name="TestDog" parent="." instance=ExtResource( 16 )]
+transform = Transform( 1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, -20.7874, -2.73842, 10.3916 )
+
 [node name="Handbook" type="KinematicBody" parent="."]
 physics_interpolation_mode = 1
 transform = Transform( 0.898388, 0.439202, 1.91982e-08, 0, -4.37114e-08, 1, 0.439202, -0.898388, -3.92698e-08, 7.1295, -9.42205, 13.7956 )
@@ -680,7 +695,7 @@ ratPrefab = ExtResource( 43 )
 [node name="Triggers" type="Spatial" parent="."]
 
 [node name="KillTrigger" type="Area" parent="Triggers"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 47.5606, -47.8874, 13.5523 )
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 47.5606, -42.4036, 13.5523 )
 script = ExtResource( 14 )
 isKillZone = true
 
@@ -766,7 +781,7 @@ max_db = 6.0
 script = ExtResource( 40 )
 
 [node name="TrashAudio" type="AudioStreamPlayer3D" parent="AudioPoints"]
-transform = Transform( 1, 0, 0, 0, 0.99698, 0.0776591, 0, -0.0776591, 0.99698, 47.9225, -31.1477, 19.9753 )
+transform = Transform( 1, 0, 0, 0, 0.99698, 0.0776591, 0, -0.0776591, 0.99698, 54.103, -23.8333, 25.4063 )
 stream = ExtResource( 47 )
 unit_db = 30.0
 max_db = 6.0
@@ -913,16 +928,10 @@ material/0 = SubResource( 64 )
 [node name="GeigerCounter" parent="." instance=ExtResource( 44 )]
 transform = Transform( 0.17166, 0, 0.985156, 0, 1, 0, -0.985156, 0, 0.17166, 5.50541, -10.2901, -19.9819 )
 
-<<<<<<< HEAD
 [node name="vent" parent="." instance=ExtResource( 46 )]
 transform = Transform( 1.5, 0, 0, 0, 1.5, 0, 0, 0, 2, -55.8996, -11.3558, 4.46407 )
 script = ExtResource( 45 )
 
-=======
-[node name="Hotdog" parent="." instance=ExtResource( 16 )]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -16.7739, 1.91575, 22.1542 )
-
 [connection signal="OnTrigger" from="Triggers/KillTrigger" to="AudioPoints/TrashAudio" method="OnEvent"]
->>>>>>> c6935b1 (Audio setup)
 [connection signal="OnProcess" from="Triggers/ProcessTrigger" to="AudioPoints/ProcessAudio" method="OnEvent"]
 [connection signal="Pressed" from="SpawnButton" to="Spawner" method="OnSpawnButton"]
