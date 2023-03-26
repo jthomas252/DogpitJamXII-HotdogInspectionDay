@@ -1,4 +1,4 @@
-[gd_scene load_steps=93 format=2]
+[gd_scene load_steps=94 format=2]
 
 [ext_resource path="res://Scripts/BaseScene.cs" type="Script" id=1]
 [ext_resource path="res://Prefab/Cursor.tscn" type="PackedScene" id=2]
@@ -54,6 +54,7 @@
 [ext_resource path="res://Assets/Textures/handbook/Handbook-5.png" type="Texture" id=52]
 [ext_resource path="res://Assets/Textures/handbook/Handbook-3.png" type="Texture" id=53]
 [ext_resource path="res://Assets/Textures/handbook/Handbook-4.png" type="Texture" id=54]
+[ext_resource path="res://Assets/Textures/handbook/credits.png" type="Texture" id=55]
 
 [sub_resource type="CubeMesh" id=30]
 
@@ -743,6 +744,7 @@ next = NodePath("")
 [node name="Sprite3D" type="Sprite3D" parent="CreditPoster"]
 shaded = true
 double_sided = false
+texture = ExtResource( 55 )
 
 [node name="CollisionShape" type="CollisionShape" parent="CreditPoster"]
 shape = SubResource( 45 )
