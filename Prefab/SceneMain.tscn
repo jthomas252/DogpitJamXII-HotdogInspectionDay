@@ -1,4 +1,4 @@
-[gd_scene load_steps=88 format=2]
+[gd_scene load_steps=90 format=2]
 
 [ext_resource path="res://Scripts/BaseScene.cs" type="Script" id=1]
 [ext_resource path="res://Prefab/Cursor.tscn" type="PackedScene" id=2]
@@ -15,6 +15,7 @@
 [ext_resource path="res://Assets/Fonts/TimerFont.tres" type="DynamicFont" id=13]
 [ext_resource path="res://Scripts/Trigger.cs" type="Script" id=14]
 [ext_resource path="res://Assets/Models/trashcan/trashcan.obj" type="ArrayMesh" id=15]
+[ext_resource path="res://Prefab/Meathook.tscn" type="PackedScene" id=16]
 [ext_resource path="res://Scripts/SnapTrigger.cs" type="Script" id=17]
 [ext_resource path="res://Prefab/ComputerPrefab.tscn" type="PackedScene" id=18]
 [ext_resource path="res://Assets/Materials/trashcan.tres" type="Material" id=19]
@@ -49,6 +50,7 @@
 [ext_resource path="res://Assets/Fonts/DosFont.tres" type="DynamicFont" id=48]
 [ext_resource path="res://Assets/Music/hotdog_title.ogg" type="AudioStream" id=49]
 [ext_resource path="res://Assets/Music/hotdog_bgm.ogg" type="AudioStream" id=50]
+[ext_resource path="res://Scripts/Meathook.cs" type="Script" id=51]
 
 [sub_resource type="CubeMesh" id=30]
 
@@ -544,6 +546,7 @@ shape = SubResource( 67 )
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 554.538, 0, -100 )
 
 [node name="MeshInstance" type="MeshInstance" parent="Environment/Static/RightWall"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 44.1254 )
 mesh = SubResource( 25 )
 material/0 = ExtResource( 7 )
 
@@ -921,6 +924,10 @@ transform = Transform( 0.17166, 0, 0.985156, 0, 1, 0, -0.985156, 0, 0.17166, 5.5
 [node name="vent" parent="." instance=ExtResource( 46 )]
 transform = Transform( 1.5, 0, 0, 0, 1.5, 0, 0, 0, 2, -55.8996, -11.3558, 4.46407 )
 script = ExtResource( 45 )
+
+[node name="meathook" parent="." instance=ExtResource( 16 )]
+transform = Transform( -4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 222.748, 32.682, -153.602 )
+script = ExtResource( 51 )
 
 [node name="Music" type="AudioStreamPlayer" parent="."]
 volume_db = -20.0
