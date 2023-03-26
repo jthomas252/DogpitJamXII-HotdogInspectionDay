@@ -4,13 +4,8 @@
     - Should include some basic enviromental details in the distance to give a sense of depth
     - Possibly add meathooks or small animation in the background 
 
-- Cardboard box
-    - Used if we do the secret condition 
-    - Should be just large enough to fit a hotdog in 
-
 - Arbitrary models (non-hotdogs)
     - Human finger
-    - Dynamite
     - Bone
 	- Non-interactives to leave on the desk, places for the rat to scurry
 	- Pipes, wall objects, etc. 
@@ -39,17 +34,14 @@
 
 - Add credits poster
 
-# Feedback
-- Simplify serial numbers
-	- Should always be a repeating number puzzle?
-	- Simplify down to 7 digits instead of 9
-
 # Misc
 - Have a "Start Shift" button, maybe on the spawner button arm
 	- Trigger the spot lights to flash
 	- Conveyor animation starts
 	- Computer turns on
 	- Gives the player a chance to read the manual or examine notices
+
+- Spawn random objects 
 
 # Sound setup
 - Play title theme on the between-days pop-up
@@ -89,7 +81,8 @@
 
 # Nice to have
 - Make the vent break open 
-	- Add trigger, play the break animation when a rat comes through
+	- Change script to work off a signal / trigger
+	- Figure out a sound to play 
 
 - Make the start screen look nice
 
@@ -102,6 +95,7 @@
 
 - Dynamite
 	- If it explodes causes a game over
+	- Animation is burn_fuse, time is 1s
 
 - Fix problems with rat moonwalking
 	- Could have a child object that can run LookAt and copy the rotation from it
@@ -124,10 +118,6 @@
 
 - Improve the next/prev buttons 
 	- Should probably just be generic arrows 
-
-- Add secret box
-	- It asks for a specific condition hotdog in a note
-	- If fulfilled gives some kind of unique reward
 
 - Make an ending segment
 	- Newspaper article detailing how the factory was shut down

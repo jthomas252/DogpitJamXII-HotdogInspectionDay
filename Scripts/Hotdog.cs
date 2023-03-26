@@ -107,14 +107,13 @@ public class Hotdog : GrabbableObject
         string output =
             $"BRAND   {_brand.ToString()}\n" +
             $"SERIAL  {_serialNumber}\n" +
-            $"QUALITY {_qualityLevel}\n" +
-            $"MOLD    {_moldLevel}\n" +
-            $"COLD    {_temperature}\n" +
-            $"RADIO   {_radioactivity}\n" +
-            $"BURNT   {_burntLevel}\n" + 
-            "\n### MEAT CONTENTS ######!\n";
+            "\n### MEAT CONTENTS #############################\n";
         
         // Iterate through meats and add to output
+        foreach (MeatContent meat in _meats)
+        {
+            output += $"{meat.ToString()}\n";
+        }
 
         return output.ToUpper();
     }
@@ -402,5 +401,7 @@ public class Hotdog : GrabbableObject
                 MeatContent.CHICKEN,
             } 
         }
-    };    
+    };   
+    
+    
 }
