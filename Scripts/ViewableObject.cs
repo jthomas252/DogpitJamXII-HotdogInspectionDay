@@ -20,6 +20,7 @@ public class ViewableObject : KinematicBody
     public virtual void Inspect()
     {
         if (_inspecting) return;
+        
         GD.Print($"Document grabbed {Name}");
         
         GlobalTranslation = _inspectPoint.GlobalTranslation;

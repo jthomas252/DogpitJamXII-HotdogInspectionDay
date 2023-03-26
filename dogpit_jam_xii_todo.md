@@ -9,9 +9,6 @@
 
 - Spawn random objects 
 
-# Sound setup
-- Play title theme on the between-days pop-up
-
 # Level Iteration
 - Set rat spawns to change on Level 2+
 
@@ -37,8 +34,6 @@
 - Make the vent break open 
 	- Change script to work off a signal / trigger
 	- Figure out a sound to play 
-
-- Make the start screen look nice
 
 - Dynamite
 	- If it explodes causes a game over

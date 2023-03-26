@@ -37,6 +37,8 @@ public class Cursor : Sprite3D
     private Array ignoreObjects;
     private PhysicsDirectSpaceState spaceState;
 
+    private bool _revertToNormalOnDrop = false; 
+
     public enum CursorState
     {
         HandOpen,
@@ -79,6 +81,8 @@ public class Cursor : Sprite3D
                 grabbedObject = viewableObject;
                 ChangeCursorState(CursorState.HandOpen);
                 BaseScene.ChangePlayerState(BaseScene.PlayerState.Inspecting);
+
+                _revertToNormalOnDrop = true; 
             }
 
             if (hoverObject is GrabbableObject grabbableObject)
@@ -88,6 +92,8 @@ public class Cursor : Sprite3D
                 grabbableObject.Grab();
                 ChangeCursorState(CursorState.HandClosed);
                 BaseScene.ChangePlayerState(BaseScene.PlayerState.Grabbing);
+
+                _revertToNormalOnDrop = false; 
             }
         }
     }
@@ -123,7 +129,7 @@ public class Cursor : Sprite3D
 
                     case (int)ButtonList.Right:
                         // Don't allow dropping the hotdog if it's currently in inspection mode, but cancel out instead
-                        if (!BaseScene.Inspecting())
+                        if (!BaseScene.Inspecting() || _revertToNormalOnDrop)
                         {
                             DropObject();
                         }
@@ -324,7 +330,7 @@ public class Cursor : Sprite3D
 
     public static void ForceReleaseObject(Spatial obj)
     {
-        if (obj == _instance.grabbedObject)
+        if (IsInstanceValid(_instance.grabbedObject) && obj == _instance.grabbedObject)
         {
             _instance.DropObject();
         }

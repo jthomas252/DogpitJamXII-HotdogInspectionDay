@@ -23,7 +23,7 @@ public class ViewableDocument : ViewableObject
 
         if (previous != null) _prev = GetNodeOrNull<ViewableObject>(previous);
         if (next != null) _next = GetNodeOrNull<ViewableObject>(next);
-        
+
         _prevButton.Connect("pressed", this, nameof(OnPrevButton));
         _nextButton.Connect("pressed", this, nameof(OnNextButton));             
     }

@@ -1,4 +1,4 @@
-[gd_scene load_steps=96 format=2]
+[gd_scene load_steps=98 format=2]
 
 [ext_resource path="res://Scripts/BaseScene.cs" type="Script" id=1]
 [ext_resource path="res://Prefab/Cursor.tscn" type="PackedScene" id=2]
@@ -27,9 +27,9 @@
 [ext_resource path="res://Scripts/ProcessTrigger.cs" type="Script" id=25]
 [ext_resource path="res://Assets/Textures/cursor_grab.png" type="Texture" id=26]
 [ext_resource path="res://Assets/Sounds/the_most_important_sound.wav" type="AudioStream" id=27]
-[ext_resource path="res://Assets/Textures/Logo.svg" type="Texture" id=28]
+[ext_resource path="res://Assets/Textures/Logo_White.png" type="Texture" id=28]
 [ext_resource path="res://Assets/Fonts/StencilFont.tres" type="DynamicFont" id=29]
-[ext_resource path="res://Assets/Textures/texture_hotdog.png" type="Texture" id=30]
+[ext_resource path="res://Assets/Textures/djam_logo.png" type="Texture" id=30]
 [ext_resource path="res://Assets/Sounds/ComputerHum_Loop.ogg" type="AudioStream" id=31]
 [ext_resource path="res://Assets/Textures/decal_scanner.png" type="Texture" id=32]
 [ext_resource path="res://Assets/Textures/decal_spawner.png" type="Texture" id=33]
@@ -57,6 +57,14 @@
 [ext_resource path="res://Assets/Textures/handbook/credits.png" type="Texture" id=55]
 [ext_resource path="res://Scripts/Fader.cs" type="Script" id=56]
 [ext_resource path="res://Scripts/StartScreen.cs" type="Script" id=57]
+
+[sub_resource type="DynamicFontData" id=1]
+antialiased = false
+font_path = "res://Assets/Fonts/Ac437_Phoenix_BIOS.ttf"
+
+[sub_resource type="DynamicFont" id=73]
+size = 24
+font_data = SubResource( 1 )
 
 [sub_resource type="CubeMesh" id=30]
 
@@ -132,15 +140,17 @@ size = Vector3( 24, 9, 2 )
 [sub_resource type="SpatialMaterial" id=62]
 albedo_color = Color( 0.341176, 0.341176, 0.341176, 1 )
 
-[sub_resource type="BoxShape" id=45]
-extents = Vector3( 3, 4.25, 0.1 )
-
 [sub_resource type="PlaneMesh" id=54]
 size = Vector2( 15, 15 )
 
 [sub_resource type="SpatialMaterial" id=55]
 flags_transparent = true
 albedo_texture = ExtResource( 33 )
+
+[sub_resource type="SphereMesh" id=63]
+
+[sub_resource type="SpatialMaterial" id=64]
+albedo_color = Color( 0.898039, 0.270588, 0.270588, 1 )
 
 [sub_resource type="BoxShape" id=72]
 extents = Vector3( 200, 10, 200 )
@@ -169,10 +179,8 @@ extents = Vector3( 7, 10, 10 )
 [sub_resource type="BoxShape" id=48]
 extents = Vector3( 10, 10, 30 )
 
-[sub_resource type="SphereMesh" id=63]
-
-[sub_resource type="SpatialMaterial" id=64]
-albedo_color = Color( 0.898039, 0.270588, 0.270588, 1 )
+[sub_resource type="BoxShape" id=45]
+extents = Vector3( 3, 4.25, 0.1 )
 
 [node name="SceneRoot" type="Spatial"]
 script = ExtResource( 1 )
@@ -214,29 +222,19 @@ enabled_focus_mode = 0
 text = "Next"
 
 [node name="StartScreen" type="ColorRect" parent="Interface"]
+visible = false
 anchor_right = 1.0
 anchor_bottom = 1.0
-color = Color( 0.552941, 0.34902, 0.25098, 1 )
+color = Color( 0, 0, 0, 1 )
 script = ExtResource( 57 )
-
-[node name="TextureRect2" type="TextureRect" parent="Interface/StartScreen"]
-modulate = Color( 1, 1, 1, 0.584314 )
-anchor_right = 1.0
-anchor_bottom = 1.0
-margin_right = 1280.0
-margin_bottom = 720.0
-rect_scale = Vector2( 0.5, 0.5 )
-texture = ExtResource( 30 )
-expand = true
-stretch_mode = 2
 
 [node name="TextureRect" type="TextureRect" parent="Interface/StartScreen"]
 anchor_left = 1.0
 anchor_right = 1.0
-margin_left = -1088.0
-margin_top = 64.0
-margin_right = 192.0
-margin_bottom = 1344.0
+margin_left = -888.0
+margin_top = 96.0
+margin_right = 392.0
+margin_bottom = 1376.0
 rect_scale = Vector2( 0.32, 0.32 )
 rect_pivot_offset = Vector2( 32, 32 )
 size_flags_horizontal = 0
@@ -244,28 +242,50 @@ size_flags_vertical = 0
 texture = ExtResource( 28 )
 stretch_mode = 4
 
+[node name="TextureRect3" type="TextureRect" parent="Interface/StartScreen"]
+margin_left = -24.0
+margin_top = -24.0
+margin_right = 2135.0
+margin_bottom = 1256.0
+rect_scale = Vector2( 0.16, 0.16 )
+rect_pivot_offset = Vector2( 32, 32 )
+size_flags_horizontal = 0
+size_flags_vertical = 0
+texture = ExtResource( 30 )
+stretch_mode = 4
+
 [node name="Label" type="Label" parent="Interface/StartScreen"]
-margin_left = 208.0
-margin_top = 472.0
-margin_right = 575.0
-margin_bottom = 541.0
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -368.0
+margin_top = 136.0
+margin_right = -1.0
+margin_bottom = 205.0
 rect_scale = Vector2( 2.08, 2.08 )
-custom_colors/font_color = Color( 0, 0, 0, 1 )
+custom_colors/font_color = Color( 1, 1, 1, 1 )
 custom_fonts/font = ExtResource( 29 )
 text = "Hotdog Inspection Day
 "
+align = 1
+valign = 1
 
 [node name="Button" type="Button" parent="Interface/StartScreen"]
 anchor_left = 0.5
 anchor_top = 1.0
 anchor_right = 0.5
 anchor_bottom = 1.0
-margin_left = -100.0
-margin_top = -140.0
-margin_right = 100.0
-margin_bottom = -40.0
+margin_left = -112.0
+margin_top = -144.0
+margin_right = 88.0
+margin_bottom = -44.0
+focus_mode = 0
 theme = ExtResource( 3 )
+custom_fonts/font = SubResource( 73 )
+enabled_focus_mode = 0
 text = "Begin"
+icon_align = 1
 
 [node name="ControlText" type="Label" parent="Interface"]
 anchor_left = 0.5
@@ -273,9 +293,9 @@ anchor_top = 1.0
 anchor_right = 0.5
 anchor_bottom = 1.0
 margin_left = -78.0
-margin_top = -83.0
+margin_top = -94.0
 margin_right = 78.0
-margin_bottom = -48.0
+margin_bottom = -59.0
 rect_scale = Vector2( 1.5, 1.5 )
 custom_fonts/font = ExtResource( 48 )
 align = 1
@@ -292,7 +312,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 color = Color( 0, 0, 0, 1 )
 
-[node name="Fader" type="ColorRect" parent="."]
+[node name="Fader" type="ColorRect" parent="Interface"]
 anchor_right = 1.0
 anchor_bottom = 1.0
 mouse_filter = 2
@@ -659,115 +679,13 @@ text = "00:00"
 font = ExtResource( 13 )
 horizontal_alignment = 2
 
-[node name="Handbook" type="KinematicBody" parent="."]
-physics_interpolation_mode = 1
-transform = Transform( 0.898388, 0.439202, 1.91982e-08, 0, -4.37114e-08, 1, 0.439202, -0.898388, -3.92698e-08, 7.1295, -9.42205, 13.7956 )
-collision_layer = 2
-collision_mask = 2
-script = ExtResource( 10 )
-previous = NodePath("")
-next = NodePath("../Handbook2")
+[node name="vent" parent="Environment" instance=ExtResource( 46 )]
+transform = Transform( 1.5, 0, 0, 0, 1.5, 0, 0, 0, 2, -55.8996, -24.7143, 4.46407 )
+script = ExtResource( 45 )
 
-[node name="Sprite3D" type="Sprite3D" parent="Handbook"]
-shaded = true
-double_sided = false
-texture = ExtResource( 4 )
-
-[node name="CollisionShape" type="CollisionShape" parent="Handbook"]
-shape = SubResource( 45 )
-
-[node name="Handbook2" type="KinematicBody" parent="."]
-physics_interpolation_mode = 1
-transform = Transform( 0.898388, 0.439202, 1.91982e-08, 0, -4.37114e-08, 1, 0.439202, -0.898388, -3.92698e-08, 7.1295, -9.42205, 13.7956 )
-collision_layer = 2
-collision_mask = 2
-script = ExtResource( 10 )
-previous = NodePath("../Handbook")
-next = NodePath("../Handbook3")
-
-[node name="Sprite3D" type="Sprite3D" parent="Handbook2"]
-transform = Transform( 1, -2.98023e-08, 0, 2.98023e-08, 1, -3.55271e-15, -1.77636e-15, 7.10543e-15, 1, 0, 0, -0.028389 )
-shaded = true
-double_sided = false
-texture = ExtResource( 22 )
-
-[node name="CollisionShape" type="CollisionShape" parent="Handbook2"]
-shape = SubResource( 45 )
-disabled = true
-
-[node name="Handbook3" type="KinematicBody" parent="."]
-physics_interpolation_mode = 1
-transform = Transform( 0.898388, 0.439202, 1.91982e-08, 0, -4.37114e-08, 1, 0.439202, -0.898388, -3.92698e-08, 7.1295, -9.42205, 13.7956 )
-collision_layer = 2
-collision_mask = 2
-script = ExtResource( 10 )
-previous = NodePath("../Handbook2")
-next = NodePath("../Handbook4")
-
-[node name="Sprite3D" type="Sprite3D" parent="Handbook3"]
-transform = Transform( 1, -2.98023e-08, 0, 2.98023e-08, 1, -3.55271e-15, -1.77636e-15, 7.10543e-15, 1, 0, 0, -0.028389 )
-shaded = true
-double_sided = false
-texture = ExtResource( 53 )
-
-[node name="CollisionShape" type="CollisionShape" parent="Handbook3"]
-shape = SubResource( 45 )
-disabled = true
-
-[node name="Handbook4" type="KinematicBody" parent="."]
-physics_interpolation_mode = 1
-transform = Transform( 0.898388, 0.439202, 1.91982e-08, 0, -4.37114e-08, 1, 0.439202, -0.898388, -3.92698e-08, 7.1295, -9.42205, 13.7956 )
-collision_layer = 2
-collision_mask = 2
-script = ExtResource( 10 )
-previous = NodePath("../Handbook3")
-next = NodePath("../Handbook5")
-
-[node name="Sprite3D" type="Sprite3D" parent="Handbook4"]
-transform = Transform( 1, -2.98023e-08, 0, 2.98023e-08, 1, -3.55271e-15, -1.77636e-15, 7.10543e-15, 1, 0, 0, -0.028389 )
-shaded = true
-double_sided = false
-texture = ExtResource( 54 )
-
-[node name="CollisionShape" type="CollisionShape" parent="Handbook4"]
-shape = SubResource( 45 )
-disabled = true
-
-[node name="Handbook5" type="KinematicBody" parent="."]
-physics_interpolation_mode = 1
-transform = Transform( 0.898388, 0.439202, 1.91982e-08, 0, -4.37114e-08, 1, 0.439202, -0.898388, -3.92698e-08, 7.1295, -9.42205, 13.7956 )
-collision_layer = 2
-collision_mask = 2
-script = ExtResource( 10 )
-previous = NodePath("../Handbook4")
-next = NodePath("")
-
-[node name="Sprite3D" type="Sprite3D" parent="Handbook5"]
-transform = Transform( 1, -2.98023e-08, 0, 2.98023e-08, 1, -3.55271e-15, -1.77636e-15, 7.10543e-15, 1, 0, 0, -0.028389 )
-shaded = true
-double_sided = false
-texture = ExtResource( 52 )
-
-[node name="CollisionShape" type="CollisionShape" parent="Handbook5"]
-shape = SubResource( 45 )
-disabled = true
-
-[node name="CreditPoster" type="KinematicBody" parent="."]
-physics_interpolation_mode = 1
-transform = Transform( -4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -54.6925, 20.8471, 4.83691 )
-collision_layer = 2
-collision_mask = 2
-script = ExtResource( 10 )
-previous = NodePath("")
-next = NodePath("")
-
-[node name="Sprite3D" type="Sprite3D" parent="CreditPoster"]
-shaded = true
-double_sided = false
-texture = ExtResource( 55 )
-
-[node name="CollisionShape" type="CollisionShape" parent="CreditPoster"]
-shape = SubResource( 45 )
+[node name="meathook" parent="Environment" instance=ExtResource( 16 )]
+transform = Transform( -4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 222.748, 19.3235, -153.602 )
+script = ExtResource( 51 )
 
 [node name="Spawner" parent="." instance=ExtResource( 23 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -37.4838, -15.8078, -44.4093 )
@@ -780,101 +698,6 @@ material/0 = SubResource( 55 )
 [node name="RatSpawner" type="Spatial" parent="."]
 script = ExtResource( 41 )
 ratPrefab = ExtResource( 43 )
-
-[node name="Triggers" type="Spatial" parent="."]
-
-[node name="KillTrigger" type="Area" parent="Triggers"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 47.5606, -42.4036, 13.5523 )
-script = ExtResource( 14 )
-isKillZone = true
-
-[node name="CollisionShape" type="CollisionShape" parent="Triggers/KillTrigger"]
-shape = SubResource( 72 )
-
-[node name="ScanTrigger" type="Area" parent="Triggers"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 25.5288, -5.72044, -22.8146 )
-script = ExtResource( 20 )
-
-[node name="CollisionShape" type="CollisionShape" parent="Triggers/ScanTrigger"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1.74654, 0 )
-shape = SubResource( 71 )
-
-[node name="MeshInstance" type="MeshInstance" parent="Triggers/ScanTrigger"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -4.90611, 0.145279 )
-mesh = SubResource( 56 )
-material/0 = SubResource( 57 )
-
-[node name="RatTrigger" type="Area" parent="Triggers"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -117.349, -5.72044, -0.630898 )
-script = ExtResource( 42 )
-
-[node name="CollisionShape" type="CollisionShape" parent="Triggers/RatTrigger"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1.74654, 5.59595 )
-shape = SubResource( 68 )
-
-[node name="ProcessTrigger" type="Area" parent="Triggers"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 45.2887, -1.91454, -92.5094 )
-script = ExtResource( 25 )
-
-[node name="CollisionShape" type="CollisionShape" parent="Triggers/ProcessTrigger"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -3.09319 )
-shape = SubResource( 70 )
-
-[node name="SnapTriggerTrash" type="Area" parent="Triggers"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 47.9628, -13.312, 15.9003 )
-visible = false
-collision_layer = 2
-collision_mask = 2
-script = ExtResource( 17 )
-
-[node name="SnapPoint" type="MeshInstance" parent="Triggers/SnapTriggerTrash"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 1.1931, 2.61632, -0.871426 )
-mesh = SubResource( 46 )
-
-[node name="CollisionShape" type="CollisionShape" parent="Triggers/SnapTriggerTrash"]
-shape = SubResource( 47 )
-
-[node name="SnapTriggerConveyor" type="Area" parent="Triggers"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 47.9628, 7.64337, -49.2302 )
-visible = false
-collision_layer = 2
-collision_mask = 2
-script = ExtResource( 17 )
-
-[node name="SnapPoint" type="MeshInstance" parent="Triggers/SnapTriggerConveyor"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 1.1931, -6.03695, 18.3939 )
-mesh = SubResource( 46 )
-
-[node name="CollisionShape" type="CollisionShape" parent="Triggers/SnapTriggerConveyor"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1.01586, 7.79892 )
-shape = SubResource( 48 )
-
-[node name="SpawnButton" parent="." instance=ExtResource( 9 )]
-transform = Transform( 0.187037, 0, 0.982353, 0, 1, 0, -0.982353, 0, 0.187037, -42.1161, 24.7996, -7.1422 )
-
-[node name="AmbientSounds" type="Spatial" parent="."]
-
-[node name="ComputerHum" type="AudioStreamPlayer3D" parent="AmbientSounds"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 51.9969, 30.7374, -20.7901 )
-stream = ExtResource( 31 )
-unit_db = 4.72
-autoplay = true
-
-[node name="AudioPoints" type="Spatial" parent="."]
-
-[node name="ProcessAudio" type="AudioStreamPlayer3D" parent="AudioPoints"]
-transform = Transform( 1, 0, 0, 0, 0.99698, 0.0776591, 0, -0.0776591, 0.99698, 51.2902, 0, -62.3478 )
-stream = ExtResource( 39 )
-unit_db = 30.0
-max_db = 6.0
-script = ExtResource( 40 )
-
-[node name="TrashAudio" type="AudioStreamPlayer3D" parent="AudioPoints"]
-transform = Transform( 1, 0, 0, 0, 0.99698, 0.0776591, 0, -0.0776591, 0.99698, 54.103, -23.8333, 25.4063 )
-stream = ExtResource( 47 )
-unit_db = 30.0
-max_db = 6.0
-script = ExtResource( 40 )
 
 [node name="RatPointList" type="Spatial" parent="."]
 visible = false
@@ -1014,25 +837,224 @@ transform = Transform( -0.999759, -0.0219341, 0, 0.0219341, -0.999759, 0, 0, 0, 
 mesh = SubResource( 63 )
 material/0 = SubResource( 64 )
 
+[node name="Triggers" type="Spatial" parent="."]
+
+[node name="KillTrigger" type="Area" parent="Triggers"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 47.5606, -42.4036, 13.5523 )
+script = ExtResource( 14 )
+isKillZone = true
+
+[node name="CollisionShape" type="CollisionShape" parent="Triggers/KillTrigger"]
+shape = SubResource( 72 )
+
+[node name="ScanTrigger" type="Area" parent="Triggers"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 25.5288, -5.72044, -22.8146 )
+script = ExtResource( 20 )
+
+[node name="CollisionShape" type="CollisionShape" parent="Triggers/ScanTrigger"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1.74654, 0 )
+shape = SubResource( 71 )
+
+[node name="MeshInstance" type="MeshInstance" parent="Triggers/ScanTrigger"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -4.90611, 0.145279 )
+mesh = SubResource( 56 )
+material/0 = SubResource( 57 )
+
+[node name="RatTrigger" type="Area" parent="Triggers"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -117.349, -5.72044, -0.630898 )
+script = ExtResource( 42 )
+
+[node name="CollisionShape" type="CollisionShape" parent="Triggers/RatTrigger"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1.74654, 5.59595 )
+shape = SubResource( 68 )
+
+[node name="ProcessTrigger" type="Area" parent="Triggers"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 45.2887, -1.91454, -92.5094 )
+script = ExtResource( 25 )
+
+[node name="CollisionShape" type="CollisionShape" parent="Triggers/ProcessTrigger"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -3.09319 )
+shape = SubResource( 70 )
+
+[node name="SnapTriggerTrash" type="Area" parent="Triggers"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 47.9628, -13.312, 15.9003 )
+visible = false
+collision_layer = 2
+collision_mask = 2
+script = ExtResource( 17 )
+
+[node name="SnapPoint" type="MeshInstance" parent="Triggers/SnapTriggerTrash"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 1.1931, 2.61632, -0.871426 )
+mesh = SubResource( 46 )
+
+[node name="CollisionShape" type="CollisionShape" parent="Triggers/SnapTriggerTrash"]
+shape = SubResource( 47 )
+
+[node name="SnapTriggerConveyor" type="Area" parent="Triggers"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 47.9628, 7.64337, -49.2302 )
+visible = false
+collision_layer = 2
+collision_mask = 2
+script = ExtResource( 17 )
+
+[node name="SnapPoint" type="MeshInstance" parent="Triggers/SnapTriggerConveyor"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 1.1931, -6.03695, 18.3939 )
+mesh = SubResource( 46 )
+
+[node name="CollisionShape" type="CollisionShape" parent="Triggers/SnapTriggerConveyor"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1.01586, 7.79892 )
+shape = SubResource( 48 )
+
+[node name="SpawnButton" parent="." instance=ExtResource( 9 )]
+transform = Transform( 0.187037, 0, 0.982353, 0, 1, 0, -0.982353, 0, 0.187037, -42.1161, 24.7996, -7.1422 )
+
+[node name="AmbientSounds" type="Spatial" parent="."]
+
+[node name="ComputerHum" type="AudioStreamPlayer3D" parent="AmbientSounds"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 51.9969, 30.7374, -20.7901 )
+stream = ExtResource( 31 )
+unit_db = 4.72
+autoplay = true
+
+[node name="AudioPoints" type="Spatial" parent="."]
+
+[node name="ProcessAudio" type="AudioStreamPlayer3D" parent="AudioPoints"]
+transform = Transform( 1, 0, 0, 0, 0.99698, 0.0776591, 0, -0.0776591, 0.99698, 51.2902, 0, -62.3478 )
+stream = ExtResource( 39 )
+unit_db = 30.0
+max_db = 6.0
+script = ExtResource( 40 )
+
+[node name="TrashAudio" type="AudioStreamPlayer3D" parent="AudioPoints"]
+transform = Transform( 1, 0, 0, 0, 0.99698, 0.0776591, 0, -0.0776591, 0.99698, 54.103, -23.8333, 25.4063 )
+stream = ExtResource( 47 )
+unit_db = 30.0
+max_db = 6.0
+script = ExtResource( 40 )
+
 [node name="GeigerCounter" parent="." instance=ExtResource( 44 )]
 transform = Transform( 0.17166, 0, 0.985156, 0, 1, 0, -0.985156, 0, 0.17166, 5.50541, -10.2901, -19.9819 )
 
-[node name="vent" parent="." instance=ExtResource( 46 )]
-transform = Transform( 1.5, 0, 0, 0, 1.5, 0, 0, 0, 2, -55.8996, -11.3558, 4.46407 )
-script = ExtResource( 45 )
+[node name="Documents" type="Spatial" parent="."]
 
-[node name="meathook" parent="." instance=ExtResource( 16 )]
-transform = Transform( -4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 222.748, 32.682, -153.602 )
-script = ExtResource( 51 )
+[node name="Handbook" type="KinematicBody" parent="Documents"]
+physics_interpolation_mode = 1
+transform = Transform( 0.898388, 0.439202, 1.91982e-08, 0, -4.37114e-08, 1, 0.439202, -0.898388, -3.92698e-08, 7.1295, -9.42205, 13.7956 )
+collision_layer = 2
+collision_mask = 2
+script = ExtResource( 10 )
+previous = NodePath("")
+next = NodePath("../Handbook2")
+
+[node name="Sprite3D" type="Sprite3D" parent="Documents/Handbook"]
+shaded = true
+double_sided = false
+texture = ExtResource( 4 )
+
+[node name="CollisionShape" type="CollisionShape" parent="Documents/Handbook"]
+shape = SubResource( 45 )
+
+[node name="Handbook2" type="KinematicBody" parent="Documents"]
+physics_interpolation_mode = 1
+transform = Transform( 0.898388, 0.439202, 1.91982e-08, 0, -4.37114e-08, 1, 0.439202, -0.898388, -3.92698e-08, 7.1295, -9.42205, 13.7956 )
+collision_layer = 2
+collision_mask = 2
+script = ExtResource( 10 )
+previous = NodePath("../Handbook")
+next = NodePath("../Handbook3")
+
+[node name="Sprite3D" type="Sprite3D" parent="Documents/Handbook2"]
+transform = Transform( 1, -2.98023e-08, 0, 2.98023e-08, 1, -3.55271e-15, -1.77636e-15, 7.10543e-15, 1, 0, 0, -0.028389 )
+shaded = true
+double_sided = false
+texture = ExtResource( 22 )
+
+[node name="CollisionShape" type="CollisionShape" parent="Documents/Handbook2"]
+shape = SubResource( 45 )
+disabled = true
+
+[node name="Handbook3" type="KinematicBody" parent="Documents"]
+physics_interpolation_mode = 1
+transform = Transform( 0.898388, 0.439202, 1.91982e-08, 0, -4.37114e-08, 1, 0.439202, -0.898388, -3.92698e-08, 7.1295, -9.42205, 13.7956 )
+collision_layer = 2
+collision_mask = 2
+script = ExtResource( 10 )
+previous = NodePath("../Handbook2")
+next = NodePath("../Handbook4")
+
+[node name="Sprite3D" type="Sprite3D" parent="Documents/Handbook3"]
+transform = Transform( 1, -2.98023e-08, 0, 2.98023e-08, 1, -3.55271e-15, -1.77636e-15, 7.10543e-15, 1, 0, 0, -0.028389 )
+shaded = true
+double_sided = false
+texture = ExtResource( 53 )
+
+[node name="CollisionShape" type="CollisionShape" parent="Documents/Handbook3"]
+shape = SubResource( 45 )
+disabled = true
+
+[node name="Handbook4" type="KinematicBody" parent="Documents"]
+physics_interpolation_mode = 1
+transform = Transform( 0.898388, 0.439202, 1.91982e-08, 0, -4.37114e-08, 1, 0.439202, -0.898388, -3.92698e-08, 7.1295, -9.42205, 13.7956 )
+collision_layer = 2
+collision_mask = 2
+script = ExtResource( 10 )
+previous = NodePath("../Handbook3")
+next = NodePath("../Handbook5")
+
+[node name="Sprite3D" type="Sprite3D" parent="Documents/Handbook4"]
+transform = Transform( 1, -2.98023e-08, 0, 2.98023e-08, 1, -3.55271e-15, -1.77636e-15, 7.10543e-15, 1, 0, 0, -0.028389 )
+shaded = true
+double_sided = false
+texture = ExtResource( 54 )
+
+[node name="CollisionShape" type="CollisionShape" parent="Documents/Handbook4"]
+shape = SubResource( 45 )
+disabled = true
+
+[node name="Handbook5" type="KinematicBody" parent="Documents"]
+physics_interpolation_mode = 1
+transform = Transform( 0.898388, 0.439202, 1.91982e-08, 0, -4.37114e-08, 1, 0.439202, -0.898388, -3.92698e-08, 7.1295, -9.42205, 13.7956 )
+collision_layer = 2
+collision_mask = 2
+script = ExtResource( 10 )
+previous = NodePath("../Handbook4")
+next = NodePath("")
+
+[node name="Sprite3D" type="Sprite3D" parent="Documents/Handbook5"]
+transform = Transform( 1, -2.98023e-08, 0, 2.98023e-08, 1, -3.55271e-15, -1.77636e-15, 7.10543e-15, 1, 0, 0, -0.028389 )
+shaded = true
+double_sided = false
+texture = ExtResource( 52 )
+
+[node name="CollisionShape" type="CollisionShape" parent="Documents/Handbook5"]
+shape = SubResource( 45 )
+disabled = true
+
+[node name="CreditPoster" type="KinematicBody" parent="Documents"]
+physics_interpolation_mode = 1
+transform = Transform( -4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -54.6925, 20.8471, 4.83691 )
+collision_layer = 2
+collision_mask = 2
+script = ExtResource( 10 )
+previous = NodePath("")
+next = NodePath("")
+
+[node name="Sprite3D" type="Sprite3D" parent="Documents/CreditPoster"]
+shaded = true
+double_sided = false
+texture = ExtResource( 55 )
+
+[node name="CollisionShape" type="CollisionShape" parent="Documents/CreditPoster"]
+shape = SubResource( 45 )
 
 [node name="Music" type="AudioStreamPlayer" parent="."]
 volume_db = -20.0
 
 [node name="Sound" type="AudioStreamPlayer" parent="."]
-volume_db = -10.0
+volume_db = -15.0
 
 [connection signal="pressed" from="Interface/StartScreen/Button" to="Interface/StartScreen" method="OnStartButton"]
-[connection signal="FadeApex" from="Fader" to="Interface/StartScreen" method="Hide"]
+[connection signal="FadeApex" from="Interface/Fader" to="Interface/StartScreen" method="Hide"]
 [connection signal="OnTrigger" from="Triggers/KillTrigger" to="AudioPoints/TrashAudio" method="OnEvent"]
 [connection signal="OnProcess" from="Triggers/ProcessTrigger" to="AudioPoints/ProcessAudio" method="OnEvent"]
 [connection signal="Pressed" from="SpawnButton" to="Spawner" method="OnSpawnButton"]

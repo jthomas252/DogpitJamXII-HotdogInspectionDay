@@ -49,7 +49,7 @@ public class GrabbableObject : RigidBody
         return radiation; 
     }
 
-    private void OnInspection()
+    protected virtual void OnInspection()
     {
         if (isGrabbed)
         {
@@ -60,7 +60,7 @@ public class GrabbableObject : RigidBody
         }
     }
 
-    private void InspectionReset()
+    protected virtual void InspectionReset()
     {
         if (isGrabbed)
         {

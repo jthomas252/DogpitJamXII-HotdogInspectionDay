@@ -128,10 +128,8 @@ public class BaseScene : Spatial
 	public static void StartNextLevel()
 	{
 		_instance.EmitEvent("LevelStart");
-		_instance._playerLevel++; 
-		
-		
-		
+		_instance._playerLevel++;
+
 		_instance._playerQuota = PLAYER_QUOTA + _instance._playerLevel * PLAYER_QUOTA_PER_LEVEL;
 		_instance._playerTimer = PLAYER_LEVEL_LENGTH; 
 	}
@@ -144,7 +142,7 @@ public class BaseScene : Spatial
 	}
 
 	// Play a generic sound at the world position
-	public static void PlaySound(AudioStream stream, float volume = 10f)
+	public static void PlaySound(AudioStream stream, float volume = -10f)
 	{
 		_instance._soundPlayer.VolumeDb = volume; 
 		_instance._soundPlayer.Stream = stream; 
@@ -183,8 +181,23 @@ public class BaseScene : Spatial
 
 		_musicPlayer.Stream = titleTheme;
 		_musicPlayer.Play(); 
-		
-		StartNextLevel();
+	}
+
+	public void OnFadeApex(string callback)
+	{
+		switch (callback)
+		{
+			case "hide_stat_menu":
+			case "hide_start_menu":
+				_musicPlayer.Stream = gameTheme;
+				_musicPlayer.Play();
+				break; 
+			
+			case "show_stat_menu":
+				_musicPlayer.Stream = titleTheme;
+				_musicPlayer.Play(); 
+				break;
+		}
 	}
 
 	public override void _Process(float delta)
