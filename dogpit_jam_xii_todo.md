@@ -1,6 +1,10 @@
 # Misc
 - Make builds and submit to Itch.io
 
+- Make geiger counter louder
+
+- Make conveyor anim/trigger only active when the game is
+
 # Level Iteration
 - Show screen between levels telling the player how they did
 	- Let them know if they fulfilled quota
@@ -22,9 +26,6 @@
 - Fix problems with rat moonwalking
 	- Could have a child object that can run LookAt and copy the rotation from it
 	- Change to use some from of DirectionTo() and SetAngularVelocity()? 
-
-- Overlapping sounds for the geiger counter
-	- Would have to create audio stream and replay it 
 
 - Apply radiation from the rod to nearby hotdogs	
 	- An area is already present on it, attach function in _Process

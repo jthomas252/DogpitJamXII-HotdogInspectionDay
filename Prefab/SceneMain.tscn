@@ -1,4 +1,4 @@
-[gd_scene load_steps=102 format=2]
+[gd_scene load_steps=103 format=2]
 
 [ext_resource path="res://Scripts/BaseScene.cs" type="Script" id=1]
 [ext_resource path="res://Prefab/Cursor.tscn" type="PackedScene" id=2]
@@ -61,6 +61,7 @@
 [ext_resource path="res://Prefab/Finger.tscn" type="PackedScene" id=59]
 [ext_resource path="res://Prefab/UraniumRod.tscn" type="PackedScene" id=60]
 [ext_resource path="res://Prefab/Dynamite.tscn" type="PackedScene" id=61]
+[ext_resource path="res://Prefab/Notice.tscn" type="PackedScene" id=62]
 
 [sub_resource type="DynamicFontData" id=1]
 antialiased = false
@@ -1068,6 +1069,11 @@ volume_db = -20.0
 
 [node name="Sound" type="AudioStreamPlayer" parent="."]
 volume_db = -15.0
+
+[node name="Notice" parent="." instance=ExtResource( 62 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -14.465, -10.2052, 15.6724 )
+collision_layer = 3
+collision_mask = 3
 
 [connection signal="pressed" from="Interface/StartScreen/Button" to="Interface/StartScreen" method="OnStartButton"]
 [connection signal="FadeApex" from="Interface/Fader" to="Interface/StartScreen" method="Hide"]
