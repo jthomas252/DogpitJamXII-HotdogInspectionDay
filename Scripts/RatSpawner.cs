@@ -32,10 +32,10 @@ public class RatSpawner : Spatial
         {
             new SpawnRate(false, 0f, 0f),
             new SpawnRate(false, 0f, 0f),
-            new SpawnRate(true, 45f, 100f),
-            new SpawnRate(true, 35f, 90f),
-            new SpawnRate(true, 25f, 60f),
-            new SpawnRate(true, 10f, 45f),
+            new SpawnRate(true, 45f, 90f),
+            new SpawnRate(true, 35f, 65f),
+            new SpawnRate(true, 20f, 45f),
+            new SpawnRate(true, 8f, 25f),
         };
 
         GetTree().CurrentScene.Connect("LevelStart", this, nameof(OnLevelStart));
