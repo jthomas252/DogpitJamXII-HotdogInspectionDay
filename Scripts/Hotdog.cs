@@ -163,7 +163,10 @@ public class Hotdog : GrabbableObject
         string output = $"BRAND   {_brand.ToString()}\n";
         
         // DEBUG
-        output += $"VALID {_isValid.ToString()}\nCHALL {_challenge.ToString()}";
+        if (BaseScene.GetDebugMode())
+        {
+            output += $"VALID {_isValid.ToString()}\nCHALL {_challenge.ToString()}";
+        }
 
         // Only show serials if we're in that challenge
         if (_challenge == HotdogChallenge.SERIAL_NUMBER)
@@ -299,16 +302,19 @@ public class Hotdog : GrabbableObject
         List<string> contents = new List<string>();
         string[] order = new string[5]; // Default for invalid
         
-        // Do specific brand or challenge meats here
-        if (_brand == HotdogBrand.BIG_BILL_CHEESE) contents.Add("CHEESE");
-        if (_brand == HotdogBrand.O_LEARY_GOLDEN) contents.Add("GOLD");
-        if (_brand == HotdogBrand.WHOLESOME_CHRISTIAN) contents.Add("LOVE");
-        if (_brand == HotdogBrand.BIXI_RECYCLED) contents.Add("HOTDOG?");
-        if (_brand == HotdogBrand.MARTHA_VEGAN) contents.Add("TOFU");
+        // Signature ingredients if a serial number puzzle is presented, only present if valid
+        if (IsValid())
+        {
+            if (_brand == HotdogBrand.BIG_BILL_CHEESE) contents.Add("CHEESE");
+            if (_brand == HotdogBrand.O_LEARY_GOLDEN) contents.Add("GOLD");
+            if (_brand == HotdogBrand.WHOLESOME_CHRISTIAN) contents.Add("LOVE");
+            if (_brand == HotdogBrand.MARTHA_VEGAN) contents.Add("TOFU");
+        }
 
         int maxBad = _isValid ? 1 : 4;
         int minBad = !_isValid && _challenge == HotdogChallenge.MEAT_CONTENT ? 2 : 0;
-        int badCount = 0; 
+        int badCount = 0;
+        int goodCount = 0; 
         
         for (int i = 0; i < order.Length; ++i)
         {
@@ -316,6 +322,7 @@ public class Hotdog : GrabbableObject
             if (randVal > 0.66)
             {
                 order[i] = (i >= order.Length - (minBad - badCount)) ? "bad" : "good";
+                ++goodCount; 
             } else if (randVal > 0.33)
             {
                 order[i] = (i >= order.Length - (minBad - badCount)) ? "bad" : "questionable"; 
@@ -374,31 +381,55 @@ public class Hotdog : GrabbableObject
             // GOOD
             "good", new string[]
                 { 
-                "PORK", "BEEF", "CHICKEN", "SOY", "DUCK", "GOOSE", "ONION", "GARLIC", "CHEESE", 
-                "CRAB", "FISH", "WALRUS", "OCTOPUS", "YAK", "ALLIGATOR", "SNAKE", "ELEPHANT",
-                "LAMB", "GOAT", "BOAR", "GIRAFFE", "HIPPO", "LOBSTER", "MOOSE", "ELK", "DEER",
-                "RABBIT", "FOX", "TIGER", "LION", "WOLF", "KANGAROO", "KOALA", "ARMADILLO", 
-                "COW", "BULL", "PIG", "OYSTER", "STARFISH", "CRAWFISH", "SALMON", "BACON",
-                "BEAVER", "SQUIRREL", "MOUSE", "HAMSTER", "CAPYBARA", 
+                // Beef products 
+                "COW", "BULL", "STEAK", "BEEF", "YAK", "HAMBURGER", "RIBEYE", "FILET_MIGNON",
+                
+                // Pork Products
+                "PORK", "BACON", "SAUSAGE",
+                
+                // Poultry
+                "CHICKEN", "DUCK", "GOOSE",
+                
+                // Veggies
+                "SPROUTS", "PICKLES", "CORN", "SOY", "BEANS", "CORN",  "SUNFLOWER", "PEPPERS", "SQUASH", 
+                "ONION", "GARLIC", 
                 }
         },
         {
             // QUESTIONABLE
             "questionable", new string[]
             {
-                "RAT", "BABA", "WASP", "BUMBLEBEE", "PIGEON", "OPOSSUM", "RACCOON", "HORSE", "PARROT", "DONKEY",
-                "BEANS", "CORN", "KORN", "MILK", "CHILI", "PANDA", "GRIZZLY_BEAR", "HOTDOG?", "MONKEY",
-                "SPIDERS", "ANTS", "EELS", "TOFU", "FAT", "SUNFLOWER", "PEPPERS", "TOMATO", "SQUASH", "PEAR", "APPLE",
-                "ORANGE", "LEMON", "LIME", "POTATO", "SWEET_POTATO", "YAM", "EGGPLANT", "EGG", "SPROUTS", "PICKLES"
+                // Insects
+                "WASP", "BUMBLEBEE", "ANTS", "SPIDERS",
+                
+                // Seafood
+                "FISH", "WALRUS", "OCTOPUS", "FROG", "CRAB", "OYSTER", "STARFISH", "CRAWFISH", "SALMON", "EELS",
+
+                // Other animals
+                "ALLIGATOR", "SNAKE", "ELEPHANT", "RAT", "BABA", "HORSE", "PARROT", "DONKEY",
+                "FOX", "TIGER", "LION", "WOLF", "KANGAROO", "KOALA", "ARMADILLO", "PANDA", "GRIZZLY_BEAR", "HOTDOG?", 
+                "MONKEY", "LAMB", "GOAT", "BOAR", "GIRAFFE", "HIPPO", "LOBSTER", "MOOSE", "ELK", "DEER", "RABBIT",
+                
+                // Roadkill
+                "PIGEON", "OPOSSUM", "RACCOON", "BEAVER", "SQUIRREL", "MOUSE", "HAMSTER", "CAPYBARA", 
+                
+                // Fruits
+                "PEAR", "APPLE", "ORANGE", "LEMON", "LIME", "GRAPE", "TOMATO",
+                
+                // Dairy
+                "CHEESE", "MILK", 
+                
+                // Other valid
+                 "CHILI", "EGG", "FAT",
             }
         },        
         {
             // BAD
             "bad", new string[]
             {
-                "GARBAGE", "ANUSES", "ROACHES", "TEETH", "HAIR", "ROCKS", "HOPES_DREAMS", "HUMAN",
+                "GARBAGE", "ANUSES", "ROACHES", "TEETH", "HAIR", "ROCKS", "HOPES_DREAMS", "HUMAN", "KORN",
                 "ASBESTOS", "ALIEN", "GREASE", "FEAR", "POOP", "URANIUM", "UNKNOWN", "FEAR", "ANGER", "LOVE",
-                "WRATH", "ENVY", "SASQUATCH", "YETI", "LANGOLIERS", "MATH", "QUATERNIONS", "WOOD",
+                "WRATH", "ENVY", "SASQUATCH", "YETI", "LANGOLIERS", "MATH", "QUATERNIONS", "WOOD", "MALK",
                 "POISON", "EYEBALLS", "BRAINS", "CRAYONS", "OIL", "TOXIC_WASTE", "JET_FUEL", "LITHIUM",
                 "CYANIDE", "TNT", "GLASS", "NAILS", "RUST", "FIRE", "\"BEEF\"", "CLOWN", "MICROCHIPS",
             }

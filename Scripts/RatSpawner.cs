@@ -19,10 +19,12 @@ public class RatSpawner : Spatial
         }
     }
 
+    private const int MAX_RATS_PER_LEVEL = 10;
     private SpawnRate[] _spawnRates;
 
     private float _spawnTime;
-    private Spatial _spawnPoint; 
+    private Spatial _spawnPoint;
+    private int _ratsSpawned; 
     
     public override void _Ready()
     {
@@ -33,7 +35,7 @@ public class RatSpawner : Spatial
             new SpawnRate(true, 45f, 100f),
             new SpawnRate(true, 35f, 90f),
             new SpawnRate(true, 25f, 60f),
-            new SpawnRate(true, 1f, 5f),
+            new SpawnRate(true, 10f, 45f),
         };
 
         GetTree().CurrentScene.Connect("LevelStart", this, nameof(OnLevelStart));
@@ -60,10 +62,12 @@ public class RatSpawner : Spatial
 
     private void SpawnRat()
     {
+        if (_ratsSpawned >= MAX_RATS_PER_LEVEL) return; 
         Rat rat = (Rat)ratPrefab.Instance();
         GetTree().CurrentScene.AddChild(rat);
         rat.GlobalTranslation = _spawnPoint.GlobalTranslation;
         rat.GlobalRotation = _spawnPoint.GlobalRotation;
+        ++_ratsSpawned;
     }
 
     private void SetSpawnTime()

@@ -12,4 +12,17 @@
 - Add Geiger loop
 
 - Bugs to fix
+	- If holding an object at level end stuff gets weird	
+	- If Geiger counter is discarded it does not come back 
 	
+2 good meats should allow 2+ bad 
+
+Show regular cursor when inspecting document
+
+Hide WASD control text on inspection 
+
+Geiger counter is difficult to see, maybe add a red light 
+
+Show job title promoted from in stat screen 
+
+Only hotdogs seem to spawn in level 3+ 

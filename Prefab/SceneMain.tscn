@@ -333,7 +333,6 @@ valign = 2
 uppercase = true
 
 [node name="BetweenLevel" type="Control" parent="Interface"]
-visible = false
 anchor_right = 1.0
 anchor_bottom = 1.0
 script = ExtResource( 62 )
@@ -361,11 +360,12 @@ anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
 margin_left = -400.0
-margin_top = -156.5
+margin_top = -204.5
 margin_right = 400.0
-margin_bottom = -3.5
+margin_bottom = 93.5
 custom_fonts/font = SubResource( 79 )
-text = "Met Quota
+text = "Here's how you did
+Met Quota
 
 0 CITATIONS ISSUED
 0 LOST TO RATS
@@ -486,7 +486,6 @@ transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -37.6763, 70.1364, -26.1795 )
 
 [node name="RatSpawnPoint" type="Spatial" parent="Points"]
 transform = Transform( 1, 0, 0, 0, 0.999959, -0.00905183, 0, 0.00905183, 0.999959, -117.798, -8.02165, 1.66396 )
-visible = false
 
 [node name="Icon" type="Sprite3D" parent="Points/RatSpawnPoint"]
 texture = ExtResource( 38 )
@@ -977,7 +976,7 @@ material/0 = SubResource( 64 )
 [node name="Triggers" type="Spatial" parent="."]
 
 [node name="KillTrigger" type="Area" parent="Triggers"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 47.5606, -42.4036, 13.5523 )
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 121.001, -42.4036, -66.4424 )
 script = ExtResource( 14 )
 isKillZone = true
 
@@ -1002,7 +1001,7 @@ transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -117.349, -5.72044, -0.630898 
 script = ExtResource( 42 )
 
 [node name="CollisionShape" type="CollisionShape" parent="Triggers/RatTrigger"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1.74654, 5.59595 )
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 23.2727, -1.74654, 5.59595 )
 shape = SubResource( 68 )
 
 [node name="VentBreakTrigger" type="Area" parent="Triggers"]
