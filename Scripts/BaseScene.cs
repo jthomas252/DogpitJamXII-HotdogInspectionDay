@@ -54,6 +54,8 @@ public class BaseScene : Spatial
 	
 	private Label3D _timer;
 	private Label _controlText;
+
+	private bool _canStart; 
 	
 	[Signal]
 	public delegate void Inspection();
@@ -184,6 +186,8 @@ public class BaseScene : Spatial
 	
 	public static void StartNextLevel()
 	{
+		if (!_instance._canStart) return; 
+		
 		_instance.EmitEvent("LevelStart");
 		IncrementLevel();
 
@@ -271,6 +275,7 @@ public class BaseScene : Spatial
 		
 		// Force the cursor to clean up any objects that will be erased.
 		Cursor.ForceReleaseObject(null, true);
+		_instance._canStart = false;
 	}
 
 	// Play a generic sound at the world position
@@ -317,7 +322,8 @@ public class BaseScene : Spatial
 		Computer.DeactiveScreen();
 		
 		// Force the cursor to clean up any objects that will be erased.
-		Cursor.ForceReleaseObject(null, true);		
+		Cursor.ForceReleaseObject(null, true);
+		_instance._canStart = false; 
 	}
 
 	public static void GameOverDelayed(string reason, float time)
@@ -340,6 +346,8 @@ public class BaseScene : Spatial
 
 		_musicPlayer.Stream = titleTheme;
 		_musicPlayer.Play();
+
+		_canStart = true; 
 	}
 
 	public void OnFadeApex(string callback)
@@ -351,6 +359,7 @@ public class BaseScene : Spatial
 				Input.MouseMode = Input.MouseModeEnum.Hidden;
 				_musicPlayer.Stream = gameTheme;
 				_musicPlayer.Play();
+				_instance._canStart = true; 
 				break; 
 			
 			case "show_end":
