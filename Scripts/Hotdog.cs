@@ -26,7 +26,7 @@ public class Hotdog : GrabbableObject
     private readonly float RAD_DENY_LEVEL = 3f;
 
     private const float MOLD_FAIL_BASELINE = 0.25f;
-    private const float RADIATION_FAIL_BASELINE = 3f; 
+    private const float RADIATION_FAIL_BASELINE = 4.5f; 
 
     private readonly float MOLD_SHADER_MULT = 1.8f;
     private readonly float BURN_SHADER_MULT = 2.2f;
@@ -251,6 +251,11 @@ public class Hotdog : GrabbableObject
         UpdateShader();
     }
 
+    public void ApplyRads(float amount)
+    {
+        _radioactivity += amount; 
+    }
+
     private void UpdateShader()
     {
         _material.SetShaderParam("threshold", 
@@ -330,7 +335,7 @@ public class Hotdog : GrabbableObject
             else
             {
                 badCount++; 
-                order[i] = badCount >= maxBad ? "questionable" : "bad";
+                order[i] = badCount >= (maxBad + (goodCount / 2)) ? "questionable" : "bad";
             }
         }
         
@@ -431,7 +436,7 @@ public class Hotdog : GrabbableObject
                 "ASBESTOS", "ALIEN", "GREASE", "FEAR", "POOP", "URANIUM", "UNKNOWN", "FEAR", "ANGER", "LOVE",
                 "WRATH", "ENVY", "SASQUATCH", "YETI", "LANGOLIERS", "MATH", "QUATERNIONS", "WOOD", "MALK",
                 "POISON", "EYEBALLS", "BRAINS", "CRAYONS", "OIL", "TOXIC_WASTE", "JET_FUEL", "LITHIUM",
-                "CYANIDE", "TNT", "GLASS", "NAILS", "RUST", "FIRE", "\"BEEF\"", "CLOWN", "MICROCHIPS",
+                "CYANIDE", "TNT", "GLASS", "NAILS", "RUST", "FIRE", "\"BEEF\"", "CLOWN", "MICROCHIPS", "GHOSTS",
             }
         }
     };

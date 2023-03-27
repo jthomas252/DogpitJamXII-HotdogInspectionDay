@@ -35,6 +35,7 @@ public class ViewableDocument : ViewableObject
         if (_prev != null) _prevButton.Visible = true;
         if (_next != null) _nextButton.Visible = true;
         
+        Input.MouseMode = Input.MouseModeEnum.Visible;
         BaseScene.PlaySound(BaseScene.GetDocumentNoise());
     }
 
@@ -43,6 +44,7 @@ public class ViewableDocument : ViewableObject
         base.Drop();
         if (_prev != null) _prevButton.Visible = false;
         if (_next != null) _nextButton.Visible = false;
+        Input.MouseMode = Input.MouseModeEnum.Hidden;
     }
 
     public void OnPrevButton()

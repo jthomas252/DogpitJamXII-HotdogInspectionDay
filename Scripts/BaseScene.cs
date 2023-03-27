@@ -28,12 +28,12 @@ public class BaseScene : Spatial
 	[Export] public AudioStream hotdogNoise;
 	[Export] public AudioStream[] documentNoises;
 	
-	private const int PLAYER_QUOTA = 0;
-	private const int PLAYER_QUOTA_PER_LEVEL = 0;
+	private const int PLAYER_QUOTA = 3;
+	private const int PLAYER_QUOTA_PER_LEVEL = 1;
 	private const int PLAYER_QUOTA_EXCEED = 3; 
-	private const int PLAYER_CITATION_THRESHOLD = 3;
+	private const int PLAYER_CITATION_THRESHOLD = 1;
 	private const float PLAYER_LEVEL_LENGTH = 180f;
-	private const int ALLOWED_MISTAKES_FOR_DEMOTION = 3; 
+	private const int ALLOWED_MISTAKES_FOR_DEMOTION = 2; 
 
 	private int _playerRank; // Inspector rank 
 	private int _playerMistake;
@@ -96,7 +96,7 @@ public class BaseScene : Spatial
 		{
 			case PlayerState.Inspecting:
 				_instance.EmitEvent("Inspection");
-				_instance._controlText.Text = "[Right Click] Dismiss\n[WASD] Rotate";				
+				_instance._controlText.Text = "[Right Click] Dismiss";				
 				break; 
 			
 			case PlayerState.Grabbing:
@@ -208,6 +208,7 @@ public class BaseScene : Spatial
 		string dayText = $"DAY {_instance._playerLevel} SURVIVED";
 		string statText = "HERE'S HOW YOU DID\n";
 		string buttonText = "Proceed";
+		string originalJob = _instance.inspectorRanks[_instance._playerRank];
 
 		if (_instance._playerScore > (_instance._playerQuota + PLAYER_QUOTA_EXCEED))
 		{
@@ -237,7 +238,7 @@ public class BaseScene : Spatial
 
 		if (_instance._playerScore >= _instance._playerQuota)
 		{
-			statText += $"\nYOUR NEW POSITION:";
+			statText += $"\nPROMOTED FROM {originalJob} TO";
 			BetweenLevelScreen.SetText(dayText, statText, _instance.inspectorRanks[_instance._playerRank], buttonText);
 		}
 		else
@@ -364,9 +365,19 @@ public class BaseScene : Spatial
 					case (int)KeyList.F1:
 						_debugMode = !_debugMode;
 						break; 
+					
+					case (int)KeyList.Space:
+						Pause();
+						break;
 				}
 			}
 		}
+	}
+
+	public void Pause()
+	{
+		GetTree().Paused = !GetTree().Paused;
+		Input.MouseMode = GetTree().Paused ? Input.MouseModeEnum.Visible : Input.MouseModeEnum.Hidden;
 	}
 	
 	private string GetTimerText()

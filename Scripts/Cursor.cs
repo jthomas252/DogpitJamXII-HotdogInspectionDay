@@ -60,6 +60,14 @@ public class Cursor : Sprite3D
         spaceState = GetWorld().DirectSpaceState;
         camera = GetViewport().GetCamera();
         _tooltip = GetNode<Label3D>("Tooltip");
+        
+        GetTree().CurrentScene.Connect("LevelReset", this, nameof(FreeObject));
+    }
+
+    public void FreeObject()
+    {
+        DropObject();
+        BaseScene.ChangePlayerState(BaseScene.PlayerState.Normal);
     }
 
     private void AttemptInteraction()

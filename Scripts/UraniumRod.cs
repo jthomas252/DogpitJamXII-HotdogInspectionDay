@@ -1,7 +1,9 @@
 using Godot;
+using Godot.Collections;
 
 public class UraniumRod : GrabbableObject
 {
+    private const float RAD_LEVEL = 10f; 
     private Area _area;
 
     public override void _Ready()
@@ -17,5 +19,13 @@ public class UraniumRod : GrabbableObject
         base._Process(delta);
         
         // Find and irradiate nearby hotdogs and rats 
+        Array bodies = _area.GetOverlappingBodies();
+        foreach (var body in bodies)
+        {
+            if (body is Hotdog dog)
+            {
+                dog.ApplyRads((RAD_LEVEL / GlobalTranslation.DistanceTo(dog.GlobalTranslation)) * delta);
+            }
+        }
     }
 }
