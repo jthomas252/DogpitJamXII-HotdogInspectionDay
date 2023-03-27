@@ -346,9 +346,9 @@ color = Color( 0, 0, 0, 1 )
 [node name="DayText" type="Label" parent="Interface/BetweenLevel"]
 anchor_left = 0.5
 anchor_right = 0.5
-margin_left = -217.0
+margin_left = -640.0
 margin_top = 88.0
-margin_right = 217.0
+margin_right = 640.0
 margin_bottom = 153.0
 custom_fonts/font = SubResource( 75 )
 text = "DAY X SURVIVED"
@@ -360,9 +360,9 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-margin_left = -400.0
+margin_left = -640.0
 margin_top = -204.5
-margin_right = 400.0
+margin_right = 640.0
 margin_bottom = 93.5
 custom_fonts/font = SubResource( 79 )
 text = "Here's how you did
@@ -395,9 +395,9 @@ anchor_top = 1.0
 anchor_right = 0.5
 anchor_bottom = 1.0
 margin_left = -200.0
-margin_top = -164.0
+margin_top = -160.0
 margin_right = 200.0
-margin_bottom = -64.0
+margin_bottom = -60.0
 focus_mode = 0
 theme = ExtResource( 3 )
 custom_fonts/font = SubResource( 73 )
@@ -411,9 +411,9 @@ anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
 margin_left = -400.0
-margin_top = -213.0
+margin_top = -220.0
 margin_right = 400.0
-margin_bottom = -208.0
+margin_bottom = -215.0
 
 [node name="EndingScreen" type="Control" parent="Interface"]
 visible = false
@@ -427,15 +427,10 @@ anchor_bottom = 1.0
 color = Color( 0, 0, 0, 1 )
 
 [node name="TextureRect" type="TextureRect" parent="Interface/EndingScreen"]
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-margin_left = -524.0
-margin_top = -302.0
-margin_right = 524.0
-margin_bottom = 302.0
+anchor_right = 1.0
+anchor_bottom = 1.0
 texture = ExtResource( 65 )
+stretch_mode = 6
 
 [node name="Fader" type="ColorRect" parent="Interface"]
 anchor_right = 1.0
@@ -984,6 +979,22 @@ isKillZone = true
 [node name="CollisionShape" type="CollisionShape" parent="Triggers/KillTrigger"]
 shape = SubResource( 72 )
 
+[node name="KillTrigger2" type="Area" parent="Triggers"]
+transform = Transform( 1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 121.001, -42.4036, 123.301 )
+script = ExtResource( 14 )
+isKillZone = true
+
+[node name="CollisionShape" type="CollisionShape" parent="Triggers/KillTrigger2"]
+shape = SubResource( 72 )
+
+[node name="KillTrigger3" type="Area" parent="Triggers"]
+transform = Transform( -4.37114e-08, 1, -4.37114e-08, 0, -4.37114e-08, -1, -1, -4.37114e-08, 1.91069e-15, 267.206, -42.4036, -71.3307 )
+script = ExtResource( 14 )
+isKillZone = true
+
+[node name="CollisionShape" type="CollisionShape" parent="Triggers/KillTrigger3"]
+shape = SubResource( 72 )
+
 [node name="ScanTrigger" type="Area" parent="Triggers"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 25.5288, -5.72044, -22.8146 )
 script = ExtResource( 20 )
@@ -1225,6 +1236,8 @@ script = ExtResource( 67 )
 [connection signal="FadeApex" from="Interface/Fader" to="Interface/BetweenLevel" method="OnFadeApex"]
 [connection signal="FadeApex" from="Interface/Fader" to="Interface/EndingScreen" method="OnFadeApex"]
 [connection signal="OnTrigger" from="Triggers/KillTrigger" to="AudioPoints/TrashAudio" method="OnEvent"]
+[connection signal="OnTrigger" from="Triggers/KillTrigger2" to="AudioPoints/TrashAudio" method="OnEvent"]
+[connection signal="OnTrigger" from="Triggers/KillTrigger3" to="AudioPoints/TrashAudio" method="OnEvent"]
 [connection signal="OnAction" from="Triggers/VentBreakTrigger" to="Environment/vent" method="OnAction"]
 [connection signal="OnProcess" from="Triggers/ProcessTrigger" to="AudioPoints/ProcessAudio" method="OnEvent"]
 [connection signal="Pressed" from="SpawnButton" to="Spawner" method="OnSpawnButton"]

@@ -25,10 +25,10 @@ public class Spawner : Spatial
     {
         0f,
         0.05f,
-        0.16f,
         0.21f,
         0.26f,
-        0.33f,
+        0.31f,
+        0.38f,
     };
     
     private Vector3 _spawnPoint;

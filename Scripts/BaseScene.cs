@@ -28,11 +28,12 @@ public class BaseScene : Spatial
 	[Export] public AudioStream hotdogNoise;
 	[Export] public AudioStream[] documentNoises;
 	
-	private const int PLAYER_QUOTA = 3;
+	private const int PLAYER_QUOTA = 2;
 	private const int PLAYER_QUOTA_PER_LEVEL = 1;
-	private const int PLAYER_QUOTA_EXCEED = 3; 
+	private const int PLAYER_QUOTA_EXCEED = 2; 
 	private const int PLAYER_CITATION_THRESHOLD = 1;
-	private const float PLAYER_LEVEL_LENGTH = 180f;
+	private const int CITATION_FOR_GAME_OVER = 3; 
+	private const float PLAYER_LEVEL_LENGTH = 120f;
 	private const int ALLOWED_MISTAKES_FOR_DEMOTION = 2; 
 
 	private int _playerRank; // Inspector rank 
@@ -43,7 +44,10 @@ public class BaseScene : Spatial
 	private int _playerLevel; 
 	private int _playerQuota;
 	private float _playerTimer;
-	private bool _debugMode; 
+	private bool _debugMode;
+	
+	private float _delayGameOverTime;
+	private string _delayGameOverReason; 
 
 	private AudioStreamPlayer _soundPlayer;
 	private AudioStreamPlayer _musicPlayer; 
@@ -146,7 +150,7 @@ public class BaseScene : Spatial
 		{
 			_instance._playerCitations++;
 			Spawner.Spawn(_instance.citationObject);
-			if (_instance._playerCitations >= 3) GameOver("Too many citations!");
+			if (_instance._playerCitations >= CITATION_FOR_GAME_OVER) GameOverDelayed("Too many citations!", 3f);
 		}
 		UpdateScoreDisplay();
 	}
@@ -294,11 +298,20 @@ public class BaseScene : Spatial
 		
 		// Deactivate relevant objects
 		_instance._playerTimer = 0f; 
-		_instance._timer.Visible = false; 
+		_instance._timer.Visible = false;
+		
+		_instance._delayGameOverTime = 0f; 
+		
 		Computer.DeactiveScreen();
 		
 		// Force the cursor to clean up any objects that will be erased.
 		Cursor.ForceReleaseObject(null, true);		
+	}
+
+	public static void GameOverDelayed(string reason, float time)
+	{
+		_instance._delayGameOverReason = reason;
+		_instance._delayGameOverTime = time; 
 	}
 
 	public override void _Ready()
@@ -306,9 +319,6 @@ public class BaseScene : Spatial
 		// Set initial seed 
 		GD.Randomize();
 		_instance = this;
-		
-		// Set the mouse to be hidden, reconsider enabling when in menus (disable while working on MacOS)
-		// Input.MouseMode = Input.MouseModeEnum.Hidden;
 
 		_timer = GetNode<Label3D>("Environment/Timer/Main");
 		_controlText = GetNode<Label>("Interface/ControlText");
@@ -317,7 +327,7 @@ public class BaseScene : Spatial
 		_musicPlayer = GetNode<AudioStreamPlayer>("Music");
 
 		_musicPlayer.Stream = titleTheme;
-		_musicPlayer.Play(); 
+		_musicPlayer.Play();
 	}
 
 	public void OnFadeApex(string callback)
@@ -349,7 +359,16 @@ public class BaseScene : Spatial
 			_timer.Text = GetTimerText();
 			if (_playerTimer < 0)
 			{
-				OnLevelEnd();
+				if (_delayGameOverTime == 0f) OnLevelEnd();
+			}
+		}
+
+		if (_delayGameOverTime > 0)
+		{
+			_delayGameOverTime -= delta;
+			if (_delayGameOverTime < 0)
+			{
+				GameOver(_delayGameOverReason);
 			}
 		}
 	}

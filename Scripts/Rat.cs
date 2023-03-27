@@ -109,7 +109,6 @@ public class Rat : GrabbableObject
             _debug.GlobalTranslation = _movementTarget.GlobalTranslation;
             if (GlobalTranslation.DistanceTo(_movementTarget.GlobalTranslation) > 100f)
             {
-                GD.Print("Rat: Finding new target");
                 _movementTarget = FindRandomMovementPoint();
             }
         }

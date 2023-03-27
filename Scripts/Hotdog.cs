@@ -11,9 +11,9 @@ public class Hotdog : GrabbableObject
     private readonly float CHANCE_VALID = 0.65f;
 
     // Frozen stats
-    private readonly float FROZEN_CHANCE = 0.83f;
+    private readonly float FROZEN_CHANCE = 0.18f;
     private readonly float ICE_MAX_SCALE = 1.3f;
-    private readonly float ICE_MIN_SCALE = 0.95f;
+    private readonly float ICE_MIN_SCALE = 0.99f;
     private readonly float FROZEN_TEMPERATURE = 0f;
     private readonly float NORMAL_TEMPERATURE = 10f;
     private readonly float BURN_TEMPERATURE = 20f;
