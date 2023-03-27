@@ -3,16 +3,17 @@
 importer="texture"
 type="StreamTexture"
 path.s3tc="res://.import/finger_Flesh_Normal.png-b40b04ae7bb5b43e5bdc7fa00a45c59f.s3tc.stex"
+path.etc2="res://.import/finger_Flesh_Normal.png-b40b04ae7bb5b43e5bdc7fa00a45c59f.etc2.stex"
 path.etc="res://.import/finger_Flesh_Normal.png-b40b04ae7bb5b43e5bdc7fa00a45c59f.etc.stex"
 metadata={
-"imported_formats": [ "s3tc", "etc" ],
+"imported_formats": [ "s3tc", "etc2", "etc" ],
 "vram_texture": true
 }
 
 [deps]
 
 source_file="res://Assets/Models/finger/finger_Flesh_Normal.png"
-dest_files=[ "res://.import/finger_Flesh_Normal.png-b40b04ae7bb5b43e5bdc7fa00a45c59f.s3tc.stex", "res://.import/finger_Flesh_Normal.png-b40b04ae7bb5b43e5bdc7fa00a45c59f.etc.stex" ]
+dest_files=[ "res://.import/finger_Flesh_Normal.png-b40b04ae7bb5b43e5bdc7fa00a45c59f.s3tc.stex", "res://.import/finger_Flesh_Normal.png-b40b04ae7bb5b43e5bdc7fa00a45c59f.etc2.stex", "res://.import/finger_Flesh_Normal.png-b40b04ae7bb5b43e5bdc7fa00a45c59f.etc.stex" ]
 
 [params]
 

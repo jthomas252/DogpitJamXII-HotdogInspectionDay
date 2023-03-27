@@ -2,21 +2,19 @@
 
 importer="texture"
 type="StreamTexture"
-path.s3tc="res://.import/spawner_pendant_PendantYellowPlastic_Normal.png-7f7860542200b3de58f954dd43083423.s3tc.stex"
-path.etc="res://.import/spawner_pendant_PendantYellowPlastic_Normal.png-7f7860542200b3de58f954dd43083423.etc.stex"
+path="res://.import/spawner_pendant_PendantYellowPlastic_Normal.png-7f7860542200b3de58f954dd43083423.stex"
 metadata={
-"imported_formats": [ "s3tc", "etc" ],
-"vram_texture": true
+"vram_texture": false
 }
 
 [deps]
 
 source_file="res://Assets/Models/spawner_pendant/textures/spawner_pendant_PendantYellowPlastic_Normal.png"
-dest_files=[ "res://.import/spawner_pendant_PendantYellowPlastic_Normal.png-7f7860542200b3de58f954dd43083423.s3tc.stex", "res://.import/spawner_pendant_PendantYellowPlastic_Normal.png-7f7860542200b3de58f954dd43083423.etc.stex" ]
+dest_files=[ "res://.import/spawner_pendant_PendantYellowPlastic_Normal.png-7f7860542200b3de58f954dd43083423.stex" ]
 
 [params]
 
-compress/mode=2
+compress/mode=1
 compress/lossy_quality=0.7
 compress/hdr_mode=0
 compress/bptc_ldr=0

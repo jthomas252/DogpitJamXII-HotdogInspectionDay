@@ -2,21 +2,19 @@
 
 importer="texture"
 type="StreamTexture"
-path.s3tc="res://.import/conveyor_belt_ConveyorBelt_BaseColor.png-0766a799dabe2b32f7d3e9fba330b1ae.s3tc.stex"
-path.etc="res://.import/conveyor_belt_ConveyorBelt_BaseColor.png-0766a799dabe2b32f7d3e9fba330b1ae.etc.stex"
+path="res://.import/conveyor_belt_ConveyorBelt_BaseColor.png-0766a799dabe2b32f7d3e9fba330b1ae.stex"
 metadata={
-"imported_formats": [ "s3tc", "etc" ],
-"vram_texture": true
+"vram_texture": false
 }
 
 [deps]
 
 source_file="res://Assets/Models/conveyor_belt/textures/conveyor_belt_ConveyorBelt_BaseColor.png"
-dest_files=[ "res://.import/conveyor_belt_ConveyorBelt_BaseColor.png-0766a799dabe2b32f7d3e9fba330b1ae.s3tc.stex", "res://.import/conveyor_belt_ConveyorBelt_BaseColor.png-0766a799dabe2b32f7d3e9fba330b1ae.etc.stex" ]
+dest_files=[ "res://.import/conveyor_belt_ConveyorBelt_BaseColor.png-0766a799dabe2b32f7d3e9fba330b1ae.stex" ]
 
 [params]
 
-compress/mode=2
+compress/mode=1
 compress/lossy_quality=0.7
 compress/hdr_mode=0
 compress/bptc_ldr=0

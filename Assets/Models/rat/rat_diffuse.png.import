@@ -2,21 +2,19 @@
 
 importer="texture"
 type="StreamTexture"
-path.s3tc="res://.import/rat_diffuse.png-7175375b3a0cf3cffb90c123f97e6310.s3tc.stex"
-path.etc="res://.import/rat_diffuse.png-7175375b3a0cf3cffb90c123f97e6310.etc.stex"
+path="res://.import/rat_diffuse.png-7175375b3a0cf3cffb90c123f97e6310.stex"
 metadata={
-"imported_formats": [ "s3tc", "etc" ],
-"vram_texture": true
+"vram_texture": false
 }
 
 [deps]
 
 source_file="res://Assets/Models/rat/rat_diffuse.png"
-dest_files=[ "res://.import/rat_diffuse.png-7175375b3a0cf3cffb90c123f97e6310.s3tc.stex", "res://.import/rat_diffuse.png-7175375b3a0cf3cffb90c123f97e6310.etc.stex" ]
+dest_files=[ "res://.import/rat_diffuse.png-7175375b3a0cf3cffb90c123f97e6310.stex" ]
 
 [params]
 
-compress/mode=2
+compress/mode=1
 compress/lossy_quality=0.7
 compress/hdr_mode=0
 compress/bptc_ldr=0

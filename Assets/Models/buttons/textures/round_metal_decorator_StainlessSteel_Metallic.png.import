@@ -3,16 +3,17 @@
 importer="texture"
 type="StreamTexture"
 path.s3tc="res://.import/round_metal_decorator_StainlessSteel_Metallic.png-fb736f66194113e1fa3c90b441be20a3.s3tc.stex"
+path.etc2="res://.import/round_metal_decorator_StainlessSteel_Metallic.png-fb736f66194113e1fa3c90b441be20a3.etc2.stex"
 path.etc="res://.import/round_metal_decorator_StainlessSteel_Metallic.png-fb736f66194113e1fa3c90b441be20a3.etc.stex"
 metadata={
-"imported_formats": [ "s3tc", "etc" ],
+"imported_formats": [ "s3tc", "etc2", "etc" ],
 "vram_texture": true
 }
 
 [deps]
 
 source_file="res://Assets/Models/buttons/textures/round_metal_decorator_StainlessSteel_Metallic.png"
-dest_files=[ "res://.import/round_metal_decorator_StainlessSteel_Metallic.png-fb736f66194113e1fa3c90b441be20a3.s3tc.stex", "res://.import/round_metal_decorator_StainlessSteel_Metallic.png-fb736f66194113e1fa3c90b441be20a3.etc.stex" ]
+dest_files=[ "res://.import/round_metal_decorator_StainlessSteel_Metallic.png-fb736f66194113e1fa3c90b441be20a3.s3tc.stex", "res://.import/round_metal_decorator_StainlessSteel_Metallic.png-fb736f66194113e1fa3c90b441be20a3.etc2.stex", "res://.import/round_metal_decorator_StainlessSteel_Metallic.png-fb736f66194113e1fa3c90b441be20a3.etc.stex" ]
 
 [params]
 

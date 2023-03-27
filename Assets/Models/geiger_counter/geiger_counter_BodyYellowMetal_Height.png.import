@@ -14,11 +14,11 @@ dest_files=[ "res://.import/geiger_counter_BodyYellowMetal_Height.png-3a5995e7f6
 
 [params]
 
-compress/mode=0
+compress/mode=1
 compress/lossy_quality=0.7
 compress/hdr_mode=0
 compress/bptc_ldr=0
-compress/normal_map=0
+compress/normal_map=1
 flags/repeat=0
 flags/filter=true
 flags/mipmaps=false

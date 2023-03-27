@@ -3,16 +3,17 @@
 importer="texture"
 type="StreamTexture"
 path.s3tc="res://.import/dynamite_DynamiteBody_Metallic.png-9beb5d9df5b7e632e75e4fd4f950b428.s3tc.stex"
+path.etc2="res://.import/dynamite_DynamiteBody_Metallic.png-9beb5d9df5b7e632e75e4fd4f950b428.etc2.stex"
 path.etc="res://.import/dynamite_DynamiteBody_Metallic.png-9beb5d9df5b7e632e75e4fd4f950b428.etc.stex"
 metadata={
-"imported_formats": [ "s3tc", "etc" ],
+"imported_formats": [ "s3tc", "etc2", "etc" ],
 "vram_texture": true
 }
 
 [deps]
 
 source_file="res://Assets/Models/dynamite/dynamite_DynamiteBody_Metallic.png"
-dest_files=[ "res://.import/dynamite_DynamiteBody_Metallic.png-9beb5d9df5b7e632e75e4fd4f950b428.s3tc.stex", "res://.import/dynamite_DynamiteBody_Metallic.png-9beb5d9df5b7e632e75e4fd4f950b428.etc.stex" ]
+dest_files=[ "res://.import/dynamite_DynamiteBody_Metallic.png-9beb5d9df5b7e632e75e4fd4f950b428.s3tc.stex", "res://.import/dynamite_DynamiteBody_Metallic.png-9beb5d9df5b7e632e75e4fd4f950b428.etc2.stex", "res://.import/dynamite_DynamiteBody_Metallic.png-9beb5d9df5b7e632e75e4fd4f950b428.etc.stex" ]
 
 [params]
 

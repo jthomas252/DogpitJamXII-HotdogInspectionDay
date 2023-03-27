@@ -1,4 +1,4 @@
-[gd_scene load_steps=117 format=2]
+[gd_scene load_steps=118 format=2]
 
 [ext_resource path="res://Scripts/BaseScene.cs" type="Script" id=1]
 [ext_resource path="res://Prefab/Cursor.tscn" type="PackedScene" id=2]
@@ -7,7 +7,6 @@
 [ext_resource path="res://Assets/Models/desk/desk.obj" type="ArrayMesh" id=5]
 [ext_resource path="res://Assets/Materials/Desk.tres" type="Material" id=6]
 [ext_resource path="res://Assets/Materials/EnvironmentWall.tres" type="Material" id=7]
-[ext_resource path="res://Assets/Materials/EnvironmentFloor.tres" type="Material" id=8]
 [ext_resource path="res://SpawnButton.tscn" type="PackedScene" id=9]
 [ext_resource path="res://Scripts/ViewableDocument.cs" type="Script" id=10]
 [ext_resource path="res://Prefab/ConveyorBelt.tscn" type="PackedScene" id=11]
@@ -92,6 +91,36 @@ font_data = SubResource( 74 )
 [sub_resource type="DynamicFont" id=77]
 size = 32
 font_data = SubResource( 74 )
+
+[sub_resource type="ProceduralSky" id=82]
+
+[sub_resource type="Environment" id=83]
+background_mode = 1
+background_sky = SubResource( 82 )
+background_color = Color( 0.360784, 0.290196, 0.231373, 1 )
+ambient_light_color = Color( 0.235294, 0.235294, 0.235294, 1 )
+ambient_light_energy = 0.17
+fog_color = Color( 0.466667, 0.360784, 0.258824, 1 )
+fog_sun_color = Color( 0.823529, 0.482353, 0, 1 )
+fog_sun_amount = 0.17
+fog_depth_begin = 0.0
+fog_depth_end = 631.3
+fog_depth_curve = 1.74109
+fog_height_enabled = true
+fog_height_min = -9.9
+fog_height_max = -233.6
+tonemap_mode = 2
+tonemap_exposure = 0.65
+tonemap_white = 1.5
+ssao_radius = 3.22
+ssao_intensity = 8.93
+ssao_quality = 0
+ssao_edge_sharpness = 4.13
+dof_blur_far_enabled = true
+dof_blur_far_distance = 650.0
+dof_blur_far_transition = 137.21
+dof_blur_far_amount = 0.12
+glow_intensity = 1.32
 
 [sub_resource type="CubeMesh" id=30]
 
@@ -259,6 +288,7 @@ enabled_focus_mode = 0
 text = "Next"
 
 [node name="StartScreen" type="ColorRect" parent="Interface"]
+visible = false
 anchor_right = 1.0
 anchor_bottom = 1.0
 color = Color( 0, 0, 0, 1 )
@@ -455,6 +485,17 @@ light_indirect_energy = 0.673
 spot_range = 19.776
 spot_angle = 60.86
 
+[node name="Camera" type="Camera" parent="Camera"]
+transform = Transform( 0.999969, 0.0078539, 5.61134e-09, -0.00733194, 0.933512, 0.35847, 0.00281539, -0.358459, 0.933541, 0, 24.8409, 48.4861 )
+environment = SubResource( 83 )
+fov = 90.0
+far = 1000.0
+
+[node name="Light" type="SpotLight" parent="Camera/Camera"]
+light_indirect_energy = 0.673
+spot_range = 19.776
+spot_angle = 60.86
+
 [node name="Cursor" parent="." instance=ExtResource( 2 )]
 cursorDistance = 30.0
 handTextureGrab = ExtResource( 26 )
@@ -499,19 +540,18 @@ texture = ExtResource( 38 )
 
 [node name="Lights" type="Spatial" parent="."]
 
-[node name="DirectionalLight" type="DirectionalLight" parent="Lights"]
-transform = Transform( 0.259648, 0.144491, -0.954833, -0.486266, 0.873811, -2.88257e-07, 0.834343, 0.464303, 0.297144, 0.0731354, 3.8147e-06, 0.0175591 )
-light_color = Color( 0.631373, 0.627451, 0.521569, 1 )
-light_energy = 0.147
-light_indirect_energy = 0.0
-shadow_enabled = true
-shadow_bias = 1.0
-
 [node name="SpotLight" type="SpotLight" parent="Lights"]
 transform = Transform( 1, 0, 0, 0, -0.156513, 0.987676, 0, -0.987676, -0.156513, 0, 88.2795, -34.8194 )
 light_color = Color( 1, 0.956863, 0.870588, 1 )
 light_energy = 2.5
 spot_range = 160.0
+
+[node name="DirectionalLight" type="DirectionalLight" parent="Lights"]
+transform = Transform( nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, nan )
+light_color = Color( 0.223529, 0.196078, 0.164706, 1 )
+light_energy = 0.562
+shadow_enabled = true
+shadow_bias = 1.0
 
 [node name="Environment" type="Spatial" parent="."]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 13.3585, 0 )
@@ -615,7 +655,7 @@ shape = SubResource( 23 )
 
 [node name="MeshInstance" type="MeshInstance" parent="Environment/Static/Floor"]
 mesh = SubResource( 24 )
-material/0 = ExtResource( 8 )
+material/0 = ExtResource( 7 )
 
 [node name="Ceiling" type="StaticBody" parent="Environment/Static"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 104.178, 0 )
@@ -625,7 +665,7 @@ shape = SubResource( 23 )
 
 [node name="MeshInstance" type="MeshInstance" parent="Environment/Static/Ceiling"]
 mesh = SubResource( 24 )
-material/0 = ExtResource( 8 )
+material/0 = ExtResource( 7 )
 
 [node name="Wall" type="StaticBody" parent="Environment/Static"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -207.863, 0, -100 )

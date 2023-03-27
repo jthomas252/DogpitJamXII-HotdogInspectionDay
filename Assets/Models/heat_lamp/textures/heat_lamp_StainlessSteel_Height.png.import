@@ -14,11 +14,11 @@ dest_files=[ "res://.import/heat_lamp_StainlessSteel_Height.png-5c8c6811cf9d10f4
 
 [params]
 
-compress/mode=0
+compress/mode=1
 compress/lossy_quality=0.7
 compress/hdr_mode=0
 compress/bptc_ldr=0
-compress/normal_map=0
+compress/normal_map=1
 flags/repeat=0
 flags/filter=true
 flags/mipmaps=false

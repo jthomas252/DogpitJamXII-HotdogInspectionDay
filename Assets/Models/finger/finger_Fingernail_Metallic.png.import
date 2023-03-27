@@ -3,16 +3,17 @@
 importer="texture"
 type="StreamTexture"
 path.s3tc="res://.import/finger_Fingernail_Metallic.png-09942c7435d7f4592f8c14e45b1c3a25.s3tc.stex"
+path.etc2="res://.import/finger_Fingernail_Metallic.png-09942c7435d7f4592f8c14e45b1c3a25.etc2.stex"
 path.etc="res://.import/finger_Fingernail_Metallic.png-09942c7435d7f4592f8c14e45b1c3a25.etc.stex"
 metadata={
-"imported_formats": [ "s3tc", "etc" ],
+"imported_formats": [ "s3tc", "etc2", "etc" ],
 "vram_texture": true
 }
 
 [deps]
 
 source_file="res://Assets/Models/finger/finger_Fingernail_Metallic.png"
-dest_files=[ "res://.import/finger_Fingernail_Metallic.png-09942c7435d7f4592f8c14e45b1c3a25.s3tc.stex", "res://.import/finger_Fingernail_Metallic.png-09942c7435d7f4592f8c14e45b1c3a25.etc.stex" ]
+dest_files=[ "res://.import/finger_Fingernail_Metallic.png-09942c7435d7f4592f8c14e45b1c3a25.s3tc.stex", "res://.import/finger_Fingernail_Metallic.png-09942c7435d7f4592f8c14e45b1c3a25.etc2.stex", "res://.import/finger_Fingernail_Metallic.png-09942c7435d7f4592f8c14e45b1c3a25.etc.stex" ]
 
 [params]
 

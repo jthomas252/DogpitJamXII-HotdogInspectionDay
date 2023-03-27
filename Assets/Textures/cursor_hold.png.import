@@ -14,7 +14,7 @@ dest_files=[ "res://.import/cursor_hold.png-ff747e711e7cc03b42192dcc4abc4c5b.ste
 
 [params]
 
-compress/mode=3
+compress/mode=1
 compress/lossy_quality=0.7
 compress/hdr_mode=0
 compress/bptc_ldr=0

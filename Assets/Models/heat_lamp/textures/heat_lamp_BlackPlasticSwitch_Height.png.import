@@ -14,11 +14,11 @@ dest_files=[ "res://.import/heat_lamp_BlackPlasticSwitch_Height.png-a302f42e366a
 
 [params]
 
-compress/mode=0
+compress/mode=1
 compress/lossy_quality=0.7
 compress/hdr_mode=0
 compress/bptc_ldr=0
-compress/normal_map=0
+compress/normal_map=1
 flags/repeat=0
 flags/filter=true
 flags/mipmaps=false

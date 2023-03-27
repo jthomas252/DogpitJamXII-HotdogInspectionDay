@@ -3,16 +3,17 @@
 importer="texture"
 type="StreamTexture"
 path.s3tc="res://.import/finger_Fingernail_Roughness.png-571bf4c50400f36eda1d638f801cf2db.s3tc.stex"
+path.etc2="res://.import/finger_Fingernail_Roughness.png-571bf4c50400f36eda1d638f801cf2db.etc2.stex"
 path.etc="res://.import/finger_Fingernail_Roughness.png-571bf4c50400f36eda1d638f801cf2db.etc.stex"
 metadata={
-"imported_formats": [ "s3tc", "etc" ],
+"imported_formats": [ "s3tc", "etc2", "etc" ],
 "vram_texture": true
 }
 
 [deps]
 
 source_file="res://Assets/Models/finger/finger_Fingernail_Roughness.png"
-dest_files=[ "res://.import/finger_Fingernail_Roughness.png-571bf4c50400f36eda1d638f801cf2db.s3tc.stex", "res://.import/finger_Fingernail_Roughness.png-571bf4c50400f36eda1d638f801cf2db.etc.stex" ]
+dest_files=[ "res://.import/finger_Fingernail_Roughness.png-571bf4c50400f36eda1d638f801cf2db.s3tc.stex", "res://.import/finger_Fingernail_Roughness.png-571bf4c50400f36eda1d638f801cf2db.etc2.stex", "res://.import/finger_Fingernail_Roughness.png-571bf4c50400f36eda1d638f801cf2db.etc.stex" ]
 
 [params]
 

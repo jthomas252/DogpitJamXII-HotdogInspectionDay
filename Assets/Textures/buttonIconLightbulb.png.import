@@ -2,21 +2,19 @@
 
 importer="texture"
 type="StreamTexture"
-path.s3tc="res://.import/buttonIconLightbulb.png-0c61279cb7b47577758c7e0135b65d26.s3tc.stex"
-path.etc="res://.import/buttonIconLightbulb.png-0c61279cb7b47577758c7e0135b65d26.etc.stex"
+path="res://.import/buttonIconLightbulb.png-0c61279cb7b47577758c7e0135b65d26.stex"
 metadata={
-"imported_formats": [ "s3tc", "etc" ],
-"vram_texture": true
+"vram_texture": false
 }
 
 [deps]
 
 source_file="res://Assets/Textures/buttonIconLightbulb.png"
-dest_files=[ "res://.import/buttonIconLightbulb.png-0c61279cb7b47577758c7e0135b65d26.s3tc.stex", "res://.import/buttonIconLightbulb.png-0c61279cb7b47577758c7e0135b65d26.etc.stex" ]
+dest_files=[ "res://.import/buttonIconLightbulb.png-0c61279cb7b47577758c7e0135b65d26.stex" ]
 
 [params]
 
-compress/mode=2
+compress/mode=1
 compress/lossy_quality=0.7
 compress/hdr_mode=0
 compress/bptc_ldr=0

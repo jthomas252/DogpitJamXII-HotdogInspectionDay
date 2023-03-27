@@ -2,21 +2,19 @@
 
 importer="texture"
 type="StreamTexture"
-path.s3tc="res://.import/notice.png-e363756d27bd10afe68e0d385efebe4f.s3tc.stex"
-path.etc="res://.import/notice.png-e363756d27bd10afe68e0d385efebe4f.etc.stex"
+path="res://.import/notice.png-e363756d27bd10afe68e0d385efebe4f.stex"
 metadata={
-"imported_formats": [ "s3tc", "etc" ],
-"vram_texture": true
+"vram_texture": false
 }
 
 [deps]
 
 source_file="res://Assets/Textures/notice.png"
-dest_files=[ "res://.import/notice.png-e363756d27bd10afe68e0d385efebe4f.s3tc.stex", "res://.import/notice.png-e363756d27bd10afe68e0d385efebe4f.etc.stex" ]
+dest_files=[ "res://.import/notice.png-e363756d27bd10afe68e0d385efebe4f.stex" ]
 
 [params]
 
-compress/mode=2
+compress/mode=1
 compress/lossy_quality=0.7
 compress/hdr_mode=0
 compress/bptc_ldr=0

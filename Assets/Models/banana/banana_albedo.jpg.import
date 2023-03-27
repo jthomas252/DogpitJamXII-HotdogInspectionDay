@@ -2,21 +2,19 @@
 
 importer="texture"
 type="StreamTexture"
-path.s3tc="res://.import/banana_albedo.jpg-14199287c9be318eaa8141aa6303191d.s3tc.stex"
-path.etc="res://.import/banana_albedo.jpg-14199287c9be318eaa8141aa6303191d.etc.stex"
+path="res://.import/banana_albedo.jpg-14199287c9be318eaa8141aa6303191d.stex"
 metadata={
-"imported_formats": [ "s3tc", "etc" ],
-"vram_texture": true
+"vram_texture": false
 }
 
 [deps]
 
 source_file="res://Assets/Models/banana/banana_albedo.jpg"
-dest_files=[ "res://.import/banana_albedo.jpg-14199287c9be318eaa8141aa6303191d.s3tc.stex", "res://.import/banana_albedo.jpg-14199287c9be318eaa8141aa6303191d.etc.stex" ]
+dest_files=[ "res://.import/banana_albedo.jpg-14199287c9be318eaa8141aa6303191d.stex" ]
 
 [params]
 
-compress/mode=2
+compress/mode=1
 compress/lossy_quality=0.7
 compress/hdr_mode=0
 compress/bptc_ldr=0

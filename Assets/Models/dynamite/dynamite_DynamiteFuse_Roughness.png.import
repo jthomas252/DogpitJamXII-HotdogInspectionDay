@@ -3,16 +3,17 @@
 importer="texture"
 type="StreamTexture"
 path.s3tc="res://.import/dynamite_DynamiteFuse_Roughness.png-508e74f6540af74a7f7320916732b3b6.s3tc.stex"
+path.etc2="res://.import/dynamite_DynamiteFuse_Roughness.png-508e74f6540af74a7f7320916732b3b6.etc2.stex"
 path.etc="res://.import/dynamite_DynamiteFuse_Roughness.png-508e74f6540af74a7f7320916732b3b6.etc.stex"
 metadata={
-"imported_formats": [ "s3tc", "etc" ],
+"imported_formats": [ "s3tc", "etc2", "etc" ],
 "vram_texture": true
 }
 
 [deps]
 
 source_file="res://Assets/Models/dynamite/dynamite_DynamiteFuse_Roughness.png"
-dest_files=[ "res://.import/dynamite_DynamiteFuse_Roughness.png-508e74f6540af74a7f7320916732b3b6.s3tc.stex", "res://.import/dynamite_DynamiteFuse_Roughness.png-508e74f6540af74a7f7320916732b3b6.etc.stex" ]
+dest_files=[ "res://.import/dynamite_DynamiteFuse_Roughness.png-508e74f6540af74a7f7320916732b3b6.s3tc.stex", "res://.import/dynamite_DynamiteFuse_Roughness.png-508e74f6540af74a7f7320916732b3b6.etc2.stex", "res://.import/dynamite_DynamiteFuse_Roughness.png-508e74f6540af74a7f7320916732b3b6.etc.stex" ]
 
 [params]
 

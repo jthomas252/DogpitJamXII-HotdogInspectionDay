@@ -2,21 +2,19 @@
 
 importer="texture"
 type="StreamTexture"
-path.s3tc="res://.import/tile_concretebricks_Roughness.png-c0f4a928bee754c2838f316b5129e3eb.s3tc.stex"
-path.etc="res://.import/tile_concretebricks_Roughness.png-c0f4a928bee754c2838f316b5129e3eb.etc.stex"
+path="res://.import/tile_concretebricks_Roughness.png-c0f4a928bee754c2838f316b5129e3eb.stex"
 metadata={
-"imported_formats": [ "s3tc", "etc" ],
-"vram_texture": true
+"vram_texture": false
 }
 
 [deps]
 
 source_file="res://Assets/Textures/tile_concretebricks_Roughness.png"
-dest_files=[ "res://.import/tile_concretebricks_Roughness.png-c0f4a928bee754c2838f316b5129e3eb.s3tc.stex", "res://.import/tile_concretebricks_Roughness.png-c0f4a928bee754c2838f316b5129e3eb.etc.stex" ]
+dest_files=[ "res://.import/tile_concretebricks_Roughness.png-c0f4a928bee754c2838f316b5129e3eb.stex" ]
 
 [params]
 
-compress/mode=2
+compress/mode=1
 compress/lossy_quality=0.7
 compress/hdr_mode=0
 compress/bptc_ldr=0

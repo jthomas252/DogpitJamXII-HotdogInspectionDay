@@ -19,3 +19,4 @@ mono_crash.*.json
 # Build folders
 Build_Mac/
 Build_Windows/
+Build_Web/

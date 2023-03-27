@@ -14,11 +14,11 @@ dest_files=[ "res://.import/vent_Vent_Height.png-0a9f5f9c8d8c6b3c1b746763adfc6b5
 
 [params]
 
-compress/mode=0
+compress/mode=1
 compress/lossy_quality=0.7
 compress/hdr_mode=0
 compress/bptc_ldr=0
-compress/normal_map=0
+compress/normal_map=1
 flags/repeat=0
 flags/filter=true
 flags/mipmaps=false

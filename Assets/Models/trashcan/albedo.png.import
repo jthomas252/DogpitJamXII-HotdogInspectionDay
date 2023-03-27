@@ -2,21 +2,19 @@
 
 importer="texture"
 type="StreamTexture"
-path.s3tc="res://.import/albedo.png-bf49cf9cb8add34302a372d69961f5bd.s3tc.stex"
-path.etc="res://.import/albedo.png-bf49cf9cb8add34302a372d69961f5bd.etc.stex"
+path="res://.import/albedo.png-bf49cf9cb8add34302a372d69961f5bd.stex"
 metadata={
-"imported_formats": [ "s3tc", "etc" ],
-"vram_texture": true
+"vram_texture": false
 }
 
 [deps]
 
 source_file="res://Assets/Models/trashcan/albedo.png"
-dest_files=[ "res://.import/albedo.png-bf49cf9cb8add34302a372d69961f5bd.s3tc.stex", "res://.import/albedo.png-bf49cf9cb8add34302a372d69961f5bd.etc.stex" ]
+dest_files=[ "res://.import/albedo.png-bf49cf9cb8add34302a372d69961f5bd.stex" ]
 
 [params]
 
-compress/mode=2
+compress/mode=1
 compress/lossy_quality=0.7
 compress/hdr_mode=0
 compress/bptc_ldr=0

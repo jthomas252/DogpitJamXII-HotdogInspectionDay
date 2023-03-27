@@ -2,25 +2,23 @@
 
 importer="texture"
 type="StreamTexture"
-path.s3tc="res://.import/heat_lamp_StainlessSteel_Metallic.png-2887db70080747bc95c8d41ab6e6d2da.s3tc.stex"
-path.etc="res://.import/heat_lamp_StainlessSteel_Metallic.png-2887db70080747bc95c8d41ab6e6d2da.etc.stex"
+path="res://.import/heat_lamp_StainlessSteel_Metallic.png-2887db70080747bc95c8d41ab6e6d2da.stex"
 metadata={
-"imported_formats": [ "s3tc", "etc" ],
-"vram_texture": true
+"vram_texture": false
 }
 
 [deps]
 
 source_file="res://Assets/Models/heat_lamp/textures/heat_lamp_StainlessSteel_Metallic.png"
-dest_files=[ "res://.import/heat_lamp_StainlessSteel_Metallic.png-2887db70080747bc95c8d41ab6e6d2da.s3tc.stex", "res://.import/heat_lamp_StainlessSteel_Metallic.png-2887db70080747bc95c8d41ab6e6d2da.etc.stex" ]
+dest_files=[ "res://.import/heat_lamp_StainlessSteel_Metallic.png-2887db70080747bc95c8d41ab6e6d2da.stex" ]
 
 [params]
 
-compress/mode=2
+compress/mode=1
 compress/lossy_quality=0.7
 compress/hdr_mode=0
 compress/bptc_ldr=0
-compress/normal_map=0
+compress/normal_map=1
 flags/repeat=true
 flags/filter=true
 flags/mipmaps=true

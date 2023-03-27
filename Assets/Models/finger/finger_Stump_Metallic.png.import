@@ -3,16 +3,17 @@
 importer="texture"
 type="StreamTexture"
 path.s3tc="res://.import/finger_Stump_Metallic.png-1fe6c0373c7597dc3142a3e2cb715148.s3tc.stex"
+path.etc2="res://.import/finger_Stump_Metallic.png-1fe6c0373c7597dc3142a3e2cb715148.etc2.stex"
 path.etc="res://.import/finger_Stump_Metallic.png-1fe6c0373c7597dc3142a3e2cb715148.etc.stex"
 metadata={
-"imported_formats": [ "s3tc", "etc" ],
+"imported_formats": [ "s3tc", "etc2", "etc" ],
 "vram_texture": true
 }
 
 [deps]
 
 source_file="res://Assets/Models/finger/finger_Stump_Metallic.png"
-dest_files=[ "res://.import/finger_Stump_Metallic.png-1fe6c0373c7597dc3142a3e2cb715148.s3tc.stex", "res://.import/finger_Stump_Metallic.png-1fe6c0373c7597dc3142a3e2cb715148.etc.stex" ]
+dest_files=[ "res://.import/finger_Stump_Metallic.png-1fe6c0373c7597dc3142a3e2cb715148.s3tc.stex", "res://.import/finger_Stump_Metallic.png-1fe6c0373c7597dc3142a3e2cb715148.etc2.stex", "res://.import/finger_Stump_Metallic.png-1fe6c0373c7597dc3142a3e2cb715148.etc.stex" ]
 
 [params]
 

@@ -2,21 +2,19 @@
 
 importer="texture"
 type="StreamTexture"
-path.s3tc="res://.import/spark.png-e59774630a1c5db3d9b033213a7b310a.s3tc.stex"
-path.etc="res://.import/spark.png-e59774630a1c5db3d9b033213a7b310a.etc.stex"
+path="res://.import/spark.png-e59774630a1c5db3d9b033213a7b310a.stex"
 metadata={
-"imported_formats": [ "s3tc", "etc" ],
-"vram_texture": true
+"vram_texture": false
 }
 
 [deps]
 
 source_file="res://Assets/Textures/spark.png"
-dest_files=[ "res://.import/spark.png-e59774630a1c5db3d9b033213a7b310a.s3tc.stex", "res://.import/spark.png-e59774630a1c5db3d9b033213a7b310a.etc.stex" ]
+dest_files=[ "res://.import/spark.png-e59774630a1c5db3d9b033213a7b310a.stex" ]
 
 [params]
 
-compress/mode=2
+compress/mode=1
 compress/lossy_quality=0.7
 compress/hdr_mode=0
 compress/bptc_ldr=0

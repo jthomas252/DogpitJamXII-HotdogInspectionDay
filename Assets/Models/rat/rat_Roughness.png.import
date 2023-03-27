@@ -2,21 +2,19 @@
 
 importer="texture"
 type="StreamTexture"
-path.s3tc="res://.import/rat_Roughness.png-060ec703aacfe47807a3864b4624d6aa.s3tc.stex"
-path.etc="res://.import/rat_Roughness.png-060ec703aacfe47807a3864b4624d6aa.etc.stex"
+path="res://.import/rat_Roughness.png-060ec703aacfe47807a3864b4624d6aa.stex"
 metadata={
-"imported_formats": [ "s3tc", "etc" ],
-"vram_texture": true
+"vram_texture": false
 }
 
 [deps]
 
 source_file="res://Assets/Models/rat/rat_Roughness.png"
-dest_files=[ "res://.import/rat_Roughness.png-060ec703aacfe47807a3864b4624d6aa.s3tc.stex", "res://.import/rat_Roughness.png-060ec703aacfe47807a3864b4624d6aa.etc.stex" ]
+dest_files=[ "res://.import/rat_Roughness.png-060ec703aacfe47807a3864b4624d6aa.stex" ]
 
 [params]
 
-compress/mode=2
+compress/mode=1
 compress/lossy_quality=0.7
 compress/hdr_mode=0
 compress/bptc_ldr=0

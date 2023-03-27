@@ -2,21 +2,19 @@
 
 importer="texture"
 type="StreamTexture"
-path.s3tc="res://.import/cursor_magnify.png-c52fdf356969265adaa97e2d50b51278.s3tc.stex"
-path.etc="res://.import/cursor_magnify.png-c52fdf356969265adaa97e2d50b51278.etc.stex"
+path="res://.import/cursor_magnify.png-c52fdf356969265adaa97e2d50b51278.stex"
 metadata={
-"imported_formats": [ "s3tc", "etc" ],
-"vram_texture": true
+"vram_texture": false
 }
 
 [deps]
 
 source_file="res://Assets/Textures/cursor_magnify.png"
-dest_files=[ "res://.import/cursor_magnify.png-c52fdf356969265adaa97e2d50b51278.s3tc.stex", "res://.import/cursor_magnify.png-c52fdf356969265adaa97e2d50b51278.etc.stex" ]
+dest_files=[ "res://.import/cursor_magnify.png-c52fdf356969265adaa97e2d50b51278.stex" ]
 
 [params]
 
-compress/mode=2
+compress/mode=1
 compress/lossy_quality=0.7
 compress/hdr_mode=0
 compress/bptc_ldr=0

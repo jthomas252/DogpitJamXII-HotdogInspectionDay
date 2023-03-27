@@ -14,7 +14,7 @@ dest_files=[ "res://.import/cursor_pointer.png-607f00b38ea62d6b901d1900ac2bcef2.
 
 [params]
 
-compress/mode=3
+compress/mode=1
 compress/lossy_quality=0.7
 compress/hdr_mode=0
 compress/bptc_ldr=0
