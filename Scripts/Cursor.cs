@@ -210,10 +210,10 @@ public class Cursor : Sprite3D
         {
             hoverObject = (Node)interacts["collider"];
 
-            if (hoverObject is InteractableObject && !Input.IsMouseButtonPressed((int)ButtonList.Left) && !IsGrabbing())
+            if (hoverObject is InteractableObject interactableObject && !Input.IsMouseButtonPressed((int)ButtonList.Left) && !IsGrabbing())
             {
                 ChangeCursorState(CursorState.HandPoint);
-                ChangeTooltip("Interact");
+                ChangeTooltip(interactableObject.GetTooltip());
             }
             else if (hoverObject is ViewableObject && !IsGrabbing())
             {

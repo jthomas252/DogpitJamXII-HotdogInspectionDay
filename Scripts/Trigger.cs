@@ -28,6 +28,9 @@ public class Trigger : Area
                     ComputerScreen.FlashError("VALID HOTDOG TRASHED");
                     BaseScene.DecrementScore();
                 }
+
+                // Don't destroy the geiger counter, just let it get lost
+                if (node is GeigerCounter) return;
                 
                 EmitSignal(nameof(OnTrigger));
                 rigidBody.QueueFree();

@@ -3,14 +3,13 @@ using Godot.Collections;
 
 public class UraniumRod : GrabbableObject
 {
-    private const float RAD_LEVEL = 10f; 
+    private const float RAD_LEVEL = 3f; 
     private Area _area;
 
     public override void _Ready()
     {
         base._Ready();
         _area = GetNode<Area>("Area");
-
         radiation = 100f; 
     }
 

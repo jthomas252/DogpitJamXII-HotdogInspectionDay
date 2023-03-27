@@ -129,10 +129,16 @@ public class BaseScene : Spatial
 	/**
 	 * Run when a valid Hotdog passes through the process trigger
 	 */
-	public static void IterateScore()
+	public static void IncrementScore()
 	{
 		_instance._playerScore++;
 		UpdateScoreDisplay();
+		
+		// If score above quota then offer to end the level early 
+		if (_instance._playerScore >= _instance._playerQuota)
+		{
+			PhoneButton.Activate();
+		}
 	}
 
 	public static int GetLevel()
@@ -199,6 +205,11 @@ public class BaseScene : Spatial
 
 	public static void OnLevelEnd()
 	{
+		// No escaping if you fucked up
+		if (_instance._delayGameOverTime > 0f) return; 
+		
+		_instance._playerTimer = 0f; 
+		
 		// Past level 5 just trigger the ending.
 		if (_instance._playerLevel >= 5)
 		{
@@ -256,6 +267,7 @@ public class BaseScene : Spatial
 		// Deactivate relevant objects
 		_instance._timer.Visible = false; 
 		Computer.DeactiveScreen();
+		PhoneButton.Deactivate();
 		
 		// Force the cursor to clean up any objects that will be erased.
 		Cursor.ForceReleaseObject(null, true);
@@ -385,9 +397,9 @@ public class BaseScene : Spatial
 						_debugMode = !_debugMode;
 						break; 
 					
-					case (int)KeyList.Space:
-						Pause();
-						break;
+					// case (int)KeyList.Space:
+					// 	Pause();
+					// 	break;
 				}
 			}
 		}

@@ -44,6 +44,7 @@ public class RatSpawner : Spatial
 
     public void OnLevelStart()
     {
+        _ratsSpawned = 0; 
         SetSpawnTime();
     }
 

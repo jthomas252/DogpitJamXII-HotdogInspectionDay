@@ -152,9 +152,8 @@ public class Rat : GrabbableObject
         Vector3 curDir = currentTransform.basis.Xform(new Vector3(0,0,-1));
         Vector3 targetDir = targetPosition.DirectionTo(currentTransform.origin);
         float rotationAngle = Mathf.Acos(curDir.x) - Mathf.Acos(targetDir.x);
-        float rotationVelocity = rotationAngle / state.GetStep();
-        
-        state.SetAngularVelocity(upDir * rotationVelocity);
+        float rotationVelocity = rotationAngle / state.Step;
+        AngularVelocity = upDir * rotationVelocity;
     }
 
     public override void _IntegrateForces(PhysicsDirectBodyState state)

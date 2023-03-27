@@ -408,7 +408,8 @@ public class Hotdog : GrabbableObject
                 "WASP", "BUMBLEBEE", "ANTS", "SPIDERS",
                 
                 // Seafood
-                "FISH", "WALRUS", "OCTOPUS", "FROG", "CRAB", "OYSTER", "STARFISH", "CRAWFISH", "SALMON", "EELS",
+                "FISH", "WALRUS", "OCTOPUS", "FROG", "CRAB", "OYSTER", "STARFISH", "CRAWFISH", "SALMON", "EELS", "SHARK",
+                "TUNA",
 
                 // Other animals
                 "ALLIGATOR", "SNAKE", "ELEPHANT", "RAT", "BABA", "HORSE", "PARROT", "DONKEY",

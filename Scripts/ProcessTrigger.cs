@@ -15,7 +15,7 @@ public class ProcessTrigger:Trigger
 
                 if (hotdog.IsValid())
                 {
-                    BaseScene.IterateScore();
+                    BaseScene.IncrementScore();
                     ComputerScreen.FlashSuccess("HOTDOG ACCEPTED");
                 }
                 else
@@ -26,6 +26,7 @@ public class ProcessTrigger:Trigger
             }
             else
             {
+                BaseScene.DecrementScore();
                 ComputerScreen.FlashError("NOT HOTDOG");
             }
             
